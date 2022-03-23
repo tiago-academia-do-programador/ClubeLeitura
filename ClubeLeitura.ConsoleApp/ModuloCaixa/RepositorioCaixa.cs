@@ -98,6 +98,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             return caixasInseridas;
         }
 
+        public Caixa SelecionarCaixa(int numeroCaixa)
+        {
+            for (int i = 0; i < caixas.Length; i++)
+            {
+                if (caixas[i] != null && numeroCaixa == caixas[i].numero)
+                    return caixas[i];
+            }
+
+            return null;
+        }
+
         public int ObterQtdCaixas()
         {
             int numeroCaixas = 0;

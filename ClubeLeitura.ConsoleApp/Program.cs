@@ -10,6 +10,7 @@
  */
 using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
 namespace ClubeLeitura.ConsoleApp
@@ -29,6 +30,14 @@ namespace ClubeLeitura.ConsoleApp
             Notificador notificador = new Notificador();
             telaCadastroCaixa.notificador = notificador;
 
+            RepositorioRevista repositorioRevista = new RepositorioRevista();
+            repositorioRevista.revistas = new Revista[10];
+
+            TelaCadastroRevista telaCadastroRevista = new TelaCadastroRevista();
+            telaCadastroRevista.notificador = notificador;
+            telaCadastroRevista.telaCadastroCaixa = telaCadastroCaixa;
+            telaCadastroRevista.repositorioCaixa = repositorioCaixa;
+            telaCadastroRevista.repositorioRevista = repositorioRevista;
 
             while (true)
             {                
@@ -57,7 +66,35 @@ namespace ClubeLeitura.ConsoleApp
                         {
                             notificador.ApresentarMensagem("Nenhuma caixa cadastrada", "Atencao");
                         }
-                        Console.ReadLine(); 
+                        Console.ReadLine();
+                    }
+                }
+                else if (opcaoMenuPrincipal == "2")
+                {
+                    string opcao = telaCadastroRevista.MostrarOpcoes();
+
+                    if (opcao == "1")
+                    {
+                        telaCadastroRevista.InserirNovaRevista();
+                    }
+                    else if (opcao == "2")
+                    {
+                        telaCadastroRevista.EditarRevista();
+                    }
+                    else if (opcao == "3")
+                    {
+                        telaCadastroRevista.ExcluirRevista();
+                    }
+                    else if (opcao == "4")
+                    {
+                        bool temRevistaCadastrada = telaCadastroRevista.VisualizarRevistas("Tela");
+
+                        if (!temRevistaCadastrada)
+                        {
+                            notificador.ApresentarMensagem("Nenhuma revista cadastrada", "Atencao");
+                        }
+
+                        Console.ReadLine();
                     }
                 }
             }

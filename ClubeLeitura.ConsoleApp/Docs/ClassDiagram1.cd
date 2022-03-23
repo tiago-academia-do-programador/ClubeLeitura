@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ClubeLeitura.ConsoleApp.Program">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClubeLeitura.ConsoleApp.ModuloRevista.Revista">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAgAIAAAAAAAEAIAAAAAA=</HashCode>
+      <FileName>ModuloRevista\Revista.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClubeLeitura.ConsoleApp.ModuloRevista.TelaCadastroRevista">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAIEAAAAAAAAAAEAAAAAAAAAACAAAAAAAAAADQAA=</HashCode>
+      <FileName>ModuloRevista\TelaCadastroRevista.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="notificador" />
+      <Field Name="repositorioRevista" />
+      <Field Name="repositorioCaixa" />
+      <Field Name="telaCadastroCaixa" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ClubeLeitura.ConsoleApp.ModuloRevista.RepositorioRevista">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAgAAAQAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>ModuloRevista\RepositorioRevista.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClubeLeitura.ConsoleApp.Compartilhado.Notificador" Collapsed="true">
+    <Position X="4" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Compartilhado\Notificador.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClubeLeitura.ConsoleApp.ModuloCaixa.RepositorioCaixa">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAEAggAAQBAgAAAAAABAgAAgAAQAAA=</HashCode>
+      <FileName>ModuloCaixa\RepositorioCaixa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ClubeLeitura.ConsoleApp.ModuloCaixa.TelaCadastroCaixa">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAEAAAAAAAEQAACgAAAEAAAAAAAACgAACQAA=</HashCode>
+      <FileName>ModuloCaixa\TelaCadastroCaixa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
