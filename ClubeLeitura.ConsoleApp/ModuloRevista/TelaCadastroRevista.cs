@@ -45,11 +45,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             // após a escolha da caixa, então podemos cadastrar a revista
             // ...
-            repositorioRevista.Inserir(novaRevista);
+            string statusValidacao = repositorioRevista.Inserir(novaRevista);
 
-            // no final podemos apresentar uma mensagem para o usuário...
-            // ...utilizando o notificador
-            notificador.ApresentarMensagem("Revista inserida com sucesso", TipoMensagem.Sucesso);
+            if (statusValidacao != "REGISTRO_VALIDO")
+                notificador.ApresentarMensagem(statusValidacao, TipoMensagem.Erro);
+            else
+                notificador.ApresentarMensagem("Revista inserida com sucesso", TipoMensagem.Sucesso);
         }
 
 

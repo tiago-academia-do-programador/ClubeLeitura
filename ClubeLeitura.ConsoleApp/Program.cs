@@ -7,7 +7,7 @@
  *  -Para gerenciar emprestimos, ele deve digitar "4"
  *  
  *  -Para sair, usuário deve digitar "s"
- */
+**/
 using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
@@ -40,7 +40,7 @@ namespace ClubeLeitura.ConsoleApp
             telaCadastroRevista.repositorioRevista = repositorioRevista;
 
             while (true)
-            {                
+            {
                 string opcaoMenuPrincipal = menuPrincipal.MostrarOpcoes();
 
                 if (opcaoMenuPrincipal == "1")
@@ -96,6 +96,6 @@ namespace ClubeLeitura.ConsoleApp
                     }
                 }
             }
-        }       
+        }
     }
 }

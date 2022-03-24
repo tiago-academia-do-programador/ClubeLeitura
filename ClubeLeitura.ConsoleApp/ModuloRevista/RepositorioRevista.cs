@@ -5,13 +5,20 @@
         public Revista[] revistas; // contém elementos null
         public int numeroRevista;
 
-        public void Inserir(Revista revista)
+        public string Inserir(Revista revista)
         {
+            string validacao = revista.Validar();
+
+            if (validacao != "REGISTRO_VALIDO")
+                return validacao;
+
             revista.numero = ++numeroRevista;
 
             int posicaoVazia = ObterPosicaoVazia();
 
             revistas[posicaoVazia] = revista;
+
+            return validacao;
         }
 
         public void Editar(int numeroSelecionado, Revista revista)
