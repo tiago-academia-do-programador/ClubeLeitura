@@ -62,10 +62,10 @@ namespace ClubeLeitura.ConsoleApp
                     else if (opcao == "4")
                     {
                         bool temCaixaCadastrada = telaCadastroCaixa.VisualizarCaixas("Tela");
+
                         if (temCaixaCadastrada == false)
-                        {
-                            notificador.ApresentarMensagem("Nenhuma caixa cadastrada", "Atencao");
-                        }
+                            notificador.ApresentarMensagem("Nenhuma caixa cadastrada", TipoMensagem.Atencao);
+
                         Console.ReadLine();
                     }
                 }
@@ -90,9 +90,7 @@ namespace ClubeLeitura.ConsoleApp
                         bool temRevistaCadastrada = telaCadastroRevista.VisualizarRevistas("Tela");
 
                         if (!temRevistaCadastrada)
-                        {
-                            notificador.ApresentarMensagem("Nenhuma revista cadastrada", "Atencao");
-                        }
+                            notificador.ApresentarMensagem("Nenhuma revista cadastrada", TipoMensagem.Atencao);
 
                         Console.ReadLine();
                     }
