@@ -1,4 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
@@ -10,6 +11,28 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         public int edicao;
         public int ano;
         public Caixa caixa;
+
+        public Emprestimo[] historicoEmprestimos = new Emprestimo[10];
+
+        public void RegistrarEmprestimo(Emprestimo emprestimo)
+        {
+            historicoEmprestimos[ObtemPosicaoVazia()] = emprestimo;
+        }
+
+        public bool EstaEmprestada()
+        {
+            bool temEmprestimoEmAberto = false;
+
+            foreach (Emprestimo emprestimo in historicoEmprestimos)
+            {
+                if (emprestimo != null && emprestimo.estaAberto)
+                {
+                    temEmprestimoEmAberto = true;
+                    break;
+                }
+            }
+            return temEmprestimoEmAberto;
+        }
 
         public string Validar()
         {
@@ -28,6 +51,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 return "REGISTRO_VALIDO";
 
             return validacao;
+        }
+
+        public int ObtemPosicaoVazia()
+        {
+            for (int i = 0; i < historicoEmprestimos.Length; i++)
+            {
+                if (historicoEmprestimos[i] == null)
+                    return i;
+            }
+
+            return -1;
         }
     }
 }

@@ -67,6 +67,17 @@
             return revistasInseridas;
         }
 
+        public Revista SelecionarRevista(int numeroRevista)
+        {
+            for (int i = 0; i < revistas.Length; i++)
+            {
+                if (revistas[i] != null && numeroRevista == revistas[i].numero)
+                    return revistas[i];
+            }
+
+            return null;
+        }
+
         public int ObterPosicaoVazia()
         {
             for (int i = 0; i < revistas.Length; i++)

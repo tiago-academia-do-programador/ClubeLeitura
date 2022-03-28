@@ -11,6 +11,7 @@
 using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloAmigo;
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
@@ -48,6 +49,18 @@ namespace ClubeLeitura.ConsoleApp
             TelaCadastroAmigo telaCadastroAmigo = new TelaCadastroAmigo();
             telaCadastroAmigo.notificador = notificador;
             telaCadastroAmigo.repositorioAmigo = repositorioAmigo;
+
+            // Instanciação de Empréstimos
+            RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
+            repositorioEmprestimo.emprestimos = new Emprestimo[10];
+
+            TelaCadastroEmprestimo telaCadastroEmprestimo = new TelaCadastroEmprestimo();
+            telaCadastroEmprestimo.notificador = notificador;
+            telaCadastroEmprestimo.repositorioAmigo = repositorioAmigo;
+            telaCadastroEmprestimo.repositorioRevista = repositorioRevista;
+            telaCadastroEmprestimo.repositorioEmprestimo = repositorioEmprestimo;
+            telaCadastroEmprestimo.telaCadastroAmigo = telaCadastroAmigo;
+            telaCadastroEmprestimo.telaCadastroRevista = telaCadastroRevista;
 
             while (true)
             {
@@ -130,6 +143,43 @@ namespace ClubeLeitura.ConsoleApp
                             notificador.ApresentarMensagem("Nenhum amigo cadastrado.", TipoMensagem.Atencao);
 
                         Console.ReadLine();
+                    }
+                }
+                else if (opcaoMenuPrincipal == "4") // Cadastro de Empréstimos
+                {
+                    string opcao = telaCadastroEmprestimo.MostrarOpcoes();
+
+                    if (opcao == "1")
+                    {
+                        telaCadastroEmprestimo.InserirNovoEmprestimo();
+                    }
+                    else if (opcao == "2")
+                    {
+                        telaCadastroEmprestimo.EditarEmprestimo();
+                    }
+                    else if (opcao == "3")
+                    {
+                        telaCadastroEmprestimo.ExcluirEmprestimo();
+                    }
+                    else if (opcao == "4")
+                    {
+                        bool temEmprestimoCadastrado = telaCadastroEmprestimo.VisualizarEmprestimos("Tela");
+
+                        if (!temEmprestimoCadastrado)
+                            notificador.ApresentarMensagem("Nenhum empréstimo cadastrado.", TipoMensagem.Atencao);
+
+                        Console.ReadLine();
+                    }
+                    else if (opcao == "5")
+                    {
+                        bool temEmprestimoCadastrado = telaCadastroEmprestimo.VisualizarEmprestimosEmAberto("Tela");
+
+                        if (!temEmprestimoCadastrado)
+                            notificador.ApresentarMensagem("Nenhum empréstimo em aberto.", TipoMensagem.Atencao);
+                    }
+                    else if (opcao == "6")
+                    {
+                        telaCadastroEmprestimo.RegistrarDevolucao();
                     }
                 }
             }

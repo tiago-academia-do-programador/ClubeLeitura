@@ -58,6 +58,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             return amigosInseridos;
         }
 
+        public Amigo SelecionarAmigo(int numeroAmigo)
+        {
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null && numeroAmigo == amigos[i].numero)
+                    return amigos[i];
+            }
+
+            return null;
+        }
+
         public int ObterPosicaoVazia()
         {
             for (int i = 0; i < amigos.Length; i++)
