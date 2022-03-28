@@ -11,7 +11,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
         {
             emprestimo.numero = ++numeroEmprestimo;
 
-            emprestimo.estaAberto = true;
+            emprestimo.Abrir();
 
             emprestimo.revista.RegistrarEmprestimo(emprestimo);
             emprestimo.amigo.RegistrarEmprestimo(emprestimo);
@@ -21,7 +21,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
         public bool RegistrarDevolucao(Emprestimo emprestimo, DateTime data)
         {
-            emprestimo.Fechar(data);
+            emprestimo.Fechar();
 
             return true;
         }

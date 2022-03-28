@@ -15,12 +15,21 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
         public bool estaAberto;
 
-        public void Fechar(DateTime data)
+        public void Abrir()
+        {
+            if (!estaAberto)
+            {
+                estaAberto = true;
+                dataEmprestimo = DateTime.Now;
+            }
+        }
+
+        public void Fechar()
         {
             if (estaAberto)
             {
                 estaAberto = false;
-                dataDevolucao = data;
+                dataDevolucao = DateTime.Now;
             }
         }
 

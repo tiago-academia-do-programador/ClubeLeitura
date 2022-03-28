@@ -199,8 +199,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             novoEmprestimo.revista = revista;
             novoEmprestimo.dataDevolucao = dataDevolucao;
 
-            novoEmprestimo.dataEmprestimo = DateTime.Now;
-
             return novoEmprestimo;
         }
 
