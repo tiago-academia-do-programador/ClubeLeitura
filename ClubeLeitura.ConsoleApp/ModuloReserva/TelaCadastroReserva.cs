@@ -122,7 +122,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
                 string statusReserva = reserva.estaAberta ? "Aberta" : "Fechada";
 
                 Console.WriteLine("Número: " + reserva.numero);
-                Console.WriteLine("Revista reservada: " + reserva.revista.colecao);
+                Console.WriteLine("Revista reservada: " + reserva.revista.Colecao);
                 Console.WriteLine("Nome do amigo: " + reserva.amigo.Nome);
                 Console.WriteLine("Data da reserva: " + reserva.dataInicialReserva.ToShortDateString());
                 Console.WriteLine("Status da reserva: " + statusReserva);
@@ -147,7 +147,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
                 Reserva reserva = reservas[i];
 
                 Console.WriteLine("Número: " + reserva.numero);
-                Console.WriteLine("Revista reservada: " + reserva.revista.colecao);
+                Console.WriteLine("Revista reservada: " + reserva.revista.Colecao);
                 Console.WriteLine("Nome do amigo: " + reserva.amigo.Nome);
                 Console.WriteLine("Data de expiração da Reserva: " + reserva.dataInicialReserva.AddDays(2).ToShortDateString());
                 Console.WriteLine();

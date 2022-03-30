@@ -7,12 +7,28 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
     public class TelaCadastroRevista
     {
-        public TelaCadastroCategoria telaCadastroCategoria;
-        public RepositorioCategoria repositorioCategoria;
-        public TelaCadastroCaixa telaCadastroCaixa;
-        public RepositorioCaixa repositorioCaixa;
-        public RepositorioRevista repositorioRevista;
-        public Notificador notificador;
+        private readonly TelaCadastroCategoria telaCadastroCategoria;
+        private readonly RepositorioCategoria repositorioCategoria;
+        private readonly TelaCadastroCaixa telaCadastroCaixa;
+        private readonly RepositorioCaixa repositorioCaixa;
+        private readonly RepositorioRevista repositorioRevista;
+        private readonly Notificador notificador;
+
+        public TelaCadastroRevista(
+            TelaCadastroCategoria telaCadastroCategoria,
+            RepositorioCategoria repositorioCategoria,
+            TelaCadastroCaixa telaCadastroCaixa,
+            RepositorioCaixa repositorioCaixa,
+            RepositorioRevista repositorioRevista,
+            Notificador notificador)
+        {
+            this.telaCadastroCategoria = telaCadastroCategoria;
+            this.repositorioCategoria = repositorioCategoria;
+            this.telaCadastroCaixa = telaCadastroCaixa;
+            this.repositorioCaixa = repositorioCaixa;
+            this.repositorioRevista = repositorioRevista;
+            this.notificador = notificador;
+        }
 
         public string MostrarOpcoes()
         {
@@ -125,9 +141,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
                 Console.WriteLine("Número: " + revista.numero);
                 Console.WriteLine("Categoria: " + revista.categoria.nome);
-                Console.WriteLine("Coleção: " + revista.colecao);
-                Console.WriteLine("Edição: " + revista.edicao);
-                Console.WriteLine("Ano: " + revista.ano);
+                Console.WriteLine("Coleção: " + revista.Colecao);
+                Console.WriteLine("Edição: " + revista.Edicao);
+                Console.WriteLine("Ano: " + revista.Ano);
                 Console.WriteLine("Caixa que está guardada: " + revista.caixa.Cor);
 
                 Console.WriteLine();
@@ -136,7 +152,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return true;
         }
 
-        public Revista ObterRevista()
+        #region Métodos privados
+        private Revista ObterRevista()
         {
             Console.Write("Digite a coleção da revista: ");
             string colecao = Console.ReadLine();
@@ -147,16 +164,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.Write("Digite o ano da revista: ");
             int ano = Convert.ToInt32(Console.ReadLine());
 
-            Revista novaRevista = new Revista();
-
-            novaRevista.colecao = colecao;
-            novaRevista.edicao = edicao;
-            novaRevista.ano = ano;
+            Revista novaRevista = new Revista(colecao, edicao, ano);
 
             return novaRevista;
         }
 
-        public Categoria ObtemCategoria()
+        private Categoria ObtemCategoria()
         {
             bool temCategoriasDisponiveis = telaCadastroCategoria.VisualizarCategorias("");
 
@@ -176,7 +189,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return categoriaSelecionada;
         }
 
-        public Caixa ObtemCaixa()
+        private Caixa ObtemCaixa()
         {
             bool temCaixasDisponiveis = telaCadastroCaixa.VisualizarCaixas("");
 
@@ -196,7 +209,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return caixaSelecionada;
         }
 
-        public int ObterNumeroRevista()
+        private int ObterNumeroRevista()
         {
             int numeroRevista;
             bool numeroRevistaEncontrado;
@@ -216,7 +229,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return numeroRevista;
         }
 
-        public void MostrarTitulo(string titulo)
+
+        private void MostrarTitulo(string titulo)
         {
             Console.Clear();
 
@@ -224,5 +238,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             Console.WriteLine();
         }
+        #endregion
     }
 }

@@ -8,15 +8,29 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
     public class Revista
     {
-        public int numero; // número que iremos usar como identificador das revistas
-        public string colecao;
-        public int edicao;
-        public int ano;
+        public int numero;
+
+        private readonly string colecao;
+        private readonly int edicao;
+        private readonly int ano;
         public Caixa caixa;
         public Categoria categoria;
 
         public Emprestimo[] historicoEmprestimos = new Emprestimo[10];
         public Reserva[] historicoReservas = new Reserva[10];
+
+        public string Colecao => colecao;
+
+        public int Edicao => edicao;
+
+        public int Ano => ano;
+
+        public Revista(string colecao, int edicao, int ano)
+        {
+            this.colecao = colecao;
+            this.edicao = edicao;
+            this.ano = ano;
+        }
 
         public void RegistrarReserva(Reserva reserva)
         {
@@ -63,13 +77,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         {
             string validacao = "";
 
-            if (string.IsNullOrEmpty(colecao))
+            if (string.IsNullOrEmpty(Colecao))
                 validacao += "É necessário incluir uma coleção!\n";
 
-            if (edicao < 0)
+            if (Edicao < 0)
                 validacao += "A edição de uma revista não pode ser menor que zero!\n";
 
-            if (ano < 0 || ano > DateTime.Now.Year)
+            if (Ano < 0 || Ano > DateTime.Now.Year)
                 validacao += "O ano da revista precisa ser válido!\n";
 
             if (string.IsNullOrEmpty(validacao))

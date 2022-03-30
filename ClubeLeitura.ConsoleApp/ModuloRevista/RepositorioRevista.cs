@@ -2,8 +2,13 @@
 {
     public class RepositorioRevista
     {
-        public Revista[] revistas; // contém elementos null
-        public int numeroRevista;
+        private int numeroRevista;
+        private readonly Revista[] revistas;
+
+        public RepositorioRevista(int qtdRevistas)
+        {
+            revistas = new Revista[qtdRevistas];
+        }
 
         public string Inserir(Revista revista)
         {
@@ -78,17 +83,6 @@
             return null;
         }
 
-        public int ObterPosicaoVazia()
-        {
-            for (int i = 0; i < revistas.Length; i++)
-            {
-                if (revistas[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
         public bool VerificarNumeroRevistaExiste(int numeroRevista)
         {
             bool numeroRevistaEncontrado = false;
@@ -105,6 +99,18 @@
             return numeroRevistaEncontrado;
         }
 
+        #region Métodos privados
+        public int ObterPosicaoVazia()
+        {
+            for (int i = 0; i < revistas.Length; i++)
+            {
+                if (revistas[i] == null)
+                    return i;
+            }
+
+            return -1;
+        }
+
         public int ObterQtdRevistas()
         {
             int numeroRevistas = 0;
@@ -117,5 +123,6 @@
 
             return numeroRevistas;
         }
+        #endregion
     }
 }

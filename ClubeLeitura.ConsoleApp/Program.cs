@@ -25,7 +25,6 @@ namespace ClubeLeitura.ConsoleApp
 
         static void Main(string[] args)
         {
-
             TelaMenuPrincipal menuPrincipal = new TelaMenuPrincipal();
             Notificador notificador = new Notificador();
 
@@ -43,16 +42,16 @@ namespace ClubeLeitura.ConsoleApp
             telaCadastroCategoria.notificador = notificador;
 
             // Instanciação de Revistas
-            RepositorioRevista repositorioRevista = new RepositorioRevista();
-            repositorioRevista.revistas = new Revista[10];
+            RepositorioRevista repositorioRevista = new RepositorioRevista(QUANTIDADE_REGISTROS);
 
-            TelaCadastroRevista telaCadastroRevista = new TelaCadastroRevista();
-            telaCadastroRevista.notificador = notificador;
-            telaCadastroRevista.telaCadastroCategoria = telaCadastroCategoria;
-            telaCadastroRevista.repositorioCategoria = repositorioCategoria;
-            telaCadastroRevista.telaCadastroCaixa = telaCadastroCaixa;
-            telaCadastroRevista.repositorioCaixa = repositorioCaixa;
-            telaCadastroRevista.repositorioRevista = repositorioRevista;
+            TelaCadastroRevista telaCadastroRevista = new TelaCadastroRevista(
+                telaCadastroCategoria,
+                repositorioCategoria,
+                telaCadastroCaixa,
+                repositorioCaixa,
+                repositorioRevista,
+                notificador
+            );
 
             // Instanciação de Amigos
             RepositorioAmigo repositorioAmigo = new RepositorioAmigo(QUANTIDADE_REGISTROS);

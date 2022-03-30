@@ -176,7 +176,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                 string statusEmprestimo = emprestimo.estaAberto ? "Aberto" : "Fechado";
 
                 Console.WriteLine("Número: " + emprestimo.numero);
-                Console.WriteLine("Revista emprestada: " + emprestimo.revista.colecao);
+                Console.WriteLine("Revista emprestada: " + emprestimo.revista.Colecao);
                 Console.WriteLine("Nome do amigo: " + emprestimo.amigo.Nome);
                 Console.WriteLine("Data do empréstimo: " + emprestimo.dataEmprestimo);
                 Console.WriteLine("Status do empréstimo: " + statusEmprestimo);
@@ -201,7 +201,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                 Emprestimo emprestimo = emprestimos[i];
 
                 Console.WriteLine("Número: " + emprestimo.numero);
-                Console.WriteLine("Revista emprestada: " + emprestimo.revista.colecao);
+                Console.WriteLine("Revista emprestada: " + emprestimo.revista.Colecao);
                 Console.WriteLine("Nome do amigo: " + emprestimo.amigo.Nome);
                 Console.WriteLine("Data do empréstimo: " + emprestimo.dataEmprestimo);
                 Console.WriteLine();

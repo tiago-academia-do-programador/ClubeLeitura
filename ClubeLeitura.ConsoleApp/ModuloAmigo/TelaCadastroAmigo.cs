@@ -5,7 +5,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
     public class TelaCadastroAmigo
     {
-        private readonly Notificador notificador; //reponsável pelas mensagens pro usuário
+        private readonly Notificador notificador;
         private readonly RepositorioAmigo repositorioAmigo;
 
         public TelaCadastroAmigo(RepositorioAmigo repositorioAmigo, Notificador notificador)
@@ -87,24 +87,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             notificador.ApresentarMensagem("Amigo editado com sucesso", TipoMensagem.Sucesso);
         }
 
-        public int ObterNumeroAmigo()
-        {
-            int numeroAmigo;
-            bool numeroAmigoEncontrado;
-
-            do
-            {
-                Console.Write("Digite o número do amigo que deseja selecionar: ");
-                numeroAmigo = Convert.ToInt32(Console.ReadLine());
-
-                numeroAmigoEncontrado = repositorioAmigo.VerificarNumeroAmigoExiste(numeroAmigo);
-
-                if (numeroAmigoEncontrado == false)
-                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente.", TipoMensagem.Atencao);
-
-            } while (numeroAmigoEncontrado == false);
-            return numeroAmigo;
-        }
 
         public void ExcluirAmigo()
         {
@@ -177,7 +159,27 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             return true;
         }
 
-        public Amigo ObterAmigo()
+        #region Métodos privados
+        private int ObterNumeroAmigo()
+        {
+            int numeroAmigo;
+            bool numeroAmigoEncontrado;
+
+            do
+            {
+                Console.Write("Digite o número do amigo que deseja selecionar: ");
+                numeroAmigo = Convert.ToInt32(Console.ReadLine());
+
+                numeroAmigoEncontrado = repositorioAmigo.VerificarNumeroAmigoExiste(numeroAmigo);
+
+                if (numeroAmigoEncontrado == false)
+                    notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente.", TipoMensagem.Atencao);
+
+            } while (numeroAmigoEncontrado == false);
+            return numeroAmigo;
+        }
+
+        private Amigo ObterAmigo()
         {
             Console.Write("Digite o nome do amigo: ");
             string nome = Console.ReadLine();
@@ -196,7 +198,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             return amigo;
         }
 
-        public void MostrarTitulo(string titulo)
+        private void MostrarTitulo(string titulo)
         {
             Console.Clear();
 
@@ -204,5 +206,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             Console.WriteLine();
         }
+        #endregion
     }
 }
