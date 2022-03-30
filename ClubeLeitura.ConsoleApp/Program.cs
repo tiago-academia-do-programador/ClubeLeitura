@@ -21,18 +21,18 @@ namespace ClubeLeitura.ConsoleApp
 {
     internal class Program
     {
+        private const int QUANTIDADE_REGISTROS = 10;
+
         static void Main(string[] args)
         {
+
             TelaMenuPrincipal menuPrincipal = new TelaMenuPrincipal();
             Notificador notificador = new Notificador();
 
             // Instanciação de Caixas
-            RepositorioCaixa repositorioCaixa = new RepositorioCaixa();
-            repositorioCaixa.caixas = new Caixa[10];
+            RepositorioCaixa repositorioCaixa = new RepositorioCaixa(QUANTIDADE_REGISTROS);
 
-            TelaCadastroCaixa telaCadastroCaixa = new TelaCadastroCaixa();
-            telaCadastroCaixa.repositorioCaixa = repositorioCaixa; 
-            telaCadastroCaixa.notificador = notificador;
+            TelaCadastroCaixa telaCadastroCaixa = new TelaCadastroCaixa(repositorioCaixa, notificador);
 
             // Instanciação de Categorias
             RepositorioCategoria repositorioCategoria = new RepositorioCategoria();

@@ -128,7 +128,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Console.WriteLine("Coleção: " + revista.colecao);
                 Console.WriteLine("Edição: " + revista.edicao);
                 Console.WriteLine("Ano: " + revista.ano);
-                Console.WriteLine("Caixa que está guardada: " + revista.caixa.cor);
+                Console.WriteLine("Caixa que está guardada: " + revista.caixa.Cor);
 
                 Console.WriteLine();
             }

@@ -5,9 +5,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
     public class TelaCadastroCaixa
     {
-        public int numeroCaixa; //controlar o número da caixas cadastradas
-        public Notificador notificador; //reponsável pelas mensagens pro usuário
-        public RepositorioCaixa repositorioCaixa; 
+        private readonly Notificador notificador;
+        private readonly RepositorioCaixa repositorioCaixa;
+
+        public TelaCadastroCaixa(RepositorioCaixa repositorioCaixa, Notificador notificador)
+        {
+            this.repositorioCaixa = repositorioCaixa;
+            this.notificador = notificador;
+        }
+
         public string MostrarOpcoes()
         {
             Console.Clear();
@@ -114,8 +120,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
                 Caixa c = caixas[i];
 
                 Console.WriteLine("Número: " + c.numero);
-                Console.WriteLine("Cor: " + c.cor);
-                Console.WriteLine("Etiqueta: " + c.etiqueta);
+                Console.WriteLine("Cor: " + c.Cor);
+                Console.WriteLine("Etiqueta: " + c.Etiqueta);
 
                 Console.WriteLine();
             }
@@ -147,10 +153,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             } while (etiquetaJaUtilizada);
 
-            Caixa caixa = new Caixa();
-
-            caixa.etiqueta = etiqueta;
-            caixa.cor = cor;
+            Caixa caixa = new Caixa(cor, etiqueta);
 
             return caixa;
         }
