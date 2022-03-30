@@ -17,8 +17,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             Console.WriteLine();
 
             Console.WriteLine("Digite 1 para Inserir");
-            //Console.WriteLine("Digite 2 para Editar");
-            //Console.WriteLine("Digite 3 para Excluir");
+            Console.WriteLine("Digite 2 para Editar");
+            Console.WriteLine("Digite 3 para Excluir");
             Console.WriteLine("Digite 4 para Visualizar");
 
             Console.WriteLine("Digite s para sair");
