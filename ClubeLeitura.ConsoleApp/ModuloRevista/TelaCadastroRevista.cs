@@ -1,11 +1,14 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.ModuloCategoria;
 using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
     public class TelaCadastroRevista
     {
+        public TelaCadastroCategoria telaCadastroCategoria;
+        public RepositorioCategoria repositorioCategoria;
         public TelaCadastroCaixa telaCadastroCaixa;
         public RepositorioCaixa repositorioCaixa;
         public RepositorioRevista repositorioRevista;
@@ -35,16 +38,22 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         {
             MostrarTitulo("Inserindo nova revista");
 
-            // vamos inserir uma revista em uma caixa...
-            // ...então precisamos da lista de caixas disponíveis
             Caixa caixaSelecionada = ObtemCaixa();
+
+            Categoria categoriaSelecionada = ObtemCategoria();
+
+            if (caixaSelecionada == null || categoriaSelecionada == null)
+            {
+                notificador
+                    .ApresentarMensagem("Cadastre uma caixa e uma categoria antes de cadastrar revistas!", TipoMensagem.Atencao);
+                return;
+            }
 
             Revista novaRevista = ObterRevista();
 
             novaRevista.caixa = caixaSelecionada;
+            novaRevista.categoria = categoriaSelecionada;
 
-            // após a escolha da caixa, então podemos cadastrar a revista
-            // ...
             string statusValidacao = repositorioRevista.Inserir(novaRevista);
 
             if (statusValidacao != "REGISTRO_VALIDO")
@@ -52,7 +61,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             else
                 notificador.ApresentarMensagem("Revista inserida com sucesso", TipoMensagem.Sucesso);
         }
-
 
         public void EditarRevista()
         {
@@ -116,6 +124,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Revista revista = revistas[i];
 
                 Console.WriteLine("Número: " + revista.numero);
+                Console.WriteLine("Categoria: " + revista.categoria.nome);
                 Console.WriteLine("Coleção: " + revista.colecao);
                 Console.WriteLine("Edição: " + revista.edicao);
                 Console.WriteLine("Ano: " + revista.ano);
@@ -145,6 +154,26 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             novaRevista.ano = ano;
 
             return novaRevista;
+        }
+
+        public Categoria ObtemCategoria()
+        {
+            bool temCategoriasDisponiveis = telaCadastroCategoria.VisualizarCategorias("");
+
+            if (!temCategoriasDisponiveis)
+            {
+                notificador.ApresentarMensagem("Você precisa cadastrar uma categoria antes de uma revista!", TipoMensagem.Atencao);
+                return null;
+            }
+
+            Console.Write("Digite o número da categoria da revista: ");
+            int numCategoriaSelecionada = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine();
+
+            Categoria categoriaSelecionada = repositorioCategoria.SelecionarCategoria(numCategoriaSelecionada);
+
+            return categoriaSelecionada;
         }
 
         public Caixa ObtemCaixa()

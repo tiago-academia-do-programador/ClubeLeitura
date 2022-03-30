@@ -1,4 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.ModuloCategoria;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using System;
 
@@ -11,6 +12,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         public int edicao;
         public int ano;
         public Caixa caixa;
+        public Categoria categoria;
 
         public Emprestimo[] historicoEmprestimos = new Emprestimo[10];
 

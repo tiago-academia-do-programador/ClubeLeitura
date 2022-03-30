@@ -1,4 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
+using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
@@ -12,6 +13,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
         public string endereco;
 
         public Emprestimo[] historicoEmprestimos = new Emprestimo[10];
+        public Multa multa;
 
         public void RegistrarEmprestimo(Emprestimo emprestimo)
         {
@@ -42,6 +44,29 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             }
 
             return -1;
+        }
+
+        public void RegistrarMulta(decimal valorMulta)
+        {
+            Multa novaMulta = new Multa();
+
+            novaMulta.valor = valorMulta;
+
+            multa = novaMulta;
+        }
+
+        public void PagarMulta()
+        {
+            if (multa != null)
+                multa = null;
+        }
+
+        public bool TemMultaEmAberto()
+        {
+            if (multa == null)
+                return false;
+
+            return true;
         }
     }
 }

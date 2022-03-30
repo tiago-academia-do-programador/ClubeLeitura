@@ -20,12 +20,33 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.WriteLine("Digite 2 para Editar");
             Console.WriteLine("Digite 3 para Excluir");
             Console.WriteLine("Digite 4 para Visualizar");
+            Console.WriteLine("Digite 5 para Visualizar Amigos com Multa");
+            Console.WriteLine("Digite 6 para Pagar Multas");
 
             Console.WriteLine("Digite s para sair");
 
             string opcao = Console.ReadLine();
 
             return opcao;
+        }
+
+        public void PagarMulta()
+        {
+            MostrarTitulo("Pagamento de Multas");
+
+            bool temAmigosComMulta = VisualizarAmigosComMulta("Pesquisando");
+
+            if (!temAmigosComMulta)
+            {
+                notificador.ApresentarMensagem("Não há nenhum amigo com multas em aberto", TipoMensagem.Atencao);
+                return;
+            }
+
+            int numeroAmigoComMulta = ObterNumeroAmigo();
+
+            Amigo amigoComMulta = repositorioAmigo.SelecionarAmigo(numeroAmigoComMulta);
+
+            amigoComMulta.PagarMulta();
         }
 
         public void InserirNovoAmigo()
@@ -117,6 +138,32 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
                 Console.WriteLine("Nome: " + a.nome);
                 Console.WriteLine("Nome do responsável: " + a.nomeResponsavel);
                 Console.WriteLine("Onde mora: " + a.endereco);
+
+                Console.WriteLine();
+            }
+
+            return true;
+        }
+
+        public bool VisualizarAmigosComMulta(string tipo)
+        {
+            if (tipo == "Tela")
+                MostrarTitulo("Visualização de Amigos com Multa");
+
+            Amigo[] amigos = repositorioAmigo.SelecionarAmigosComMulta();
+
+            if (amigos.Length == 0)
+                return false;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                Amigo a = amigos[i];
+
+                Console.WriteLine("Número: " + a.numero);
+                Console.WriteLine("Nome: " + a.nome);
+                Console.WriteLine("Nome do responsável: " + a.nomeResponsavel);
+                Console.WriteLine("Onde mora: " + a.endereco);
+                Console.WriteLine("Multa: R$" + a.multa.valor);
 
                 Console.WriteLine();
             }

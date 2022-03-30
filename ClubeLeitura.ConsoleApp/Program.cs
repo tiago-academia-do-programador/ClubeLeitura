@@ -11,6 +11,7 @@
 using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloAmigo;
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
+using ClubeLeitura.ConsoleApp.ModuloCategoria;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
@@ -32,12 +33,22 @@ namespace ClubeLeitura.ConsoleApp
             telaCadastroCaixa.repositorioCaixa = repositorioCaixa; 
             telaCadastroCaixa.notificador = notificador;
 
+            // Instanciação de Categorias
+            RepositorioCategoria repositorioCategoria = new RepositorioCategoria();
+            repositorioCategoria.categorias = new Categoria[10];
+
+            TelaCadastroCategoria telaCadastroCategoria = new TelaCadastroCategoria();
+            telaCadastroCategoria.repositorioCategoria = repositorioCategoria;
+            telaCadastroCategoria.notificador = notificador;
+
             // Instanciação de Revistas
             RepositorioRevista repositorioRevista = new RepositorioRevista();
             repositorioRevista.revistas = new Revista[10];
 
             TelaCadastroRevista telaCadastroRevista = new TelaCadastroRevista();
             telaCadastroRevista.notificador = notificador;
+            telaCadastroRevista.telaCadastroCategoria = telaCadastroCategoria;
+            telaCadastroRevista.repositorioCategoria = repositorioCategoria;
             telaCadastroRevista.telaCadastroCaixa = telaCadastroCaixa;
             telaCadastroRevista.repositorioCaixa = repositorioCaixa;
             telaCadastroRevista.repositorioRevista = repositorioRevista;
@@ -61,6 +72,7 @@ namespace ClubeLeitura.ConsoleApp
             telaCadastroEmprestimo.repositorioEmprestimo = repositorioEmprestimo;
             telaCadastroEmprestimo.telaCadastroAmigo = telaCadastroAmigo;
             telaCadastroEmprestimo.telaCadastroRevista = telaCadastroRevista;
+
 
             while (true)
             {
@@ -92,7 +104,33 @@ namespace ClubeLeitura.ConsoleApp
                         Console.ReadLine();
                     }
                 }
-                else if (opcaoMenuPrincipal == "2") // Cadastro de Revistas
+                else if (opcaoMenuPrincipal == "2") // Cadastro de Categorias
+                {
+                    string opcao = telaCadastroCategoria.MostrarOpcoes();
+
+                    if (opcao == "1")
+                    {
+                        telaCadastroCategoria.InserirNovaCategoria();
+                    }
+                    else if (opcao == "2")
+                    {
+                        telaCadastroCategoria.EditarCategoria();
+                    }
+                    else if (opcao == "3")
+                    {
+                        telaCadastroCategoria.ExcluirCategoria();
+                    }
+                    else if (opcao == "4")
+                    {
+                        bool temCategoriasCadastradas = telaCadastroCategoria.VisualizarCategorias("Tela");
+
+                        if (!temCategoriasCadastradas)
+                            notificador.ApresentarMensagem("Nenhuma categoria cadastrada.", TipoMensagem.Atencao);
+
+                        Console.ReadLine();
+                    }
+                }
+                else if (opcaoMenuPrincipal == "3") // Cadastro de Revistas
                 {
                     string opcao = telaCadastroRevista.MostrarOpcoes();
 
@@ -119,7 +157,7 @@ namespace ClubeLeitura.ConsoleApp
                     }
                 }
 
-                else if (opcaoMenuPrincipal == "3") // Cadastro de Amigos
+                else if (opcaoMenuPrincipal == "4") // Cadastro de Amigos
                 {
                     string opcao = telaCadastroAmigo.MostrarOpcoes();
 
@@ -144,8 +182,21 @@ namespace ClubeLeitura.ConsoleApp
 
                         Console.ReadLine();
                     }
+                    else if (opcao == "5")
+                    {
+                        bool temAmigoComMulta = telaCadastroAmigo.VisualizarAmigosComMulta("Tela");
+
+                        if (!temAmigoComMulta)
+                            notificador.ApresentarMensagem("Nenhum amigo com multa em aberto.", TipoMensagem.Atencao);
+
+                        Console.ReadLine();
+                    }
+                    else if (opcao == "6")
+                    {
+                        telaCadastroAmigo.PagarMulta();
+                    }
                 }
-                else if (opcaoMenuPrincipal == "4") // Cadastro de Empréstimos
+                else if (opcaoMenuPrincipal == "5") // Cadastro de Empréstimos
                 {
                     string opcao = telaCadastroEmprestimo.MostrarOpcoes();
 
@@ -176,12 +227,15 @@ namespace ClubeLeitura.ConsoleApp
 
                         if (!temEmprestimoCadastrado)
                             notificador.ApresentarMensagem("Nenhum empréstimo em aberto.", TipoMensagem.Atencao);
+
+                        Console.ReadLine();
                     }
                     else if (opcao == "6")
                     {
                         telaCadastroEmprestimo.RegistrarDevolucao();
                     }
                 }
+
             }
         }
     }

@@ -19,7 +19,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             emprestimos[ObterPosicaoVazia()] = emprestimo;
         }
 
-        public bool RegistrarDevolucao(Emprestimo emprestimo, DateTime data)
+        public bool RegistrarDevolucao(Emprestimo emprestimo)
         {
             emprestimo.Fechar();
 

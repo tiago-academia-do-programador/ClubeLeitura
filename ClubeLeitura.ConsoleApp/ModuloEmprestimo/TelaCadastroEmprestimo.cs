@@ -43,6 +43,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             Amigo amigoSelecionado = ObtemAmigo();
 
+            if (amigoSelecionado.TemMultaEmAberto())
+            {
+                notificador.ApresentarMensagem("Este amigo tem uma multa em aberto.", TipoMensagem.Erro);
+                return;
+            }
+
             if (amigoSelecionado.TemEmprestimoEmAberto())
             {
                 notificador.ApresentarMensagem("Este amigo já tem um empréstimo em aberto.", TipoMensagem.Erro);
@@ -86,7 +92,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                 return;
             }
 
-            repositorioEmprestimo.RegistrarDevolucao(emprestimoParaDevolver, DateTime.Now);
+            repositorioEmprestimo.RegistrarDevolucao(emprestimoParaDevolver);
+
+            if (emprestimoParaDevolver.amigo.TemMultaEmAberto())
+            {
+                decimal multa = emprestimoParaDevolver.amigo.multa.valor;
+
+                notificador.ApresentarMensagem($"A devolução está atrasada, uma multa de R${multa} foi incluída.", TipoMensagem.Atencao);
+            }
 
             notificador.ApresentarMensagem("Devolução concluída com sucesso!", TipoMensagem.Sucesso);
         }
@@ -190,14 +203,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
         public Emprestimo ObtemEmprestimo(Amigo amigo, Revista revista)
         {
-            Console.Write("Digite a data de devolução prevista do empréstimo: ");
-            DateTime dataDevolucao = DateTime.Parse(Console.ReadLine());
-
             Emprestimo novoEmprestimo = new Emprestimo();
 
             novoEmprestimo.amigo = amigo;
             novoEmprestimo.revista = revista;
-            novoEmprestimo.dataDevolucao = dataDevolucao;
 
             return novoEmprestimo;
         }

@@ -20,7 +20,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             if (!estaAberto)
             {
                 estaAberto = true;
-                dataEmprestimo = DateTime.Now;
+                dataEmprestimo = DateTime.Today;
+                dataDevolucao = dataEmprestimo.AddDays(revista.categoria.diasEmprestimo);
             }
         }
 
@@ -29,7 +30,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             if (estaAberto)
             {
                 estaAberto = false;
-                dataDevolucao = DateTime.Now;
+
+                DateTime dataRealEmprestimo = DateTime.Today;
+
+                bool devolucaoAtrasada = dataRealEmprestimo > dataDevolucao;
+
+                if (devolucaoAtrasada)
+                {
+                    int diasAtrasados = (dataRealEmprestimo - dataDevolucao).Days;
+
+                    decimal valorMulta = 10 * diasAtrasados;
+
+                    amigo.RegistrarMulta(valorMulta);
+                }
             }
         }
 

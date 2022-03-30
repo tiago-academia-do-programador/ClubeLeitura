@@ -15,9 +15,10 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             Console.WriteLine();
 
             Console.WriteLine("Digite 1 para Cadastrar Caixas");
-            Console.WriteLine("Digite 2 para Cadastrar Revistinhas");
-            Console.WriteLine("Digite 3 para Cadastrar Amiguinhos");
-            Console.WriteLine("Digite 4 para Gerenciar Empréstimos");
+            Console.WriteLine("Digite 2 para Cadastrar Categorias");
+            Console.WriteLine("Digite 3 para Cadastrar Revistinhas");
+            Console.WriteLine("Digite 4 para Cadastrar Amiguinhos");
+            Console.WriteLine("Digite 5 para Gerenciar Empréstimos");
 
             Console.WriteLine("Digite s para sair");
 

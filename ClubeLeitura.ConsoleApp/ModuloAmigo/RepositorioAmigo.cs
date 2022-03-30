@@ -58,6 +58,24 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             return amigosInseridos;
         }
 
+        public Amigo[] SelecionarAmigosComMulta()
+        {
+            Amigo[] amigosComMulta = new Amigo[ObterQtdAmigosComMulta()];
+
+            int j = 0;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null && amigos[i].TemMultaEmAberto())
+                {
+                    amigosComMulta[j] = amigos[i];
+                    j++;
+                }
+            }
+
+            return amigosComMulta;
+        }
+
         public Amigo SelecionarAmigo(int numeroAmigo)
         {
             for (int i = 0; i < amigos.Length; i++)
@@ -87,6 +105,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             for (int i = 0; i < amigos.Length; i++)
             {
                 if (amigos[i] != null)
+                    numeroAmigos++;
+            }
+
+            return numeroAmigos;
+        }
+
+        public int ObterQtdAmigosComMulta()
+        {
+            int numeroAmigos = 0;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null && amigos[i].TemMultaEmAberto())
                     numeroAmigos++;
             }
 
