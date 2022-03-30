@@ -1,6 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloReserva;
-using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {

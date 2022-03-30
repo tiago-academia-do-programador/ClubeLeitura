@@ -1,11 +1,14 @@
-﻿using System;
-
-namespace ClubeLeitura.ConsoleApp.ModuloCategoria
+﻿namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 {
     public class RepositorioCategoria
     {
-        public Categoria[] categorias;
-        public int numeroCategoria;
+        private readonly Categoria[] categorias;
+        private int numeroCategoria;
+
+        public RepositorioCategoria(int qtdCategorias)
+        {
+            categorias = new Categoria[qtdCategorias];
+        }
 
         public void Inserir(Categoria categoria)
         {
@@ -73,17 +76,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             return null;
         }
 
-        public int ObterPosicaoVazia()
-        {
-            for (int i = 0; i < categorias.Length; i++)
-            {
-                if (categorias[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
         public bool VerificarNumeroCategoriaExiste(int numeroCategoria)
         {
             bool numeroRevistaEncontrado = false;
@@ -100,7 +92,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             return numeroRevistaEncontrado;
         }
 
-        public int ObterQtdCategorias()
+        #region Métodos privados
+        private int ObterPosicaoVazia()
+        {
+            for (int i = 0; i < categorias.Length; i++)
+            {
+                if (categorias[i] == null)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private int ObterQtdCategorias()
         {
             int numeroCategorias = 0;
 
@@ -112,6 +116,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 
             return numeroCategorias;
         }
-
+        #endregion
     }
 }

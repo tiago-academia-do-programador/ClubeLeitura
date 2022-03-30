@@ -2,8 +2,13 @@
 {
     public class RepositorioReserva
     {
-        public Reserva[] reservas;
-        public int numeroReserva;
+        private readonly Reserva[] reservas;
+        private int numeroReserva;
+
+        public RepositorioReserva(int qtdReservas)
+        {
+            reservas = new Reserva[qtdReservas];
+        }
 
         public void Inserir(Reserva reserva)
         {

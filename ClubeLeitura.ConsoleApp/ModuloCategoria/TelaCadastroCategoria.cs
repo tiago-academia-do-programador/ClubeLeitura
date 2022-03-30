@@ -5,8 +5,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 {
     public class TelaCadastroCategoria
     {
-        public RepositorioCategoria repositorioCategoria;
-        public Notificador notificador;
+        private readonly RepositorioCategoria repositorioCategoria;
+        private readonly Notificador notificador;
+
+        public TelaCadastroCategoria(RepositorioCategoria repositorioCategoria, Notificador notificador)
+        {
+            this.repositorioCategoria = repositorioCategoria;
+            this.notificador = notificador;
+        }
 
         public string MostrarOpcoes()
         {
@@ -95,8 +101,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
                 Categoria categoria = categorias[i];
 
                 Console.WriteLine("Número: " + categoria.numero);
-                Console.WriteLine("Tipo de Categoria: " + categoria.nome);
-                Console.WriteLine("Limite de empréstimo: " + categoria.diasEmprestimo + " dias");
+                Console.WriteLine("Tipo de Categoria: " + categoria.Nome);
+                Console.WriteLine("Limite de empréstimo: " + categoria.DiasEmprestimo + " dias");
 
                 Console.WriteLine();
             }
@@ -104,7 +110,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             return true;
         }
 
-        public int ObterNumeroCategoria()
+        #region Métodos privados
+        private int ObterNumeroCategoria()
         {
             int numeroCategoria;
             bool numeroCadastroEncontrado;
@@ -124,7 +131,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             return numeroCategoria;
         }
 
-        public Categoria ObterCategoria()
+        private Categoria ObterCategoria()
         {
             Console.Write("Digite o nome da categoria: ");
             string nome = Console.ReadLine();
@@ -132,10 +139,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             Console.Write("Digite o limite de dias de empréstimo das revistas: ");
             int diasEmprestimo = Convert.ToInt32(Console.ReadLine());
 
-            Categoria novaCategoria = new Categoria();
-
-            novaCategoria.nome = nome;
-            novaCategoria.diasEmprestimo = diasEmprestimo;
+            Categoria novaCategoria = new Categoria(nome, diasEmprestimo);
 
             return novaCategoria;
         }
@@ -148,5 +152,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 
             Console.WriteLine();
         }
+        #endregion
     }
 }

@@ -34,12 +34,9 @@ namespace ClubeLeitura.ConsoleApp
             TelaCadastroCaixa telaCadastroCaixa = new TelaCadastroCaixa(repositorioCaixa, notificador);
 
             // Instanciação de Categorias
-            RepositorioCategoria repositorioCategoria = new RepositorioCategoria();
-            repositorioCategoria.categorias = new Categoria[10];
+            RepositorioCategoria repositorioCategoria = new RepositorioCategoria(QUANTIDADE_REGISTROS);
 
-            TelaCadastroCategoria telaCadastroCategoria = new TelaCadastroCategoria();
-            telaCadastroCategoria.repositorioCategoria = repositorioCategoria;
-            telaCadastroCategoria.notificador = notificador;
+            TelaCadastroCategoria telaCadastroCategoria = new TelaCadastroCategoria(repositorioCategoria, notificador);
 
             // Instanciação de Revistas
             RepositorioRevista repositorioRevista = new RepositorioRevista(QUANTIDADE_REGISTROS);
@@ -59,31 +56,29 @@ namespace ClubeLeitura.ConsoleApp
             TelaCadastroAmigo telaCadastroAmigo = new TelaCadastroAmigo(repositorioAmigo, notificador);
 
             // Instanciação de Empréstimos
-            RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();
-            repositorioEmprestimo.emprestimos = new Emprestimo[10];
+            RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo(QUANTIDADE_REGISTROS);
 
-            TelaCadastroEmprestimo telaCadastroEmprestimo = new TelaCadastroEmprestimo();
-            telaCadastroEmprestimo.notificador = notificador;
-            telaCadastroEmprestimo.repositorioAmigo = repositorioAmigo;
-            telaCadastroEmprestimo.repositorioRevista = repositorioRevista;
-            telaCadastroEmprestimo.repositorioEmprestimo = repositorioEmprestimo;
-            telaCadastroEmprestimo.telaCadastroAmigo = telaCadastroAmigo;
-            telaCadastroEmprestimo.telaCadastroRevista = telaCadastroRevista;
+            TelaCadastroEmprestimo telaCadastroEmprestimo = new TelaCadastroEmprestimo(
+                    notificador,
+                    repositorioEmprestimo,
+                    repositorioRevista,
+                    repositorioAmigo,
+                    telaCadastroRevista,
+                    telaCadastroAmigo
+                );
 
             // Instanciação de Reservas
-            RepositorioReserva repositorioReserva = new RepositorioReserva();
-            repositorioReserva.reservas = new Reserva[10];
+            RepositorioReserva repositorioReserva = new RepositorioReserva(QUANTIDADE_REGISTROS);
 
-            TelaCadastroReserva telaCadastroReserva = new TelaCadastroReserva();
-            telaCadastroReserva.notificador = notificador;
-            telaCadastroReserva.repositorioRevista = repositorioRevista;
-            telaCadastroReserva.repositorioAmigo = repositorioAmigo;
-            telaCadastroReserva.repositorioEmprestimo = repositorioEmprestimo;
-            telaCadastroReserva.repositorioReserva = repositorioReserva;
-            telaCadastroReserva.telaCadastroRevista = telaCadastroRevista;
-            telaCadastroReserva.telaCadastroAmigo = telaCadastroAmigo;
-            telaCadastroReserva.telaCadastroEmprestimo = telaCadastroEmprestimo;
-
+            TelaCadastroReserva telaCadastroReserva = new TelaCadastroReserva(
+                notificador,
+                repositorioReserva,
+                repositorioAmigo,
+                repositorioRevista,
+                telaCadastroAmigo,
+                telaCadastroRevista,
+                repositorioEmprestimo
+            );
 
             while (true)
             {

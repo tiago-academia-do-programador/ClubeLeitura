@@ -9,16 +9,31 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
     public class TelaCadastroReserva
     {
-        public Notificador notificador;
-        public RepositorioReserva repositorioReserva;
+        private readonly Notificador notificador;
+        private readonly RepositorioReserva repositorioReserva;
+        private readonly RepositorioAmigo repositorioAmigo;
+        private readonly RepositorioRevista repositorioRevista;
+        private readonly TelaCadastroAmigo telaCadastroAmigo;
+        private readonly TelaCadastroRevista telaCadastroRevista;
+        private readonly RepositorioEmprestimo repositorioEmprestimo;
 
-        public RepositorioAmigo repositorioAmigo;
-        public RepositorioRevista repositorioRevista;
-        public TelaCadastroAmigo telaCadastroAmigo;
-        public TelaCadastroRevista telaCadastroRevista;
-
-        public RepositorioEmprestimo repositorioEmprestimo;
-        public TelaCadastroEmprestimo telaCadastroEmprestimo;
+        public TelaCadastroReserva(
+            Notificador notificador,
+            RepositorioReserva repositorioReserva,
+            RepositorioAmigo repositorioAmigo,
+            RepositorioRevista repositorioRevista,
+            TelaCadastroAmigo telaCadastroAmigo,
+            TelaCadastroRevista telaCadastroRevista,
+            RepositorioEmprestimo repositorioEmprestimo)
+        {
+            this.notificador = notificador;
+            this.repositorioReserva = repositorioReserva;
+            this.repositorioAmigo = repositorioAmigo;
+            this.repositorioRevista = repositorioRevista;
+            this.telaCadastroAmigo = telaCadastroAmigo;
+            this.telaCadastroRevista = telaCadastroRevista;
+            this.repositorioEmprestimo = repositorioEmprestimo;
+        }
 
         public string MostrarOpcoes()
         {

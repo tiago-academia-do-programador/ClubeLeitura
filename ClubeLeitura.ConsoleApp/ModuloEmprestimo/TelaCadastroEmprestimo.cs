@@ -7,13 +7,28 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
     public class TelaCadastroEmprestimo
     {
-        public Notificador notificador;
+        private readonly Notificador notificador;
+        private readonly RepositorioEmprestimo repositorioEmprestimo;
+        private readonly RepositorioRevista repositorioRevista;
+        private readonly RepositorioAmigo repositorioAmigo;
+        private readonly TelaCadastroRevista telaCadastroRevista;
+        private readonly TelaCadastroAmigo telaCadastroAmigo;
 
-        public RepositorioEmprestimo repositorioEmprestimo;
-        public RepositorioRevista repositorioRevista;
-        public RepositorioAmigo repositorioAmigo;
-        public TelaCadastroRevista telaCadastroRevista;
-        public TelaCadastroAmigo telaCadastroAmigo;
+        public TelaCadastroEmprestimo(
+            Notificador notificador,
+            RepositorioEmprestimo repositorioEmprestimo,
+            RepositorioRevista repositorioRevista,
+            RepositorioAmigo repositorioAmigo,
+            TelaCadastroRevista telaCadastroRevista,
+            TelaCadastroAmigo telaCadastroAmigo)
+        {
+            this.notificador = notificador;
+            this.repositorioEmprestimo = repositorioEmprestimo;
+            this.repositorioRevista = repositorioRevista;
+            this.repositorioAmigo = repositorioAmigo;
+            this.telaCadastroRevista = telaCadastroRevista;
+            this.telaCadastroAmigo = telaCadastroAmigo;
+        }
 
         public string MostrarOpcoes()
         {
@@ -113,7 +128,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             notificador.ApresentarMensagem("Devolução concluída com sucesso!", TipoMensagem.Sucesso);
         }
 
-
         public void EditarEmprestimo()
         {
             MostrarTitulo("Editando Empréstimos");
@@ -210,7 +224,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             return true;
         }
 
-        public Emprestimo ObtemEmprestimo(Amigo amigo, Revista revista)
+        #region Métodos privados
+        private Emprestimo ObtemEmprestimo(Amigo amigo, Revista revista)
         {
             Emprestimo novoEmprestimo = new Emprestimo();
 
@@ -220,7 +235,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             return novoEmprestimo;
         }
 
-        public Amigo ObtemAmigo()
+        private Amigo ObtemAmigo()
         {
             bool temAmigosDisponiveis = telaCadastroAmigo.VisualizarAmigos("Pesquisando");
 
@@ -240,7 +255,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             return amigoSelecionado;
         }
 
-        public Revista ObtemRevista()
+        private Revista ObtemRevista()
         {
             bool temRevistasDisponiveis = telaCadastroRevista.VisualizarRevistas("Pesquisando");
 
@@ -260,7 +275,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             return revistaSelecionada;
         }
 
-        public int ObterNumeroEmprestimo()
+        private int ObterNumeroEmprestimo()
         {
             int numeroEmprestimo;
             bool numeroEmprestimoEncontrado;
@@ -279,7 +294,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             return numeroEmprestimo;
         }
 
-        public void MostrarTitulo(string titulo)
+        private void MostrarTitulo(string titulo)
         {
             Console.Clear();
 
@@ -287,5 +302,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             Console.WriteLine();
         }
+        #endregion
     }
 }

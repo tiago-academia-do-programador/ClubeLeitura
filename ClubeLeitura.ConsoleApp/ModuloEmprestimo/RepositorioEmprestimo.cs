@@ -1,11 +1,14 @@
-﻿using System;
-
-namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
+﻿namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
     public class RepositorioEmprestimo
     {
-        public Emprestimo[] emprestimos;
-        public int numeroEmprestimo;
+        private readonly Emprestimo[] emprestimos;
+        private int numeroEmprestimo;
+
+        public RepositorioEmprestimo(int qtdEmprestimos)
+        {
+            emprestimos = new Emprestimo[qtdEmprestimos];
+        }
 
         public void Inserir(Emprestimo emprestimo)
         {

@@ -21,7 +21,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             {
                 estaAberto = true;
                 dataEmprestimo = DateTime.Today;
-                dataDevolucao = dataEmprestimo.AddDays(revista.categoria.diasEmprestimo);
+                dataDevolucao = dataEmprestimo.AddDays(revista.categoria.DiasEmprestimo);
             }
         }
 

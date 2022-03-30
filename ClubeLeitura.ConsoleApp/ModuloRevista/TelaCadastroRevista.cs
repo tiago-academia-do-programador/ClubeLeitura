@@ -140,7 +140,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Revista revista = revistas[i];
 
                 Console.WriteLine("Número: " + revista.numero);
-                Console.WriteLine("Categoria: " + revista.categoria.nome);
+                Console.WriteLine("Categoria: " + revista.categoria.Nome);
                 Console.WriteLine("Coleção: " + revista.Colecao);
                 Console.WriteLine("Edição: " + revista.Edicao);
                 Console.WriteLine("Ano: " + revista.Ano);
