@@ -55,12 +55,9 @@ namespace ClubeLeitura.ConsoleApp
             telaCadastroRevista.repositorioRevista = repositorioRevista;
 
             // Instanciação de Amigos
-            RepositorioAmigo repositorioAmigo = new RepositorioAmigo();
-            repositorioAmigo.amigos = new Amigo[10];
+            RepositorioAmigo repositorioAmigo = new RepositorioAmigo(QUANTIDADE_REGISTROS);
 
-            TelaCadastroAmigo telaCadastroAmigo = new TelaCadastroAmigo();
-            telaCadastroAmigo.notificador = notificador;
-            telaCadastroAmigo.repositorioAmigo = repositorioAmigo;
+            TelaCadastroAmigo telaCadastroAmigo = new TelaCadastroAmigo(repositorioAmigo, notificador);
 
             // Instanciação de Empréstimos
             RepositorioEmprestimo repositorioEmprestimo = new RepositorioEmprestimo();

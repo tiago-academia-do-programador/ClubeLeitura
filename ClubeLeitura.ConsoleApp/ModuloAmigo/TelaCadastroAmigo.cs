@@ -5,8 +5,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
     public class TelaCadastroAmigo
     {
-        public Notificador notificador; //reponsável pelas mensagens pro usuário
-        public RepositorioAmigo repositorioAmigo;
+        private readonly Notificador notificador; //reponsável pelas mensagens pro usuário
+        private readonly RepositorioAmigo repositorioAmigo;
+
+        public TelaCadastroAmigo(RepositorioAmigo repositorioAmigo, Notificador notificador)
+        {
+            this.repositorioAmigo = repositorioAmigo;
+            this.notificador = notificador;
+        }
 
         public string MostrarOpcoes()
         {
@@ -135,9 +141,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
                 Amigo a = amigos[i];
 
                 Console.WriteLine("Número: " + a.numero);
-                Console.WriteLine("Nome: " + a.nome);
-                Console.WriteLine("Nome do responsável: " + a.nomeResponsavel);
-                Console.WriteLine("Onde mora: " + a.endereco);
+                Console.WriteLine("Nome: " + a.Nome);
+                Console.WriteLine("Nome do responsável: " + a.NomeResponsavel);
+                Console.WriteLine("Onde mora: " + a.Endereco);
 
                 Console.WriteLine();
             }
@@ -160,10 +166,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
                 Amigo a = amigos[i];
 
                 Console.WriteLine("Número: " + a.numero);
-                Console.WriteLine("Nome: " + a.nome);
-                Console.WriteLine("Nome do responsável: " + a.nomeResponsavel);
-                Console.WriteLine("Onde mora: " + a.endereco);
-                Console.WriteLine("Multa: R$" + a.multa.valor);
+                Console.WriteLine("Nome: " + a.Nome);
+                Console.WriteLine("Nome do responsável: " + a.NomeResponsavel);
+                Console.WriteLine("Onde mora: " + a.Endereco);
+                Console.WriteLine("Multa: R$" + a.multa.Valor);
 
                 Console.WriteLine();
             }
@@ -185,12 +191,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             Console.Write("Digite onde o amigo mora: ");
             string endereco = Console.ReadLine();
 
-            Amigo amigo = new Amigo();
-
-            amigo.nome = nome;
-            amigo.nomeResponsavel = nomeResponsavel;
-            amigo.telefone = telefone;
-            amigo.endereco = endereco;
+            Amigo amigo = new Amigo(nome, nomeResponsavel, telefone, endereco);
 
             return amigo;
         }

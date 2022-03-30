@@ -4,9 +4,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
     public class RepositorioAmigo
     {
-        public Amigo[] amigos;
+        private int numeroAmigo;
+        private readonly Amigo[] amigos;
 
-        public int numeroAmigo;
+        public RepositorioAmigo(int qtdAmigos)
+        {
+            amigos = new Amigo[qtdAmigos];
+        }
+
         public void Inserir(Amigo amigo)
         {
             amigo.numero = ++numeroAmigo;
@@ -87,42 +92,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             return null;
         }
 
-        public int ObterPosicaoVazia()
-        {
-            for (int i = 0; i < amigos.Length; i++)
-            {
-                if (amigos[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        public int ObterQtdAmigos()
-        {
-            int numeroAmigos = 0;
-
-            for (int i = 0; i < amigos.Length; i++)
-            {
-                if (amigos[i] != null)
-                    numeroAmigos++;
-            }
-
-            return numeroAmigos;
-        }
-
-        public int ObterQtdAmigosComMulta()
-        {
-            int numeroAmigos = 0;
-
-            for (int i = 0; i < amigos.Length; i++)
-            {
-                if (amigos[i] != null && amigos[i].TemMultaEmAberto())
-                    numeroAmigos++;
-            }
-
-            return numeroAmigos;
-        }
 
         public bool VerificarNumeroAmigoExiste(int numeroAmigo)
         {
@@ -139,5 +108,44 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             return numeroAmigoExiste;
         }
+
+        #region Métodos privados
+        private int ObterPosicaoVazia()
+        {
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] == null)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private int ObterQtdAmigos()
+        {
+            int numeroAmigos = 0;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null)
+                    numeroAmigos++;
+            }
+
+            return numeroAmigos;
+        }
+
+        private int ObterQtdAmigosComMulta()
+        {
+            int numeroAmigos = 0;
+
+            for (int i = 0; i < amigos.Length; i++)
+            {
+                if (amigos[i] != null && amigos[i].TemMultaEmAberto())
+                    numeroAmigos++;
+            }
+
+            return numeroAmigos;
+        }
+        #endregion
     }
 }

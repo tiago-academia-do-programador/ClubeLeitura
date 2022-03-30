@@ -2,6 +2,14 @@
 {
     public class Multa
     {
-        public decimal valor;
+        private readonly decimal valor;
+
+        public decimal Valor => valor;
+
+        public Multa(decimal valor)
+        {
+            this.valor = valor;
+        }
+
     }
 }

@@ -8,14 +8,30 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
     {
         public int numero;
 
-        public string nome;
-        public string nomeResponsavel;
-        public string telefone;
-        public string endereco;
-
-        public Emprestimo[] historicoEmprestimos = new Emprestimo[10];
-        public Reserva[] historicoReservas = new Reserva[10];
+        private readonly string nome;
+        private readonly string nomeResponsavel;
+        private readonly string telefone;
+        private readonly string endereco;
         public Multa multa;
+
+        private readonly Emprestimo[] historicoEmprestimos = new Emprestimo[10];
+        private readonly Reserva[] historicoReservas = new Reserva[10];
+
+        public string Nome => nome;
+
+        public string NomeResponsavel => nomeResponsavel;
+
+        public string Telefone => telefone;
+
+        public string Endereco => endereco;
+
+        public Amigo(string nome, string nomeResponsavel, string telefone, string endereco)
+        {
+            this.nome = nome;
+            this.nomeResponsavel = nomeResponsavel;
+            this.telefone = telefone;
+            this.endereco = endereco;
+        }
 
         public void RegistrarEmprestimo(Emprestimo emprestimo)
         {
@@ -58,33 +74,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             return temEmprestimoEmAberto;
         }
 
-        private int ObtemPosicaoVazia()
+        public void RegistrarMulta(decimal valor)
         {
-            for (int i = 0; i < historicoEmprestimos.Length; i++)
-            {
-                if (historicoEmprestimos[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        public int ObtemPosicaoReservasVazia()
-        {
-            for (int i = 0; i < historicoReservas.Length; i++)
-            {
-                if (historicoReservas[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        public void RegistrarMulta(decimal valorMulta)
-        {
-            Multa novaMulta = new Multa();
-
-            novaMulta.valor = valorMulta;
+            Multa novaMulta = new Multa(valor);
 
             multa = novaMulta;
         }
@@ -102,5 +94,29 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             return true;
         }
+
+        #region Métodos privados
+        private int ObtemPosicaoVazia()
+        {
+            for (int i = 0; i < historicoEmprestimos.Length; i++)
+            {
+                if (historicoEmprestimos[i] == null)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private int ObtemPosicaoReservasVazia()
+        {
+            for (int i = 0; i < historicoReservas.Length; i++)
+            {
+                if (historicoReservas[i] == null)
+                    return i;
+            }
+
+            return -1;
+        }
+        #endregion
     }
 }

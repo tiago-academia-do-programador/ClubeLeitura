@@ -105,7 +105,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             if (emprestimoParaDevolver.amigo.TemMultaEmAberto())
             {
-                decimal multa = emprestimoParaDevolver.amigo.multa.valor;
+                decimal multa = emprestimoParaDevolver.amigo.multa.Valor;
 
                 notificador.ApresentarMensagem($"A devolução está atrasada, uma multa de R${multa} foi incluída.", TipoMensagem.Atencao);
             }
@@ -177,7 +177,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
                 Console.WriteLine("Número: " + emprestimo.numero);
                 Console.WriteLine("Revista emprestada: " + emprestimo.revista.colecao);
-                Console.WriteLine("Nome do amigo: " + emprestimo.amigo.nome);
+                Console.WriteLine("Nome do amigo: " + emprestimo.amigo.Nome);
                 Console.WriteLine("Data do empréstimo: " + emprestimo.dataEmprestimo);
                 Console.WriteLine("Status do empréstimo: " + statusEmprestimo);
                 Console.WriteLine();
@@ -202,7 +202,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
                 Console.WriteLine("Número: " + emprestimo.numero);
                 Console.WriteLine("Revista emprestada: " + emprestimo.revista.colecao);
-                Console.WriteLine("Nome do amigo: " + emprestimo.amigo.nome);
+                Console.WriteLine("Nome do amigo: " + emprestimo.amigo.Nome);
                 Console.WriteLine("Data do empréstimo: " + emprestimo.dataEmprestimo);
                 Console.WriteLine();
             }
