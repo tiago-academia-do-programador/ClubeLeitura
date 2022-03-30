@@ -23,11 +23,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             Console.WriteLine();
 
-            Console.WriteLine("Digite 1 para Inserir");
-            Console.WriteLine("Digite 2 para Editar");
-            Console.WriteLine("Digite 3 para Excluir");
+            Console.WriteLine("Digite 1 para Registrar Empréstimo");
+            Console.WriteLine("Digite 2 para Editar Empréstimo");
+            Console.WriteLine("Digite 3 para Excluir Empréstimo");
             Console.WriteLine("Digite 4 para Visualizar");
-            Console.WriteLine("Digite 5 para Visualizar empréstimos em aberto");
+            Console.WriteLine("Digite 5 para Visualizar Empréstimos em Aberto");
             Console.WriteLine("Digite 6 para Devolver um empréstimo");
 
             Console.WriteLine("Digite s para sair");
@@ -41,6 +41,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
         {
             MostrarTitulo("Inserindo novo Empréstimo");
 
+            // Validação do Amigo
             Amigo amigoSelecionado = ObtemAmigo();
 
             if (amigoSelecionado.TemMultaEmAberto())
@@ -55,11 +56,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                 return;
             }
 
+
+            // Validação da Revista
             Revista revistaSelecionada = ObtemRevista();
+
+            if (revistaSelecionada.EstaReservada())
+            {
+                notificador.ApresentarMensagem("A revista selecionada já está reservada!", TipoMensagem.Erro);
+                return;
+            }
 
             if (revistaSelecionada.EstaEmprestada())
             {
-                notificador.ApresentarMensagem("A revista nesse empréstimo já foi emprestada.", TipoMensagem.Erro);
+                notificador.ApresentarMensagem("A revista selecionada já foi emprestada.", TipoMensagem.Erro);
                 return;
             }
 

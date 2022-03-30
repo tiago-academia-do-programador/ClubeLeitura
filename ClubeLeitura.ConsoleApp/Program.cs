@@ -13,6 +13,7 @@ using ClubeLeitura.ConsoleApp.ModuloAmigo;
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
 using ClubeLeitura.ConsoleApp.ModuloCategoria;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
+using ClubeLeitura.ConsoleApp.ModuloReserva;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
 
@@ -72,6 +73,20 @@ namespace ClubeLeitura.ConsoleApp
             telaCadastroEmprestimo.repositorioEmprestimo = repositorioEmprestimo;
             telaCadastroEmprestimo.telaCadastroAmigo = telaCadastroAmigo;
             telaCadastroEmprestimo.telaCadastroRevista = telaCadastroRevista;
+
+            // Instanciação de Reservas
+            RepositorioReserva repositorioReserva = new RepositorioReserva();
+            repositorioReserva.reservas = new Reserva[10];
+
+            TelaCadastroReserva telaCadastroReserva = new TelaCadastroReserva();
+            telaCadastroReserva.notificador = notificador;
+            telaCadastroReserva.repositorioRevista = repositorioRevista;
+            telaCadastroReserva.repositorioAmigo = repositorioAmigo;
+            telaCadastroReserva.repositorioEmprestimo = repositorioEmprestimo;
+            telaCadastroReserva.repositorioReserva = repositorioReserva;
+            telaCadastroReserva.telaCadastroRevista = telaCadastroRevista;
+            telaCadastroReserva.telaCadastroAmigo = telaCadastroAmigo;
+            telaCadastroReserva.telaCadastroEmprestimo = telaCadastroEmprestimo;
 
 
             while (true)
@@ -156,7 +171,6 @@ namespace ClubeLeitura.ConsoleApp
                         Console.ReadLine();
                     }
                 }
-
                 else if (opcaoMenuPrincipal == "4") // Cadastro de Amigos
                 {
                     string opcao = telaCadastroAmigo.MostrarOpcoes();
@@ -235,7 +249,37 @@ namespace ClubeLeitura.ConsoleApp
                         telaCadastroEmprestimo.RegistrarDevolucao();
                     }
                 }
+                else if (opcaoMenuPrincipal == "6") // Cadastro de Reservas
+                {
+                    string opcao = telaCadastroReserva.MostrarOpcoes();
 
+                    if (opcao == "1")
+                    {
+                        telaCadastroReserva.InserirNovaReserva();
+                    }
+                    else if (opcao == "2")
+                    {
+                        bool temReservaCadastrada = telaCadastroReserva.VisualizarReservas("Tela");
+
+                        if (!temReservaCadastrada)
+                            notificador.ApresentarMensagem("Nenhuma reserva cadastrada.", TipoMensagem.Atencao);
+
+                        Console.ReadLine();
+                    }
+                    else if (opcao == "3")
+                    {
+                        bool temReservaCadastrada = telaCadastroReserva.VisualizarReservasEmAberto("Tela");
+
+                        if (!temReservaCadastrada)
+                            notificador.ApresentarMensagem("Nenhuma reserva em aberto disponível.", TipoMensagem.Atencao);
+
+                        Console.ReadLine();
+                    }
+                    else if (opcao == "4")
+                    {
+                        telaCadastroReserva.RegistrarNovoEmprestimo();
+                    }
+                }
             }
         }
     }

@@ -31,13 +31,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             {
                 estaAberto = false;
 
-                DateTime dataRealEmprestimo = DateTime.Today;
+                DateTime dataRealDevolucao = DateTime.Today;
 
-                bool devolucaoAtrasada = dataRealEmprestimo > dataDevolucao;
+                bool devolucaoAtrasada = dataRealDevolucao > dataDevolucao;
 
                 if (devolucaoAtrasada)
                 {
-                    int diasAtrasados = (dataRealEmprestimo - dataDevolucao).Days;
+                    int diasAtrasados = (dataRealDevolucao - dataDevolucao).Days;
 
                     decimal valorMulta = 10 * diasAtrasados;
 
