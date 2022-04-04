@@ -1,12 +1,11 @@
-﻿using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloReserva;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
-    public class Amigo
+    public class Amigo : EntidadeBase
     {
-        public int numero;
-
         private readonly string nome;
         private readonly string nomeResponsavel;
         private readonly string telefone;

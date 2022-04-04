@@ -70,12 +70,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             novaRevista.caixa = caixaSelecionada;
             novaRevista.categoria = categoriaSelecionada;
 
-            string statusValidacao = repositorioRevista.Inserir(novaRevista);
+            repositorioRevista.Inserir(novaRevista);
 
-            if (statusValidacao != "REGISTRO_VALIDO")
-                notificador.ApresentarMensagem(statusValidacao, TipoMensagem.Erro);
-            else
-                notificador.ApresentarMensagem("Revista inserida com sucesso", TipoMensagem.Sucesso);
+            notificador.ApresentarMensagem("Revista inserida com sucesso", TipoMensagem.Sucesso);
         }
 
         public void EditarRevista()
@@ -130,14 +127,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Revistas");
 
-            Revista[] revistas = repositorioRevista.SelecionarTodos();
+            EntidadeBase[] revistas = repositorioRevista.SelecionarTodos();
 
             if (revistas.Length == 0)
                 return false;
 
             for (int i = 0; i < revistas.Length; i++)
             {
-                Revista revista = revistas[i];
+                Revista revista = (Revista)revistas[i];
 
                 Console.WriteLine("Número: " + revista.numero);
                 Console.WriteLine("Categoria: " + revista.categoria.Nome);
@@ -184,7 +181,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             Console.WriteLine();
 
-            Categoria categoriaSelecionada = repositorioCategoria.SelecionarCategoria(numCategoriaSelecionada);
+            Categoria categoriaSelecionada = (Categoria)repositorioCategoria.SelecionarRegistro(numCategoriaSelecionada);
 
             return categoriaSelecionada;
         }
@@ -204,7 +201,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             Console.WriteLine();
 
-            Caixa caixaSelecionada = repositorioCaixa.SelecionarCaixa(numCaixaSelecionada);
+            Caixa caixaSelecionada = (Caixa)repositorioCaixa.SelecionarRegistro(numCaixaSelecionada);
 
             return caixaSelecionada;
         }
@@ -219,7 +216,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Console.Write("Digite o número da revista que deseja selecionar: ");
                 numeroRevista = Convert.ToInt32(Console.ReadLine());
 
-                numeroRevistaEncontrado = repositorioRevista.VerificarNumeroRevistaExiste(numeroRevista);
+                numeroRevistaEncontrado = repositorioRevista.VerificarNumeroRegistroExiste(numeroRevista);
 
                 if (numeroRevistaEncontrado == false)
                     notificador.ApresentarMensagem("Número de revista não encontrado, digite novamente", TipoMensagem.Atencao);

@@ -1,4 +1,5 @@
-﻿using ClubeLeitura.ConsoleApp.ModuloCaixa;
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using ClubeLeitura.ConsoleApp.ModuloCaixa;
 using ClubeLeitura.ConsoleApp.ModuloCategoria;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloReserva;
@@ -6,10 +7,8 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
-    public class Revista
+    public class Revista : EntidadeBase
     {
-        public int numero;
-
         private readonly string colecao;
         private readonly int edicao;
         private readonly int ano;

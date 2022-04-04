@@ -108,7 +108,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             int numeroEmprestimo = ObterNumeroEmprestimo();
 
-            Emprestimo emprestimoParaDevolver = repositorioEmprestimo.SelecionarEmprestimo(numeroEmprestimo);
+            Emprestimo emprestimoParaDevolver = (Emprestimo)repositorioEmprestimo.SelecionarRegistro(numeroEmprestimo);
 
             if (!emprestimoParaDevolver.estaAberto)
             {
@@ -178,14 +178,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Empréstimos");
 
-            Emprestimo[] emprestimos = repositorioEmprestimo.SelecionarTodos();
+            EntidadeBase[] emprestimos = repositorioEmprestimo.SelecionarTodos();
 
             if (emprestimos.Length == 0)
                 return false;
 
             for (int i = 0; i < emprestimos.Length; i++)
             {
-                Emprestimo emprestimo = emprestimos[i];
+                Emprestimo emprestimo = (Emprestimo)emprestimos[i];
 
                 string statusEmprestimo = emprestimo.estaAberto ? "Aberto" : "Fechado";
 
@@ -250,7 +250,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             Console.WriteLine();
 
-            Amigo amigoSelecionado = repositorioAmigo.SelecionarAmigo(numeroAmigoEmprestimo);
+            Amigo amigoSelecionado = (Amigo)repositorioAmigo.SelecionarRegistro(numeroAmigoEmprestimo);
 
             return amigoSelecionado;
         }
@@ -270,7 +270,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             Console.WriteLine();
 
-            Revista revistaSelecionada = repositorioRevista.SelecionarRevista(numeroRevistaEmprestimo);
+            Revista revistaSelecionada = (Revista)repositorioRevista.SelecionarRegistro(numeroRevistaEmprestimo);
 
             return revistaSelecionada;
         }
@@ -285,7 +285,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                 Console.Write("Digite o número do empréstimo que deseja selecionar: ");
                 numeroEmprestimo = Convert.ToInt32(Console.ReadLine());
 
-                numeroEmprestimoEncontrado = repositorioEmprestimo.VerificarNumeroEmprestimoExiste(numeroEmprestimo);
+                numeroEmprestimoEncontrado = repositorioEmprestimo.VerificarNumeroRegistroExiste(numeroEmprestimo);
 
                 if (numeroEmprestimoEncontrado == false)
                     notificador.ApresentarMensagem("Número de empréstimo não encontrado, digite novamente", TipoMensagem.Atencao);

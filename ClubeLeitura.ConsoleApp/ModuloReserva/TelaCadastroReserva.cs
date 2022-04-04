@@ -125,14 +125,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Reservas");
 
-            Reserva[] reservas = repositorioReserva.SelecionarTodos();
+            EntidadeBase[] reservas = repositorioReserva.SelecionarTodos();
 
             if (reservas.Length == 0)
                 return false;
 
             for (int i = 0; i < reservas.Length; i++)
             {
-                Reserva reserva = reservas[i];
+                Reserva reserva = (Reserva)reservas[i];
 
                 string statusReserva = reserva.estaAberta ? "Aberta" : "Fechada";
 
@@ -173,10 +173,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
         private Reserva ObtemReserva(Amigo amigoSelecionado, Revista revistaSelecionada)
         {
-            Reserva novaReserva = new Reserva();
-
-            novaReserva.amigo = amigoSelecionado;
-            novaReserva.revista = revistaSelecionada;
+            Reserva novaReserva = new Reserva(amigoSelecionado, revistaSelecionada);
 
             return novaReserva;
         }
@@ -196,7 +193,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Console.WriteLine();
 
-            Reserva reservaSelecionada = repositorioReserva.SelecionarReserva(numeroReserva);
+            Reserva reservaSelecionada = (Reserva)repositorioReserva.SelecionarRegistro(numeroReserva);
 
             return reservaSelecionada;
         }
@@ -216,7 +213,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Console.WriteLine();
 
-            Amigo amigoSelecionado = repositorioAmigo.SelecionarAmigo(numeroAmigoEmprestimo);
+            Amigo amigoSelecionado = (Amigo)repositorioAmigo.SelecionarRegistro(numeroAmigoEmprestimo);
 
             return amigoSelecionado;
         }
@@ -236,7 +233,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Console.WriteLine();
 
-            Revista revistaSelecionada = repositorioRevista.SelecionarRevista(numeroRevistaEmprestimo);
+            Revista revistaSelecionada = (Revista)repositorioRevista.SelecionarRegistro(numeroRevistaEmprestimo);
 
             return revistaSelecionada;
         }

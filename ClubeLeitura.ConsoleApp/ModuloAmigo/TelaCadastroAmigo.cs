@@ -50,7 +50,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             int numeroAmigoComMulta = ObterNumeroAmigo();
 
-            Amigo amigoComMulta = repositorioAmigo.SelecionarAmigo(numeroAmigoComMulta);
+            Amigo amigoComMulta = (Amigo)repositorioAmigo.SelecionarRegistro(numeroAmigoComMulta);
 
             amigoComMulta.PagarMulta();
         }
@@ -113,14 +113,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Amigos");
 
-            Amigo[] amigos = repositorioAmigo.SelecionarTodos();
+            EntidadeBase[] amigos = repositorioAmigo.SelecionarTodos();
 
             if (amigos.Length == 0)
                 return false;
 
             for (int i = 0; i < amigos.Length; i++)
             {
-                Amigo a = amigos[i];
+                Amigo a = (Amigo)amigos[i];
 
                 Console.WriteLine("Número: " + a.numero);
                 Console.WriteLine("Nome: " + a.Nome);
@@ -170,7 +170,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
                 Console.Write("Digite o número do amigo que deseja selecionar: ");
                 numeroAmigo = Convert.ToInt32(Console.ReadLine());
 
-                numeroAmigoEncontrado = repositorioAmigo.VerificarNumeroAmigoExiste(numeroAmigo);
+                numeroAmigoEncontrado = repositorioAmigo.VerificarNumeroRegistroExiste(numeroAmigo);
 
                 if (numeroAmigoEncontrado == false)
                     notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente.", TipoMensagem.Atencao);

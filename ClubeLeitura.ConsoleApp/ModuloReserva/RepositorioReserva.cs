@@ -1,42 +1,22 @@
-﻿namespace ClubeLeitura.ConsoleApp.ModuloReserva
+﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+
+namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
-    public class RepositorioReserva
+    public class RepositorioReserva : RepositorioBase
     {
-        private readonly Reserva[] reservas;
-        private int numeroReserva;
-
-        public RepositorioReserva(int qtdReservas)
+        public RepositorioReserva(int qtdReservas) : base(qtdReservas)
         {
-            reservas = new Reserva[qtdReservas];
         }
 
-        public void Inserir(Reserva reserva)
+        public override void Inserir(EntidadeBase reserva)
         {
-            reserva.numero = ++numeroReserva;
+            Reserva r = (Reserva)reserva;
 
-            reserva.Abrir();
-            reserva.revista.RegistrarReserva(reserva);
-            reserva.amigo.RegistrarReserva(reserva);
+            r.numero = ++contadorNumero;
 
-            reservas[ObterPosicaoVazia()] = reserva;
-        }
+            r.Abrir();
 
-        public Reserva[] SelecionarTodos()
-        {
-            Reserva[] reservasInseridas = new Reserva[ObterQtdReservas()];
-
-            int j = 0;
-
-            for (int i = 0; i < reservasInseridas.Length; i++)
-            {
-                if (reservas[i] != null)
-                {
-                    reservasInseridas[j] = reservas[i];
-                    j++;
-                }
-            }
-
-            return reservasInseridas;
+            registros[ObterPosicaoVazia()] = reserva;
         }
 
         public Reserva[] SelecionarReservasEmAberto()
@@ -47,9 +27,11 @@
 
             for (int i = 0; i < reservasInseridas.Length; i++)
             {
-                if (reservas[i] != null && reservas[i].estaAberta)
+                Reserva r = (Reserva)registros[i];
+
+                if (r != null && r.estaAberta)
                 {
-                    reservasInseridas[j] = reservas[i];
+                    reservasInseridas[j] = r;
                     j++;
                 }
             }
@@ -57,52 +39,19 @@
             return reservasInseridas;
         }
 
-        public Reserva SelecionarReserva(int numeroReserva)
-        {
-            for (int i = 0; i < reservas.Length; i++)
-            {
-                if (reservas[i] != null && numeroReserva == reservas[i].numero)
-                    return reservas[i];
-            }
-
-            return null;
-        }
-
-        public int ObterQtdReservas()
-        {
-            int numeroReservas = 0;
-
-            for (int i = 0; i < reservas.Length; i++)
-            {
-                if (reservas[i] != null)
-                    numeroReservas++;
-            }
-
-            return numeroReservas;
-        }
-
         public int ObterQtdReservasEmAberto()
         {
             int numeroReservas = 0;
 
-            for (int i = 0; i < reservas.Length; i++)
+            for (int i = 0; i < registros.Length; i++)
             {
-                if (reservas[i] != null && reservas[i].estaAberta)
+                Reserva r = (Reserva)registros[i];
+
+                if (r != null && r.estaAberta)
                     numeroReservas++;
             }
 
             return numeroReservas;
-        }
-
-        private int ObterPosicaoVazia()
-        {
-            for (int i = 0; i < reservas.Length; i++)
-            {
-                if (reservas[i] == null)
-                    return i;
-            }
-
-            return -1;
         }
     }
 }
