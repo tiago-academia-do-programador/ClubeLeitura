@@ -8,7 +8,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
         {
         }
 
-        public override void Inserir(EntidadeBase reserva)
+        public override string Inserir(EntidadeBase reserva)
         {
             Reserva r = (Reserva)reserva;
 
@@ -17,6 +17,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             r.Abrir();
 
             registros[ObterPosicaoVazia()] = reserva;
+
+            return "REGISTRO_VALIDO";
         }
 
         public Reserva[] SelecionarReservasEmAberto()

@@ -5,7 +5,7 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
-    public class TelaCadastroEmprestimo
+    public class TelaCadastroEmprestimo : TelaBase
     {
         private readonly Notificador notificador;
         private readonly RepositorioEmprestimo repositorioEmprestimo;
@@ -20,7 +20,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             RepositorioRevista repositorioRevista,
             RepositorioAmigo repositorioAmigo,
             TelaCadastroRevista telaCadastroRevista,
-            TelaCadastroAmigo telaCadastroAmigo)
+            TelaCadastroAmigo telaCadastroAmigo) : base("Cadastro de Empréstimos")
         {
             this.notificador = notificador;
             this.repositorioEmprestimo = repositorioEmprestimo;
@@ -30,13 +30,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             this.telaCadastroAmigo = telaCadastroAmigo;
         }
 
-        public string MostrarOpcoes()
+        public override string MostrarOpcoes()
         {
-            Console.Clear();
-
-            Console.WriteLine("Cadastro de Empréstimos");
-
-            Console.WriteLine();
+            MostrarTitulo(Titulo);
 
             Console.WriteLine("Digite 1 para Registrar Empréstimo");
             Console.WriteLine("Digite 2 para Editar Empréstimo");
@@ -52,12 +48,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             return opcao;
         }
 
-        public void InserirNovoEmprestimo()
+        public void RegistrarEmprestimo()
         {
             MostrarTitulo("Inserindo novo Empréstimo");
 
             // Validação do Amigo
             Amigo amigoSelecionado = ObtemAmigo();
+
+            if (amigoSelecionado == null)
+            {
+                notificador.ApresentarMensagem("Nenhum amigo selecionado", TipoMensagem.Erro);
+                return;
+            }
 
             if (amigoSelecionado.TemMultaEmAberto())
             {
@@ -89,9 +91,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             Emprestimo emprestimo = ObtemEmprestimo(amigoSelecionado, revistaSelecionada);
             
-            repositorioEmprestimo.Inserir(emprestimo);
+            string statusValidacao = repositorioEmprestimo.Inserir(emprestimo);
 
-            notificador.ApresentarMensagem("Empréstimo inserido com sucesso", TipoMensagem.Sucesso);
+            if (statusValidacao == "REGISTRO_VALIDO")
+                notificador.ApresentarMensagem("Empréstimo cadastrado com sucesso!", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem(statusValidacao, TipoMensagem.Erro);
         }
 
         public void RegistrarDevolucao()
@@ -237,7 +242,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
         private Amigo ObtemAmigo()
         {
-            bool temAmigosDisponiveis = telaCadastroAmigo.VisualizarAmigos("Pesquisando");
+            bool temAmigosDisponiveis = telaCadastroAmigo.VisualizarRegistros("Pesquisando");
 
             if (!temAmigosDisponiveis)
             {
@@ -257,7 +262,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
         private Revista ObtemRevista()
         {
-            bool temRevistasDisponiveis = telaCadastroRevista.VisualizarRevistas("Pesquisando");
+            bool temRevistasDisponiveis = telaCadastroRevista.VisualizarRegistros("Pesquisando");
 
             if (!temRevistasDisponiveis)
             {
@@ -292,15 +297,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             } while (numeroEmprestimoEncontrado == false);
             return numeroEmprestimo;
-        }
-
-        private void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
         }
         #endregion
     }

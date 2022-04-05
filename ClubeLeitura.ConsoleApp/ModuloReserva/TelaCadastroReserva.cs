@@ -7,7 +7,7 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
-    public class TelaCadastroReserva
+    public class TelaCadastroReserva : TelaBase
     {
         private readonly Notificador notificador;
         private readonly RepositorioReserva repositorioReserva;
@@ -24,7 +24,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             RepositorioRevista repositorioRevista,
             TelaCadastroAmigo telaCadastroAmigo,
             TelaCadastroRevista telaCadastroRevista,
-            RepositorioEmprestimo repositorioEmprestimo)
+            RepositorioEmprestimo repositorioEmprestimo) : base("Cadastro de Reservas")
         {
             this.notificador = notificador;
             this.repositorioReserva = repositorioReserva;
@@ -35,13 +35,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             this.repositorioEmprestimo = repositorioEmprestimo;
         }
 
-        public string MostrarOpcoes()
+        public override string MostrarOpcoes()
         {
-            Console.Clear();
-
-            Console.WriteLine("Cadastro de Reservas");
-
-            Console.WriteLine();
+            MostrarTitulo(Titulo);
 
             Console.WriteLine("Digite 1 para Registrar Reserva");
             Console.WriteLine("Digite 2 para Visualizar");
@@ -55,12 +51,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             return opcao;
         }
 
-        public void InserirNovaReserva()
+        public void RegistrarNovaReserva()
         {
             MostrarTitulo("Inserindo nova Reserva");
 
             // Validação do Amigo
             Amigo amigoSelecionado = ObtemAmigo();
+
+            if (amigoSelecionado == null)
+            {
+                notificador.ApresentarMensagem("Nenhum amigo selecionado", TipoMensagem.Erro);
+                return;
+            }
 
             if (amigoSelecionado.TemMultaEmAberto())
             {
@@ -97,9 +99,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Reserva novaReserva = ObtemReserva(amigoSelecionado, revistaSelecionada);
 
-            repositorioReserva.Inserir(novaReserva);
+            string statusValidacao = repositorioReserva.Inserir(novaReserva);
 
-            notificador.ApresentarMensagem("Reserva inserida com sucesso", TipoMensagem.Sucesso);
+            if (statusValidacao == "REGISTRO_VALIDO")
+                notificador.ApresentarMensagem("Reserva cadastrada com sucesso!", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem(statusValidacao, TipoMensagem.Erro);
         }
 
         public void RegistrarNovoEmprestimo()
@@ -115,9 +120,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             novoEmprestimo.revista = reservaParaEmprestimo.revista;
             novoEmprestimo.amigo = reservaParaEmprestimo.amigo;
 
-            repositorioEmprestimo.Inserir(novoEmprestimo);
-            
-            notificador.ApresentarMensagem("Empréstimo registrado com sucesso", TipoMensagem.Sucesso);
+            string statusValidacao = repositorioEmprestimo.Inserir(novoEmprestimo);
+
+            if (statusValidacao == "REGISTRO_VALIDO")
+                notificador.ApresentarMensagem("Empréstimo cadastrado com sucesso", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem(statusValidacao, TipoMensagem.Erro);
         }
 
         public bool VisualizarReservas(string tipo)
@@ -200,7 +208,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
         public Amigo ObtemAmigo()
         {
-            bool temAmigosDisponiveis = telaCadastroAmigo.VisualizarAmigos("Pesquisando");
+            bool temAmigosDisponiveis = telaCadastroAmigo.VisualizarRegistros("Pesquisando");
 
             if (!temAmigosDisponiveis)
             {
@@ -220,7 +228,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
         public Revista ObtemRevista()
         {
-            bool temRevistasDisponiveis = telaCadastroRevista.VisualizarRevistas("Pesquisando");
+            bool temRevistasDisponiveis = telaCadastroRevista.VisualizarRegistros("Pesquisando");
 
             if (!temRevistasDisponiveis)
             {

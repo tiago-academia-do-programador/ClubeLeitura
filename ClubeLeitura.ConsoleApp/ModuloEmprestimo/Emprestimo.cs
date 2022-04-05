@@ -45,5 +45,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             }
         }
 
+        public override string Validar()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

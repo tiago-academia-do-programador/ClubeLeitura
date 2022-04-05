@@ -115,6 +115,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             return -1;
         }
+
+        public override string Validar()
+        {
+            throw new System.NotImplementedException();
+        }
         #endregion
     }
 }

@@ -30,6 +30,24 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             this.edicao = edicao;
             this.ano = ano;
         }
+        public override string Validar()
+        {
+            string validacao = "";
+
+            if (string.IsNullOrEmpty(Colecao))
+                validacao += "É necessário incluir uma coleção!\n";
+
+            if (Edicao < 0)
+                validacao += "A edição de uma revista não pode ser menor que zero!\n";
+
+            if (Ano < 0 || Ano > DateTime.Now.Year)
+                validacao += "O ano da revista precisa ser válido!\n";
+
+            if (string.IsNullOrEmpty(validacao))
+                return "REGISTRO_VALIDO";
+
+            return validacao;
+        }
 
         public void RegistrarReserva(Reserva reserva)
         {
@@ -72,24 +90,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             return temEmprestimoEmAberto;
         }
 
-        public string Validar()
-        {
-            string validacao = "";
-
-            if (string.IsNullOrEmpty(Colecao))
-                validacao += "É necessário incluir uma coleção!\n";
-
-            if (Edicao < 0)
-                validacao += "A edição de uma revista não pode ser menor que zero!\n";
-
-            if (Ano < 0 || Ano > DateTime.Now.Year)
-                validacao += "O ano da revista precisa ser válido!\n";
-
-            if (string.IsNullOrEmpty(validacao))
-                return "REGISTRO_VALIDO";
-
-            return validacao;
-        }
 
         public int ObtemPosicaoReservasVazia()
         {

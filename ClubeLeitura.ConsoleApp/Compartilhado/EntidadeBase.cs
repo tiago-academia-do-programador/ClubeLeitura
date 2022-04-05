@@ -1,7 +1,9 @@
 ﻿namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
-    public class EntidadeBase
+    public abstract class EntidadeBase
     {
         public int numero;
+
+        public abstract string Validar();
     }
 }

@@ -3,53 +3,37 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 {
-    public class TelaCadastroCategoria
+    public class TelaCadastroCategoria : TelaBase, ICadastroBasico
     {
         private readonly RepositorioCategoria repositorioCategoria;
         private readonly Notificador notificador;
 
         public TelaCadastroCategoria(RepositorioCategoria repositorioCategoria, Notificador notificador)
+            : base ("Cadastro de Categorias de Revista")
         {
             this.repositorioCategoria = repositorioCategoria;
             this.notificador = notificador;
         }
 
-        public string MostrarOpcoes()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Cadastro de Categorias de Revistas");
-
-            Console.WriteLine();
-
-            Console.WriteLine("Digite 1 para Inserir");
-            Console.WriteLine("Digite 2 para Editar");
-            Console.WriteLine("Digite 3 para Excluir");
-            Console.WriteLine("Digite 4 para Visualizar");
-
-            Console.WriteLine("Digite s para sair");
-
-            string opcao = Console.ReadLine();
-
-            return opcao;
-        }
-
-        public void InserirNovaCategoria()
+        public void InserirRegistro()
         {
             MostrarTitulo("Inserindo nova categoria de revista");
 
             Categoria novaCategoria = ObterCategoria();
 
-            repositorioCategoria.Inserir(novaCategoria);
+            string statusValidacao = repositorioCategoria.Inserir(novaCategoria);
 
-            notificador.ApresentarMensagem("Categoria de Revista inserida com sucesso", TipoMensagem.Sucesso);
+            if (statusValidacao == "REGISTRO_VALIDO")
+                notificador.ApresentarMensagem("Categoria de Revista cadastrada com sucesso!", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem(statusValidacao, TipoMensagem.Erro);
         }
 
-        public void EditarCategoria()
+        public void EditarRegistro()
         {
             MostrarTitulo("Editando Categoria");
 
-            bool temCategoriasCadastradas = VisualizarCategorias("Pesquisando");
+            bool temCategoriasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temCategoriasCadastradas == false)
             {
@@ -66,11 +50,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             notificador.ApresentarMensagem("Categoria editada com sucesso", TipoMensagem.Sucesso);
         }
 
-        public void ExcluirCategoria()
+        public void ExcluirRegistro()
         {
             MostrarTitulo("Excluindo Categoria");
 
-            bool temCategoriasCadastradas = VisualizarCategorias("Pesquisando");
+            bool temCategoriasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temCategoriasCadastradas == false)
             {
@@ -86,7 +70,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             notificador.ApresentarMensagem("Revista excluída com sucesso", TipoMensagem.Sucesso);
         }
 
-        public bool VisualizarCategorias(string tipo)
+        public bool VisualizarRegistros(string tipo)
         {
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Categorias");
@@ -142,15 +126,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             Categoria novaCategoria = new Categoria(nome, diasEmprestimo);
 
             return novaCategoria;
-        }
-
-        public void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
         }
         #endregion
     }

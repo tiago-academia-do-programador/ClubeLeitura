@@ -3,53 +3,37 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
-    public class TelaCadastroCaixa
+    public class TelaCadastroCaixa : TelaBase, ICadastroBasico
     {
         private readonly Notificador notificador;
         private readonly RepositorioCaixa repositorioCaixa;
 
         public TelaCadastroCaixa(RepositorioCaixa repositorioCaixa, Notificador notificador)
+            : base("Cadastro de Caixas")
         {
             this.repositorioCaixa = repositorioCaixa;
             this.notificador = notificador;
         }
 
-        public string MostrarOpcoes()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Cadastro de Caixas");
-
-            Console.WriteLine();
-
-            Console.WriteLine("Digite 1 para Inserir");
-            Console.WriteLine("Digite 2 para Editar");
-            Console.WriteLine("Digite 3 para Excluir");
-            Console.WriteLine("Digite 4 para Visualizar");
-
-            Console.WriteLine("Digite s para sair");
-
-            string opcao = Console.ReadLine();
-
-            return opcao;
-        }
-
-        public void InserirNovaCaixa()
+        public void InserirRegistro()
         {
             MostrarTitulo("Inserindo nova Caixa");
 
             Caixa novaCaixa = ObterCaixa();
            
-            repositorioCaixa.Inserir(novaCaixa);
+            string statusValidacao = repositorioCaixa.Inserir(novaCaixa);
 
-            notificador.ApresentarMensagem("Caixa inserida com sucesso!", TipoMensagem.Sucesso);
+            if (statusValidacao == "REGISTRO_VALIDO")
+                notificador.ApresentarMensagem("Caixa cadastrada com sucesso!", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem(statusValidacao, TipoMensagem.Erro);
         }
 
-        public void EditarCaixa()
+        public void EditarRegistro()
         {
             MostrarTitulo("Editando Caixa");
 
-            bool temCaixasCadastradas = VisualizarCaixas("Pesquisando");
+            bool temCaixasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temCaixasCadastradas == false)
             {
@@ -85,11 +69,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             return numeroCaixa;
         }
 
-        public void ExcluirCaixa()
+        public void ExcluirRegistro()
         {
             MostrarTitulo("Excluindo Caixa");
 
-            bool temCaixasCadastradas = VisualizarCaixas("Pesquisando");
+            bool temCaixasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temCaixasCadastradas == false)
             {
@@ -105,7 +89,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             notificador.ApresentarMensagem("Caixa excluída com sucesso", TipoMensagem.Sucesso);
         }
 
-        public bool VisualizarCaixas(string tipo)
+        public bool VisualizarRegistros(string tipo)
         {
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Caixas");
@@ -156,15 +140,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             Caixa caixa = new Caixa(cor, etiqueta);
 
             return caixa;
-        }
-
-        public void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
         }
 
     }

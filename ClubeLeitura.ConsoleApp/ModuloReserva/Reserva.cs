@@ -45,5 +45,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             return ultrapassouDataReserva;
         }
+
+        public override string Validar()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

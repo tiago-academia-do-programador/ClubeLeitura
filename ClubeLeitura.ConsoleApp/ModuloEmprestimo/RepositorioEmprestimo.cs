@@ -8,7 +8,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
         {
         }
 
-        public override void Inserir(EntidadeBase emprestimo)
+        public override string Inserir(EntidadeBase emprestimo)
         {
             Emprestimo e = (Emprestimo)emprestimo;
             e.numero = ++contadorNumero;
@@ -19,6 +19,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             e.amigo.RegistrarEmprestimo(e);
 
             registros[ObterPosicaoVazia()] = e;
+
+            return "REGISTRO_VALIDO";
         }
 
         public bool RegistrarDevolucao(Emprestimo emprestimo)

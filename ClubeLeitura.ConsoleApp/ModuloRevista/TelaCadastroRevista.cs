@@ -5,7 +5,7 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
-    public class TelaCadastroRevista
+    public class TelaCadastroRevista : TelaBase, ICadastroBasico
     {
         private readonly TelaCadastroCategoria telaCadastroCategoria;
         private readonly RepositorioCategoria repositorioCategoria;
@@ -20,7 +20,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             TelaCadastroCaixa telaCadastroCaixa,
             RepositorioCaixa repositorioCaixa,
             RepositorioRevista repositorioRevista,
-            Notificador notificador)
+            Notificador notificador) : base("Cadastro de Revistas")
         {
             this.telaCadastroCategoria = telaCadastroCategoria;
             this.repositorioCategoria = repositorioCategoria;
@@ -30,27 +30,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             this.notificador = notificador;
         }
 
-        public string MostrarOpcoes()
-        {
-            Console.Clear();
-
-            Console.WriteLine("Cadastro de Revistas");
-
-            Console.WriteLine();
-
-            Console.WriteLine("Digite 1 para Inserir");
-            Console.WriteLine("Digite 2 para Editar");
-            Console.WriteLine("Digite 3 para Excluir");
-            Console.WriteLine("Digite 4 para Visualizar");
-
-            Console.WriteLine("Digite s para sair");
-
-            string opcao = Console.ReadLine();
-
-            return opcao;
-        }
-
-        public void InserirNovaRevista()
+        public void InserirRegistro()
         {
             MostrarTitulo("Inserindo nova revista");
 
@@ -75,11 +55,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             notificador.ApresentarMensagem("Revista inserida com sucesso", TipoMensagem.Sucesso);
         }
 
-        public void EditarRevista()
+        public void EditarRegistro()
         {
             MostrarTitulo("Editando Revista");
 
-            bool temRevistasCadastradas = VisualizarRevistas("Pesquisando");
+            bool temRevistasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temRevistasCadastradas == false)
             {
@@ -102,11 +82,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             notificador.ApresentarMensagem("Revista editada com sucesso", TipoMensagem.Sucesso);
         }
 
-        public void ExcluirRevista()
+        public void ExcluirRegistro()
         {
             MostrarTitulo("Excluindo Revista");
 
-            bool temRevistasCadastradas = VisualizarRevistas("Pesquisando");
+            bool temRevistasCadastradas = VisualizarRegistros("Pesquisando");
 
             if (temRevistasCadastradas == false)
             {
@@ -122,7 +102,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             notificador.ApresentarMensagem("Revista excluída com sucesso", TipoMensagem.Sucesso);
         }
 
-        public bool VisualizarRevistas(string tipo)
+        public bool VisualizarRegistros(string tipo)
         {
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Revistas");
@@ -168,7 +148,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
         private Categoria ObtemCategoria()
         {
-            bool temCategoriasDisponiveis = telaCadastroCategoria.VisualizarCategorias("");
+            bool temCategoriasDisponiveis = telaCadastroCategoria.VisualizarRegistros("");
 
             if (!temCategoriasDisponiveis)
             {
@@ -188,7 +168,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
         private Caixa ObtemCaixa()
         {
-            bool temCaixasDisponiveis = telaCadastroCaixa.VisualizarCaixas("");
+            bool temCaixasDisponiveis = telaCadastroCaixa.VisualizarRegistros("");
 
             if (!temCaixasDisponiveis)
             {
@@ -224,16 +204,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             } while (numeroRevistaEncontrado == false);
 
             return numeroRevista;
-        }
-
-
-        private void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
         }
         #endregion
     }

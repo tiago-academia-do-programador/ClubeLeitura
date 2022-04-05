@@ -19,5 +19,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             this.nome = nome;
             this.diasEmprestimo = diasEmprestimo;
         }
+
+        public override string Validar()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

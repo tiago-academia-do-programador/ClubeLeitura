@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ClubeLeitura.ConsoleApp.Compartilhado
+﻿namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public class RepositorioBase
     {
@@ -12,13 +10,20 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             registros = new EntidadeBase[qtdRegistros];
         }
 
-        public virtual void Inserir(EntidadeBase entidade)
+        public virtual string Inserir(EntidadeBase entidade)
         {
+            //string statusValidacao = entidade.Validar();
+
+            //if (statusValidacao != "REGISTRO_VALIDO")
+            //    return statusValidacao;
+
             entidade.numero = ++contadorNumero;
 
             int posicaoVazia = ObterPosicaoVazia();
 
             registros[posicaoVazia] = entidade;
+
+            return "REGISTRO_VALIDO";
         }
 
         public void Editar(int numeroSelecioando, EntidadeBase entidade)

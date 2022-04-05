@@ -16,5 +16,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             this.cor = cor;
             this.etiqueta = etiqueta;
         }
+
+        public override string Validar()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
