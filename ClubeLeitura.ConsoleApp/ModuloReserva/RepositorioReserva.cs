@@ -1,59 +1,35 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
     public class RepositorioReserva : RepositorioBase
     {
-        public RepositorioReserva(int qtdReservas) : base(qtdReservas)
+        public RepositorioReserva()
         {
         }
 
-        public override string Inserir(EntidadeBase reserva)
+        public override string Inserir(EntidadeBase r)
         {
-            Reserva r = (Reserva)reserva;
+            Reserva reserva = (Reserva)r;
+            reserva.numero = ++contadorNumero;
 
-            r.numero = ++contadorNumero;
+            reserva.Abrir();
 
-            r.Abrir();
-
-            registros[ObterPosicaoVazia()] = reserva;
+            registros.Add(reserva);
 
             return "REGISTRO_VALIDO";
         }
 
         public Reserva[] SelecionarReservasEmAberto()
         {
-            Reserva[] reservasInseridas = new Reserva[ObterQtdReservasEmAberto()];
+            List<Reserva> reservasInseridas = new List<Reserva>();
 
-            int j = 0;
+            foreach (Reserva reserva in registros)
+                if (reserva.estaAberta)
+                    reservasInseridas.Add(reserva);
 
-            for (int i = 0; i < reservasInseridas.Length; i++)
-            {
-                Reserva r = (Reserva)registros[i];
-
-                if (r != null && r.estaAberta)
-                {
-                    reservasInseridas[j] = r;
-                    j++;
-                }
-            }
-
-            return reservasInseridas;
-        }
-
-        public int ObterQtdReservasEmAberto()
-        {
-            int numeroReservas = 0;
-
-            for (int i = 0; i < registros.Length; i++)
-            {
-                Reserva r = (Reserva)registros[i];
-
-                if (r != null && r.estaAberta)
-                    numeroReservas++;
-            }
-
-            return numeroReservas;
+            return reservasInseridas.ToArray();
         }
     }
 }

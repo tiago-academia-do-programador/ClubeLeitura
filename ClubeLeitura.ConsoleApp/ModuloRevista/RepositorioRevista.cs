@@ -4,7 +4,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
     public class RepositorioRevista : RepositorioBase
     {
-        public RepositorioRevista(int qtdRegistros) : base(qtdRegistros)
+        public RepositorioRevista()
         {
         }
     }

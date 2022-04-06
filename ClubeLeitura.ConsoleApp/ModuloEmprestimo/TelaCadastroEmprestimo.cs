@@ -2,6 +2,7 @@
 using ClubeLeitura.ConsoleApp.ModuloAmigo;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
@@ -183,12 +184,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Empréstimos");
 
-            EntidadeBase[] emprestimos = repositorioEmprestimo.SelecionarTodos();
+            List<EntidadeBase> emprestimos = repositorioEmprestimo.SelecionarTodos();
 
-            if (emprestimos.Length == 0)
+            if (emprestimos.Count == 0)
                 return false;
 
-            for (int i = 0; i < emprestimos.Length; i++)
+            for (int i = 0; i < emprestimos.Count; i++)
             {
                 Emprestimo emprestimo = (Emprestimo)emprestimos[i];
 
@@ -210,12 +211,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Empréstimos em Aberto");
 
-            Emprestimo[] emprestimos = repositorioEmprestimo.SelecionarEmprestimosAbertos();
+            List<Emprestimo> emprestimos = repositorioEmprestimo.SelecionarEmprestimosAbertos();
 
-            if (emprestimos.Length == 0)
+            if (emprestimos.Count == 0)
                 return false;
 
-            for (int i = 0; i < emprestimos.Length; i++)
+            for (int i = 0; i < emprestimos.Count; i++)
             {
                 Emprestimo emprestimo = emprestimos[i];
 
@@ -290,7 +291,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                 Console.Write("Digite o número do empréstimo que deseja selecionar: ");
                 numeroEmprestimo = Convert.ToInt32(Console.ReadLine());
 
-                numeroEmprestimoEncontrado = repositorioEmprestimo.VerificarNumeroRegistroExiste(numeroEmprestimo);
+                numeroEmprestimoEncontrado = repositorioEmprestimo.ExisteRegistro(numeroEmprestimo);
 
                 if (numeroEmprestimoEncontrado == false)
                     notificador.ApresentarMensagem("Número de empréstimo não encontrado, digite novamente", TipoMensagem.Atencao);

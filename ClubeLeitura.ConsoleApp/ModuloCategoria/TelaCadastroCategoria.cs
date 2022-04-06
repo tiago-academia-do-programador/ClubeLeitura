@@ -1,5 +1,6 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 using System;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 {
@@ -75,12 +76,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Categorias");
 
-            EntidadeBase[] categorias = repositorioCategoria.SelecionarTodos();
+            List<EntidadeBase> categorias = repositorioCategoria.SelecionarTodos();
 
-            if (categorias.Length == 0)
+            if (categorias.Count == 0)
                 return false;
 
-            for (int i = 0; i < categorias.Length; i++)
+            for (int i = 0; i < categorias.Count; i++)
             {
                 Categoria categoria = (Categoria)categorias[i];
 
@@ -105,7 +106,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
                 Console.Write("Digite o número da categoria que deseja selecionar: ");
                 numeroCategoria = Convert.ToInt32(Console.ReadLine());
 
-                numeroCadastroEncontrado = repositorioCategoria.VerificarNumeroRegistroExiste(numeroCategoria);
+                numeroCadastroEncontrado = repositorioCategoria.ExisteRegistro(numeroCategoria);
 
                 if (numeroCadastroEncontrado == false)
                     notificador.ApresentarMensagem("Número de cadastro não encontrado, digite novamente", TipoMensagem.Atencao);

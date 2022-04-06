@@ -5,26 +5,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
     public class RepositorioCaixa : RepositorioBase
     {
-        public RepositorioCaixa(int qtdCaixas) : base(qtdCaixas)
+        public RepositorioCaixa()
         {
         }
 
         public bool EtiquetaJaUtilizada(string etiquetaInformada)
         {
-            bool etiquetaJaUtilizada = false;
+            foreach (Caixa caixa in registros)
+                if (caixa.Etiqueta == etiquetaInformada)
+                    return true;
 
-            for (int i = 0; i < registros.Length; i++)
-            {
-                Caixa c = (Caixa)registros[i];
-
-                if (registros[i] != null && c.Etiqueta == etiquetaInformada)
-                {
-                    etiquetaJaUtilizada = true;
-                    break;
-                }
-            }
-
-            return etiquetaJaUtilizada;
+            return false;
         }
     }
 }

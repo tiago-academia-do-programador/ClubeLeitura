@@ -2,6 +2,7 @@
 using ClubeLeitura.ConsoleApp.ModuloCaixa;
 using ClubeLeitura.ConsoleApp.ModuloCategoria;
 using System;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
@@ -107,12 +108,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Revistas");
 
-            EntidadeBase[] revistas = repositorioRevista.SelecionarTodos();
+            List<EntidadeBase> revistas = repositorioRevista.SelecionarTodos();
 
-            if (revistas.Length == 0)
+            if (revistas.Count == 0)
                 return false;
 
-            for (int i = 0; i < revistas.Length; i++)
+            for (int i = 0; i < revistas.Count; i++)
             {
                 Revista revista = (Revista)revistas[i];
 
@@ -196,7 +197,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Console.Write("Digite o número da revista que deseja selecionar: ");
                 numeroRevista = Convert.ToInt32(Console.ReadLine());
 
-                numeroRevistaEncontrado = repositorioRevista.VerificarNumeroRegistroExiste(numeroRevista);
+                numeroRevistaEncontrado = repositorioRevista.ExisteRegistro(numeroRevista);
 
                 if (numeroRevistaEncontrado == false)
                     notificador.ApresentarMensagem("Número de revista não encontrado, digite novamente", TipoMensagem.Atencao);

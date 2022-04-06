@@ -3,7 +3,7 @@ using ClubeLeitura.ConsoleApp.ModuloAmigo;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
-
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
@@ -133,12 +133,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Reservas");
 
-            EntidadeBase[] reservas = repositorioReserva.SelecionarTodos();
+            List<EntidadeBase> reservas = repositorioReserva.SelecionarTodos();
 
-            if (reservas.Length == 0)
+            if (reservas.Count == 0)
                 return false;
 
-            for (int i = 0; i < reservas.Length; i++)
+            for (int i = 0; i < reservas.Count; i++)
             {
                 Reserva reserva = (Reserva)reservas[i];
 
@@ -244,15 +244,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             Revista revistaSelecionada = (Revista)repositorioRevista.SelecionarRegistro(numeroRevistaEmprestimo);
 
             return revistaSelecionada;
-        }
-
-        public void MostrarTitulo(string titulo)
-        {
-            Console.Clear();
-
-            Console.WriteLine(titulo);
-
-            Console.WriteLine();
         }
     }
 }

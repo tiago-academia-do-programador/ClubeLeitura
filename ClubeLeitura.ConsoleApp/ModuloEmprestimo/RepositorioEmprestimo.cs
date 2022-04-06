@@ -1,24 +1,26 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
     public class RepositorioEmprestimo : RepositorioBase
     {
-        public RepositorioEmprestimo(int qtdEmprestimos) : base(qtdEmprestimos)
+        public RepositorioEmprestimo()
         {
         }
 
-        public override string Inserir(EntidadeBase emprestimo)
+        public override string Inserir(EntidadeBase e)
         {
-            Emprestimo e = (Emprestimo)emprestimo;
-            e.numero = ++contadorNumero;
+            Emprestimo emprestimo = (Emprestimo)e;
 
-            e.Abrir();
+            emprestimo.numero = ++contadorNumero;
 
-            e.revista.RegistrarEmprestimo(e);
-            e.amigo.RegistrarEmprestimo(e);
+            emprestimo.Abrir();
 
-            registros[ObterPosicaoVazia()] = e;
+            emprestimo.revista.RegistrarEmprestimo(emprestimo);
+            emprestimo.amigo.RegistrarEmprestimo(emprestimo);
+
+            registros.Add(e);
 
             return "REGISTRO_VALIDO";
         }
@@ -30,39 +32,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             return true;
         }
 
-        public Emprestimo[] SelecionarEmprestimosAbertos()
+        public List<Emprestimo> SelecionarEmprestimosAbertos()
         {
-            Emprestimo[] emprestimosAbertos = new Emprestimo[ObterQtdEmprestimosAbertos()];
+            List<Emprestimo> emprestimosAbertos = new List<Emprestimo>();
 
-            int j = 0;
-
-            for (int i = 0; i < registros.Length; i++)
+            foreach (Emprestimo emprestimo in registros)
             {
-                Emprestimo e = (Emprestimo)registros[i];
-
-                if (e != null && e.estaAberto)
-                {
-                    emprestimosAbertos[j] = e;
-                    j++;
-                }
+                if (emprestimo.estaAberto)
+                    emprestimosAbertos.Add(emprestimo);
             }
 
             return emprestimosAbertos;
-        }
-
-        public int ObterQtdEmprestimosAbertos()
-        {
-            int numeroEmprestimos = 0;
-
-            for (int i = 0; i < registros.Length; i++)
-            {
-                Emprestimo e = (Emprestimo)registros[i];
-
-                if (e != null && e.estaAberto)
-                    numeroEmprestimos++;
-            }
-
-            return numeroEmprestimos;
         }
     }
 }
