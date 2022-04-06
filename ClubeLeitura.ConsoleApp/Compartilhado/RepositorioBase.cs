@@ -1,13 +1,16 @@
-﻿namespace ClubeLeitura.ConsoleApp.Compartilhado
+﻿using System;
+using System.Collections.Generic;
+
+namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public class RepositorioBase
     {
-        protected readonly EntidadeBase[] registros;
+        protected readonly List<EntidadeBase> registros;
         protected int contadorNumero;
 
-        public RepositorioBase(int qtdRegistros)
+        public RepositorioBase()
         {
-            registros = new EntidadeBase[qtdRegistros];
+            registros = new List<EntidadeBase>();
         }
 
         public virtual string Inserir(EntidadeBase entidade)
@@ -19,103 +22,72 @@
 
             entidade.numero = ++contadorNumero;
 
-            int posicaoVazia = ObterPosicaoVazia();
-
-            registros[posicaoVazia] = entidade;
+            registros.Add(entidade);
 
             return "REGISTRO_VALIDO";
         }
 
-        public void Editar(int numeroSelecioando, EntidadeBase entidade)
+        public bool Editar(int numeroSelecionado, EntidadeBase entidadeEditada)
         {
-            for (int i = 0; i < registros.Length; i++)
-            {
-                if (registros[i].numero == numeroSelecioando)
-                {
-                    entidade.numero = numeroSelecioando;
-                    registros[i] = entidade;
+            EntidadeBase entidadeSelecionada = SelecionarRegistro(numeroSelecionado);
 
-                    break;
-                }
-            }
+            if (entidadeSelecionada is null)
+                return false;
+
+            entidadeEditada.numero = numeroSelecionado;
+
+            entidadeSelecionada = entidadeEditada;
+
+            return true;
         }
 
-        public void Excluir(int numeroSelecionado)
+        public bool Excluir(int numeroSelecionado)
         {
-            for (int i = 0; i < registros.Length; i++)
-            {
-                if (registros[i].numero == numeroSelecionado)
-                {
-                    registros[i] = null;
-                    break;
-                }
-            }
+            EntidadeBase entidadeSelecionada = SelecionarRegistro(numeroSelecionado);
+
+            if (entidadeSelecionada is null)
+                return false;
+
+            registros.Remove(entidadeSelecionada);
+
+            return true;
         }
 
         public EntidadeBase SelecionarRegistro(int numeroRegistro)
         {
-            for (int i = 0; i < registros.Length; i++)
+            foreach (EntidadeBase registro in registros)
             {
-                if (registros[i] != null && numeroRegistro == registros[i].numero)
-                    return registros[i];
+                if (registro.numero == numeroRegistro)
+                    return registro;
             }
 
             return null;
         }
 
-        public EntidadeBase[] SelecionarTodos()
+        public List<EntidadeBase> SelecionarTodos()
         {
-            int quantidadeRegistros = ObterQtdRegistros();
-
-            EntidadeBase[] registrosInseridos = new EntidadeBase[quantidadeRegistros];
-
-            for (int i = 0; i < registros.Length; i++)
-            {
-                if (registros[i] != null)
-                    registrosInseridos[i] = registros[i];
-            }
-
-            return registrosInseridos;
+            return registros;
         }
 
-        public bool VerificarNumeroRegistroExiste(int numeroRegistro)
+        public bool ExisteRegistro(int numeroRegistro)
         {
-            bool numeroRegistroExiste = false;
+            bool existeRegistro = false;
 
-            for (int i = 0; i < registros.Length; i++)
+            EntidadeBase registroSelecionado = SelecionarRegistro(numeroRegistro);
+
+            if (registroSelecionado is null)
+                return existeRegistro;
+
+            foreach (EntidadeBase registro in registros)
             {
-                if (registros[i] != null && registros[i].numero == numeroRegistro)
+                if (registro.numero == numeroRegistro)
                 {
-                    numeroRegistroExiste = true;
+                    existeRegistro = true;
                     break;
                 }
             }
 
-            return numeroRegistroExiste;
-        }
-
-        protected int ObterQtdRegistros()
-        {
-            int numeroRegistros = 0;
-
-            for (int i = 0; i < registros.Length; i++)
-            {
-                if (registros[i] != null)
-                    numeroRegistros++;
-            }
-
-            return numeroRegistros;
-        }
-
-        protected int ObterPosicaoVazia()
-        {
-            for (int i = 0; i < registros.Length; i++)
-            {
-                if (registros[i] == null)
-                    return i;
-            }
-
-            return -1;
+            return existeRegistro;
         }
     }
 }

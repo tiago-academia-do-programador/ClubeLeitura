@@ -5,7 +5,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
     public class RepositorioAmigo : RepositorioBase
     {
-        public RepositorioAmigo(int qtdAmigos) : base(qtdAmigos)
+        public RepositorioAmigo()
         {
         }
 
