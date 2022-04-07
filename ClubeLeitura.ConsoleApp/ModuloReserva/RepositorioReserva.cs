@@ -3,15 +3,14 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
-    public class RepositorioReserva : RepositorioBase
+    public class RepositorioReserva : RepositorioBase<Reserva>
     {
         public RepositorioReserva()
         {
         }
 
-        public override string Inserir(EntidadeBase r)
+        public override string Inserir(Reserva reserva)
         {
-            Reserva reserva = (Reserva)r;
             reserva.numero = ++contadorNumero;
 
             reserva.Abrir();

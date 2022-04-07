@@ -3,16 +3,14 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
-    public class RepositorioEmprestimo : RepositorioBase
+    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>
     {
         public RepositorioEmprestimo()
         {
         }
 
-        public override string Inserir(EntidadeBase e)
+        public override string Inserir(Emprestimo emprestimo)
         {
-            Emprestimo emprestimo = (Emprestimo)e;
-
             emprestimo.numero = ++contadorNumero;
 
             emprestimo.Abrir();
@@ -20,7 +18,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             emprestimo.revista.RegistrarEmprestimo(emprestimo);
             emprestimo.amigo.RegistrarEmprestimo(emprestimo);
 
-            registros.Add(e);
+            registros.Add(emprestimo);
 
             return "REGISTRO_VALIDO";
         }

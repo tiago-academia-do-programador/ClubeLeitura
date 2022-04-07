@@ -2,17 +2,18 @@
 
 namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
-    public class RepositorioBase
+    public abstract class RepositorioBase<T> where T : EntidadeBase
     {
-        protected readonly List<EntidadeBase> registros;
+        protected readonly List<T> registros;
+
         protected int contadorNumero;
 
         public RepositorioBase()
         {
-            registros = new List<EntidadeBase>();
+            registros = new List<T>();
         }
 
-        public virtual string Inserir(EntidadeBase entidade)
+        public virtual string Inserir(T entidade)
         {
             entidade.numero = ++contadorNumero;
 
@@ -21,7 +22,7 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             return "REGISTRO_VALIDO";
         }
 
-        public void Editar(int numeroSelecionado, EntidadeBase entidade)
+        public void Editar(int numeroSelecionado, T entidade)
         {
             for (int i = 0; i < registros.Count; i++)
             {
@@ -37,7 +38,7 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public bool Excluir(int numeroSelecionado)
         {
-            EntidadeBase entidadeSelecionada = SelecionarRegistro(numeroSelecionado);
+            T entidadeSelecionada = SelecionarRegistro(numeroSelecionado);
 
             if (entidadeSelecionada == null)
                 return false;
@@ -47,23 +48,23 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             return true;
         }
 
-        public EntidadeBase SelecionarRegistro(int numeroRegistro)
+        public T SelecionarRegistro(int numeroRegistro)
         {
-            foreach (EntidadeBase registro in registros)
+            foreach (T registro in registros)
                 if (numeroRegistro == registro.numero)
                     return registro;
 
             return null;
         }
 
-        public List<EntidadeBase> SelecionarTodos()
+        public List<T> SelecionarTodos()
         {
             return registros;
         }
 
         public bool ExisteRegistro(int numeroRegistro)
         {
-            foreach (EntidadeBase registro in registros)
+            foreach (T registro in registros)
                 if (registro.numero == numeroRegistro)
                     return true;
 
