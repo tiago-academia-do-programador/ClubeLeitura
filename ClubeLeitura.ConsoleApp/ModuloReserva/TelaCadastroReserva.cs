@@ -136,19 +136,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             if (reservas.Count == 0)
                 return false;
 
-            for (int i = 0; i < reservas.Count; i++)
-            {
-                Reserva reserva = (Reserva)reservas[i];
-
-                string statusReserva = reserva.estaAberta ? "Aberta" : "Fechada";
-
-                Console.WriteLine("Número: " + reserva.numero);
-                Console.WriteLine("Revista reservada: " + reserva.revista.Colecao);
-                Console.WriteLine("Nome do amigo: " + reserva.amigo.Nome);
-                Console.WriteLine("Data da reserva: " + reserva.dataInicialReserva.ToShortDateString());
-                Console.WriteLine("Status da reserva: " + statusReserva);
-                Console.WriteLine();
-            }
+            foreach (Reserva reserva in reservas)
+                Console.WriteLine(reserva.ToString());
 
             return true;
         }
@@ -158,21 +147,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Reservas em Aberto");
 
-            List<Reserva> reservas = ((ITransacaoRepositorio<Reserva>)repositorioReserva).SelecionarTransacoesEmAberto();
+            List<Reserva> reservas = repositorioReserva.Filtrar(x => x.estaAberta);
 
             if (reservas.Count == 0)
                 return false;
 
-            for (int i = 0; i < reservas.Count; i++)
-            {
-                Reserva reserva = reservas[i];
-
-                Console.WriteLine("Número: " + reserva.numero);
-                Console.WriteLine("Revista reservada: " + reserva.revista.Colecao);
-                Console.WriteLine("Nome do amigo: " + reserva.amigo.Nome);
-                Console.WriteLine("Data de expiração da Reserva: " + reserva.dataInicialReserva.AddDays(2).ToShortDateString());
-                Console.WriteLine();
-            }
+            foreach (Reserva reserva in reservas)
+                Console.WriteLine(reserva.ToString());
 
             return true;
         }
@@ -199,7 +180,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Console.WriteLine();
 
-            Reserva reservaSelecionada = (Reserva)repositorioReserva.SelecionarRegistro(numeroReserva);
+            Reserva reservaSelecionada = repositorioReserva.SelecionarRegistro(x => x.numero == numeroReserva);
 
             return reservaSelecionada;
         }
@@ -219,7 +200,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Console.WriteLine();
 
-            Amigo amigoSelecionado = (Amigo)repositorioAmigo.SelecionarRegistro(numeroAmigoEmprestimo);
+            Amigo amigoSelecionado = repositorioAmigo.SelecionarRegistro(x => x.numero == numeroAmigoEmprestimo);
 
             return amigoSelecionado;
         }
@@ -239,7 +220,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             Console.WriteLine();
 
-            Revista revistaSelecionada = (Revista)repositorioRevista.SelecionarRegistro(numeroRevistaEmprestimo);
+            Revista revistaSelecionada = repositorioRevista.SelecionarRegistro(x => x.numero == numeroRevistaEmprestimo);
 
             return revistaSelecionada;
         }

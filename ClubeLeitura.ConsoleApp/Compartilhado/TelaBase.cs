@@ -11,6 +11,7 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             Titulo = titulo;
         }
 
+
         public virtual string MostrarOpcoes()
         {
             MostrarTitulo(Titulo);

@@ -5,10 +5,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
     public class RepositorioEmprestimo : RepositorioBase<Emprestimo>, IRepositorio<Emprestimo>, ITransacaoRepositorio<Emprestimo>
     {
-        public RepositorioEmprestimo()
-        {
-        }
-
         public override string Inserir(Emprestimo emprestimo)
         {
             emprestimo.numero = ++contadorNumero;

@@ -29,19 +29,61 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             return "REGISTRO_VALIDO";
         }
 
-        public bool Editar(int numeroSelecionado, T entidade)
+        public bool Editar(int numeroSelecionado, T novaEntidade)
         {
-            return registros.Editar(x => x.numero == numeroSelecionado, entidade);
+            return Editar(x => x.numero == numeroSelecionado, novaEntidade);
+        }
+
+        public bool Editar(Predicate<T> condicao, T novaEntidade)
+        {
+            foreach (T entidade in registros)
+            {
+                if (condicao(entidade))
+                {
+                    novaEntidade.numero = entidade.numero;
+
+                    int posicaoParaEditar = registros.IndexOf(entidade);
+                    registros[posicaoParaEditar] = novaEntidade;
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool Excluir(int numeroSelecionado)
         {
-            return registros.Remover(x => x.numero == numeroSelecionado);
+            return Excluir(x => x.numero == numeroSelecionado);
         }
 
-        public T SelecionarRegistro(int numeroRegistro)
+        public bool Excluir(Predicate<T> condicao)
         {
-            return registros.Selecionar(x => x.numero == numeroRegistro);
+            foreach (T entidade in registros)
+            {
+                if (condicao(entidade))
+                {
+                    registros.Remove(entidade);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public T SelecionarRegistro(int numeroSelecionado)
+        {
+            return SelecionarRegistro(x => x.numero == numeroSelecionado);
+        }
+
+        public T SelecionarRegistro(Predicate<T> condicao)
+        {
+            foreach (T entidade in registros)
+            {
+                if (condicao(entidade))
+                    return entidade;
+            }
+
+            return null;
         }
 
         public List<T> SelecionarTodos()
@@ -49,9 +91,29 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             return registros;
         }
 
-        public bool ExisteRegistro(int numeroRegistro)
+        public List<T> Filtrar(Predicate<T> condicao)
         {
-            return registros.Verificar(x => x.numero == numeroRegistro);
+            List<T> registrosFiltrados = new List<T>();
+
+            foreach (T registro in registros)
+                if (condicao(registro))
+                    registrosFiltrados.Add(registro);
+
+            return registrosFiltrados;
+        }
+
+        public bool ExisteRegistro(int numeroSelecionado)
+        {
+            return ExisteRegistro(x => x.numero == numeroSelecionado);
+        }
+
+        public bool ExisteRegistro(Predicate<T> condicao)
+        {
+            foreach (T entidade in registros)
+                if (condicao(entidade))
+                    return true;
+                
+            return false;
         }
     }
 }

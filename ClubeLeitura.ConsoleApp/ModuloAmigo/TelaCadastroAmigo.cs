@@ -48,7 +48,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             int numeroAmigoComMulta = ObterNumeroAmigo();
 
-            Amigo amigoComMulta = (Amigo)repositorioAmigo.SelecionarRegistro(numeroAmigoComMulta);
+            Amigo amigoComMulta = repositorioAmigo
+                    .SelecionarRegistro(x => x.TemMultaEmAberto() && x.numero == numeroAmigoComMulta);
 
             amigoComMulta.PagarMulta();
         }
@@ -83,7 +84,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             Amigo amigoAtualizado = ObterAmigo();
 
-            bool conseguiuEditar = repositorioAmigo.Editar(numeroAmigo, amigoAtualizado);
+            bool conseguiuEditar = repositorioAmigo.Editar(x => x.numero == numeroAmigo, amigoAtualizado);
 
             if (!conseguiuEditar)
                 notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
@@ -106,7 +107,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             int numeroAmigo = ObterNumeroAmigo();
 
-            repositorioAmigo.Excluir(numeroAmigo);
+            repositorioAmigo.Excluir(x => x.numero == numeroAmigo);
 
             notificador.ApresentarMensagem("Amigo excluído com sucesso", TipoMensagem.Sucesso);
         }
@@ -121,17 +122,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             if (amigos.Count == 0)
                 return false;
 
-            for (int i = 0; i < amigos.Count; i++)
-            {
-                Amigo a = amigos[i];
-
-                Console.WriteLine("Número: " + a.numero);
-                Console.WriteLine("Nome: " + a.Nome);
-                Console.WriteLine("Nome do responsável: " + a.NomeResponsavel);
-                Console.WriteLine("Onde mora: " + a.Endereco);
-
-                Console.WriteLine();
-            }
+            foreach (Amigo amigo in amigos)
+                Console.WriteLine(amigo.ToString());
 
             return true;
         }
@@ -141,23 +133,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Amigos com Multa");
 
-            List<Amigo> amigos = ((IMultavelRepository<Amigo>)repositorioAmigo).SelecionarRegistrosComMulta();
+            List<Amigo> amigosComMulta = repositorioAmigo.Filtrar(x => x.TemMultaEmAberto());
 
-            if (amigos.Count == 0)
+            if (amigosComMulta.Count == 0)
                 return false;
 
-            for (int i = 0; i < amigos.Count; i++)
-            {
-                Amigo a = amigos[i];
-
-                Console.WriteLine("Número: " + a.numero);
-                Console.WriteLine("Nome: " + a.Nome);
-                Console.WriteLine("Nome do responsável: " + a.NomeResponsavel);
-                Console.WriteLine("Onde mora: " + a.Endereco);
-                Console.WriteLine("Multa: R$" + a.Multa.Valor);
-
-                Console.WriteLine();
-            }
+            foreach (Amigo amigo in amigosComMulta)
+                Console.WriteLine(amigo.ToString());
 
             return true;
         }
@@ -173,7 +155,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
                 Console.Write("Digite o número do amigo que deseja selecionar: ");
                 numeroAmigo = Convert.ToInt32(Console.ReadLine());
 
-                numeroAmigoEncontrado = repositorioAmigo.ExisteRegistro(numeroAmigo);
+                numeroAmigoEncontrado = repositorioAmigo.ExisteRegistro(x => x.numero == numeroAmigo);
 
                 if (numeroAmigoEncontrado == false)
                     notificador.ApresentarMensagem("Número do amigo não encontrado, digite novamente.", TipoMensagem.Atencao);

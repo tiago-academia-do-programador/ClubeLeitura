@@ -46,7 +46,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             Caixa caixaAtualizada = ObterCaixa();
 
-            bool conseguiuEditar = repositorioCaixa.Editar(numeroCaixa, caixaAtualizada);
+            bool conseguiuEditar = repositorioCaixa.Editar(x => x.numero == numeroCaixa, caixaAtualizada);
 
             if (!conseguiuEditar)
                 notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
@@ -64,7 +64,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
                 Console.Write("Digite o número da caixa que deseja editar: ");
                 numeroCaixa = Convert.ToInt32(Console.ReadLine());
 
-                numeroCaixaEncontrado = repositorioCaixa.ExisteRegistro(numeroCaixa);
+                numeroCaixaEncontrado = repositorioCaixa.ExisteRegistro(x => x.numero == numeroCaixa);
 
                 if (numeroCaixaEncontrado == false)
                     notificador.ApresentarMensagem("Número de caixa não encontrado, digite novamente", TipoMensagem.Atencao);
@@ -88,7 +88,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             int numeroCaixa = ObterNumeroCaixa();
 
-            repositorioCaixa.Excluir(numeroCaixa);
+            repositorioCaixa.Excluir(x => x.numero == numeroCaixa);
 
             notificador.ApresentarMensagem("Caixa excluída com sucesso", TipoMensagem.Sucesso);
         }

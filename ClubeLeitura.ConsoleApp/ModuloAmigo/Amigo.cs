@@ -1,11 +1,12 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloReserva;
+using System;
 using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
-    public class Amigo : EntidadeBase, IMultavel
+    public class Amigo : EntidadeBase
     {
         private readonly string nome;
         private readonly string nomeResponsavel;
@@ -30,6 +31,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             this.nomeResponsavel = nomeResponsavel;
             this.telefone = telefone;
             this.endereco = endereco;
+        }
+
+        public override string ToString()
+        {
+            return "Número: " + numero + Environment.NewLine +
+            "Nome: " + Nome + Environment.NewLine +
+            "Nome do responsável: " + NomeResponsavel + Environment.NewLine +
+            "Onde mora: " + Endereco + Environment.NewLine +
+            "Multa: R$" + Multa.Valor + Environment.NewLine;
         }
 
         public void RegistrarEmprestimo(Emprestimo emprestimo)

@@ -46,7 +46,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 
             Categoria categoriaAtualizada = ObterCategoria();
 
-            bool conseguiuEditar = repositorioCategoria.Editar(numeroCategoria, categoriaAtualizada);
+            bool conseguiuEditar = repositorioCategoria.Editar(x => x.numero == numeroCategoria, categoriaAtualizada);
 
             if (!conseguiuEditar)
                 notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
@@ -69,7 +69,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 
             int numeroCategoria = ObterNumeroCategoria();
 
-            repositorioCategoria.Excluir(numeroCategoria);
+            repositorioCategoria.Excluir(x => x.numero == numeroCategoria);
 
             notificador.ApresentarMensagem("Categoria excluída com sucesso", TipoMensagem.Sucesso);
         }
@@ -109,7 +109,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
                 Console.Write("Digite o número da categoria que deseja selecionar: ");
                 numeroCategoria = Convert.ToInt32(Console.ReadLine());
 
-                numeroCadastroEncontrado = repositorioCategoria.ExisteRegistro(numeroCategoria);
+                numeroCadastroEncontrado = repositorioCategoria.ExisteRegistro(x => x.numero == numeroCategoria);
 
                 if (numeroCadastroEncontrado == false)
                     notificador.ApresentarMensagem("Número de cadastro não encontrado, digite novamente", TipoMensagem.Atencao);

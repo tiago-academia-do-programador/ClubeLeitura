@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text;
 
 namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public class ResultadoValidacao
     {
+        public ResultadoValidacao(List<string> erros)
+        {
+            _erros = erros;
+        }
+
         private readonly List<string> _erros;
-        
+
         public StatusValidacao Status
         {
             get
@@ -15,22 +20,18 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             }
         }
 
-        public ResultadoValidacao(List<string> erros)
-        {
-            _erros = erros;
-        }
 
         public override string ToString()
         {
-            string strErros = "";
+            StringBuilder sb = new StringBuilder();
 
             foreach (string erro in _erros)
             {
                 if (!string.IsNullOrEmpty(erro))
-                    strErros += erro + Environment.NewLine;
+                    sb.Append(erro);
             }
 
-            return strErros;
+            return sb.ToString();
         }
     }
 }

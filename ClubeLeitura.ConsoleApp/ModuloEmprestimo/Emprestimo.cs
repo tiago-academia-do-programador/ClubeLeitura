@@ -14,6 +14,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
         public bool EstaAberto { get; set; }
         public DateTime DataEmprestimo { get => dataEmprestimo; }
+        public string Status { get => EstaAberto ? "Aberto" : "Fechado"; }
 
         public Emprestimo(Amigo amigo, Revista revista)
         {
@@ -50,6 +51,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                     amigo.RegistrarMulta(valorMulta);
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return "Número: " + numero + Environment.NewLine +
+                "Revista emprestada: " + revista.Colecao + Environment.NewLine +
+                "Nome do Amigo: " + amigo.Nome + Environment.NewLine +
+                "Data do empréstimo: " + DataEmprestimo.ToShortDateString() + Environment.NewLine +
+                "Status do empréstimo: " + Status + Environment.NewLine;
         }
 
         public override ResultadoValidacao Validar()

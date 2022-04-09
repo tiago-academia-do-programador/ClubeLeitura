@@ -12,6 +12,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
         public DateTime dataInicialReserva;
         public bool estaAberta;
 
+        public string Status { get => estaAberta ? "Aberta" : "Fechada"; }
+
         public Reserva(Amigo amigo, Revista revista)
         {
             this.amigo = amigo;
@@ -44,6 +46,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
                 estaAberta = false;
 
             return ultrapassouDataReserva;
+        }
+        
+        public override string ToString()
+        {
+            return "Número: " + numero + Environment.NewLine +
+                "Revista emprestada: " + revista.Colecao + Environment.NewLine +
+                "Nome do Amigo: " + amigo.Nome + Environment.NewLine +
+                "Data da reserva: " + dataInicialReserva.ToShortDateString() + Environment.NewLine +
+                "Status da reserva: " + Status + Environment.NewLine +
+                "Data de expiração da Reserva: " + dataInicialReserva.AddDays(2).ToShortDateString() + Environment.NewLine;
+            ;
         }
 
         public override ResultadoValidacao Validar()

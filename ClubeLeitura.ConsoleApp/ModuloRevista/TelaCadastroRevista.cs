@@ -46,10 +46,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 return;
             }
 
-            Revista novaRevista = ObterRevista();
-
-            novaRevista.caixa = caixaSelecionada;
-            novaRevista.categoria = categoriaSelecionada;
+            Revista novaRevista = ObterRevista(caixaSelecionada, categoriaSelecionada);
 
             repositorioRevista.Inserir(novaRevista);
 
@@ -74,11 +71,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             
             Caixa caixaSelecionada = ObtemCaixa();
 
-            Revista revistaAtualizada = ObterRevista();
+            Categoria categoriaSelecionada = ObtemCategoria();
 
-            revistaAtualizada.caixa = caixaSelecionada;
+            Revista revistaAtualizada = ObterRevista(caixaSelecionada, categoriaSelecionada);
 
-            repositorioRevista.Editar(numeroRevista, revistaAtualizada);
+            repositorioRevista.Editar(x => x.numero == numeroRevista, revistaAtualizada);
 
             notificador.ApresentarMensagem("Revista editada com sucesso", TipoMensagem.Sucesso);
         }
@@ -98,7 +95,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             int numeroRevista = ObterNumeroRevista();
 
-            repositorioRevista.Excluir(numeroRevista);
+            repositorioRevista.Excluir(x => x.numero == numeroRevista);
 
             notificador.ApresentarMensagem("Revista excluída com sucesso", TipoMensagem.Sucesso);
         }
@@ -113,25 +110,14 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             if (revistas.Count == 0)
                 return false;
 
-            for (int i = 0; i < revistas.Count; i++)
-            {
-                Revista revista = (Revista)revistas[i];
-
-                Console.WriteLine("Número: " + revista.numero);
-                Console.WriteLine("Categoria: " + revista.categoria.Nome);
-                Console.WriteLine("Coleção: " + revista.Colecao);
-                Console.WriteLine("Edição: " + revista.Edicao);
-                Console.WriteLine("Ano: " + revista.Ano);
-                Console.WriteLine("Caixa que está guardada: " + revista.caixa.Cor);
-
-                Console.WriteLine();
-            }
+            foreach (Revista revista in revistas)
+                Console.WriteLine(revista.ToString());
 
             return true;
         }
 
         #region Métodos privados
-        private Revista ObterRevista()
+        private Revista ObterRevista(Caixa caixaSelecionada, Categoria categoriaSelecionada)
         {
             Console.Write("Digite a coleção da revista: ");
             string colecao = Console.ReadLine();
@@ -142,7 +128,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             Console.Write("Digite o ano da revista: ");
             int ano = Convert.ToInt32(Console.ReadLine());
 
-            Revista novaRevista = new Revista(colecao, edicao, ano);
+            Revista novaRevista = new Revista(colecao, edicao, ano, caixaSelecionada, categoriaSelecionada);
 
             return novaRevista;
         }
@@ -162,7 +148,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             Console.WriteLine();
 
-            Categoria categoriaSelecionada = (Categoria)repositorioCategoria.SelecionarRegistro(numCategoriaSelecionada);
+            Categoria categoriaSelecionada = repositorioCategoria.SelecionarRegistro(x => x.numero == numCategoriaSelecionada);
 
             return categoriaSelecionada;
         }
@@ -182,7 +168,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             Console.WriteLine();
 
-            Caixa caixaSelecionada = (Caixa)repositorioCaixa.SelecionarRegistro(numCaixaSelecionada);
+            Caixa caixaSelecionada = repositorioCaixa.SelecionarRegistro(x => x.numero == numCaixaSelecionada);
 
             return caixaSelecionada;
         }
@@ -197,7 +183,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 Console.Write("Digite o número da revista que deseja selecionar: ");
                 numeroRevista = Convert.ToInt32(Console.ReadLine());
 
-                numeroRevistaEncontrado = repositorioRevista.ExisteRegistro(numeroRevista);
+                numeroRevistaEncontrado = repositorioRevista.ExisteRegistro(x => x.numero == numeroRevista);
 
                 if (numeroRevistaEncontrado == false)
                     notificador.ApresentarMensagem("Número de revista não encontrado, digite novamente", TipoMensagem.Atencao);

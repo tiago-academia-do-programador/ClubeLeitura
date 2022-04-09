@@ -2,6 +2,7 @@
 {
     public interface ITransacao
     {
+        string Status { get; }
         void Abrir();
         void Fechar();
     }

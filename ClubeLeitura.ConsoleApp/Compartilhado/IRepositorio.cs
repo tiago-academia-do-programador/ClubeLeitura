@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public interface IRepositorio<T> where T: EntidadeBase
     {
         string Inserir(T entidade);
-        bool Editar(int id, T entidade);
-        bool Excluir(int id);
-        bool ExisteRegistro(int id);
+        bool Editar(Predicate<T> condicao, T novaEntidade);
+        bool Excluir(Predicate<T> condicao);
+        bool ExisteRegistro(Predicate<T> condicao);
         List<T> SelecionarTodos();
-        T SelecionarRegistro(int id);
+        List<T> Filtrar(Predicate<T> condicao);
+        T SelecionarRegistro(Predicate<T> condicao);
+
     }
 }
