@@ -1,6 +1,6 @@
 ﻿namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
-    public interface ICadastroBasico
+    public interface ITelaCadastravel
     {
         void InserirRegistro();
         void EditarRegistro();

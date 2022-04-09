@@ -19,7 +19,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
         public TelaCadastroReserva(
             Notificador notificador,
-            RepositorioReserva repositorioReserva,
+            IRepositorio<Reserva> repositorioReserva,
             IRepositorio<Amigo> repositorioAmigo,
             IRepositorio<Revista> repositorioRevista,
             TelaCadastroAmigo telaCadastroAmigo,
@@ -134,7 +134,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             List<Reserva> reservas = repositorioReserva.SelecionarTodos();
 
             if (reservas.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhuma reserva disponível", TipoMensagem.Atencao);
                 return false;
+            }
 
             foreach (Reserva reserva in reservas)
                 Console.WriteLine(reserva.ToString());
@@ -147,10 +150,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Reservas em Aberto");
 
-            List<Reserva> reservas = repositorioReserva.Filtrar(x => x.estaAberta);
+            List<Reserva> reservas = repositorioReserva.Filtrar(x => x.EstaAberta);
 
             if (reservas.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhuma reserva em aberto disponível", TipoMensagem.Atencao);
                 return false;
+            }
 
             foreach (Reserva reserva in reservas)
                 Console.WriteLine(reserva.ToString());

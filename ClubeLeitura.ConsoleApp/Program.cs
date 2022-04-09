@@ -16,9 +16,12 @@ namespace ClubeLeitura.ConsoleApp
             {
                 TelaBase telaSelecionada = menuPrincipal.ObterTela();
 
+                if (telaSelecionada is null)
+                    return;
+
                 string opcaoSelecionada = telaSelecionada.MostrarOpcoes();
 
-                if (telaSelecionada is ICadastroBasico)
+                if (telaSelecionada is ITelaCadastravel)
                     GerenciarCadastroBasico(telaSelecionada, opcaoSelecionada);
 
                 else if (telaSelecionada is TelaCadastroEmprestimo)
@@ -31,60 +34,56 @@ namespace ClubeLeitura.ConsoleApp
 
         private static void GerenciarCadastroReservas(TelaBase telaSelecionada, string opcaoSelecionada)
         {
-            TelaCadastroReserva telaCadastroReserva = (TelaCadastroReserva)telaSelecionada;
+            TelaCadastroReserva telaCadastroReserva = telaSelecionada as TelaCadastroReserva;
+
+            if (telaCadastroReserva is null)
+                return;
 
             if (opcaoSelecionada == "1")
                 telaCadastroReserva.RegistrarNovaReserva();
 
             else if (opcaoSelecionada == "2")
-            {
-                bool temRegistros = telaCadastroReserva.VisualizarReservas("Tela");
+                telaCadastroReserva.VisualizarReservas("Tela");
 
-                if (!temRegistros)
-                    notificador.ApresentarMensagem("Não há nenhuma reserva cadastrada!", TipoMensagem.Atencao);
-            }
             else if (opcaoSelecionada == "3")
-            {
-                bool temRegistros = telaCadastroReserva.VisualizarReservasEmAberto("Tela");
+                telaCadastroReserva.VisualizarReservasEmAberto("Tela");
 
-                if (!temRegistros)
-                    notificador.ApresentarMensagem("Não há nenhuma reserva em aberto!", TipoMensagem.Atencao);
-            }
             else if (opcaoSelecionada == "4")
                 telaCadastroReserva.RegistrarNovoEmprestimo();
         }
 
         private static void GerenciarCadastroEmprestimos(TelaBase telaSelecionada, string opcaoSelecionada)
         {
-            TelaCadastroEmprestimo telaCadastroEmprestimo = (TelaCadastroEmprestimo)telaSelecionada;
+            TelaCadastroEmprestimo telaCadastroEmprestimo = telaSelecionada as TelaCadastroEmprestimo;
+
+            if (telaCadastroEmprestimo is null)
+                return;
 
             if (opcaoSelecionada == "1")
                 telaCadastroEmprestimo.RegistrarEmprestimo();
+
             else if (opcaoSelecionada == "2")
                 telaCadastroEmprestimo.EditarEmprestimo();
+
             else if (opcaoSelecionada == "3")
                 telaCadastroEmprestimo.ExcluirEmprestimo();
+
             else if (opcaoSelecionada == "4")
-            {
-                bool temRegistros = telaCadastroEmprestimo.VisualizarEmprestimos("Tela");
+                telaCadastroEmprestimo.VisualizarEmprestimos("Tela");
 
-                if (!temRegistros)
-                    notificador.ApresentarMensagem("Não há nenhum empréstimo cadastrado!", TipoMensagem.Atencao);
-            }
             else if (opcaoSelecionada == "5")
-            {
-                bool temRegistros = telaCadastroEmprestimo.VisualizarEmprestimosEmAberto("Tela");
+                telaCadastroEmprestimo.VisualizarEmprestimosEmAberto("Tela");
 
-                if (!temRegistros)
-                    notificador.ApresentarMensagem("Não há nenhum empréstimo em aberto!", TipoMensagem.Atencao);
-            }
             else if (opcaoSelecionada == "6")
                 telaCadastroEmprestimo.RegistrarDevolucao();
         }
 
         public static void GerenciarCadastroBasico(TelaBase telaSelecionada, string opcaoSelecionada)
         {
-            ICadastroBasico telaCadastroBasico = (ICadastroBasico)telaSelecionada;
+            ITelaCadastravel telaCadastroBasico = telaSelecionada as ITelaCadastravel;
+
+            if (telaCadastroBasico is null)
+                return;
 
             if (opcaoSelecionada == "1")
                 telaCadastroBasico.InserirRegistro();
@@ -96,28 +95,18 @@ namespace ClubeLeitura.ConsoleApp
                 telaCadastroBasico.ExcluirRegistro();
 
             else if (opcaoSelecionada == "4")
-            {
-                bool temRegistros = telaCadastroBasico.VisualizarRegistros("Tela");
+                telaCadastroBasico.VisualizarRegistros("Tela");
 
-                if (!temRegistros)
-                    notificador.ApresentarMensagem("Nenhum registro disponível!", TipoMensagem.Atencao);
-            }
+            TelaCadastroAmigo telaCadastroAmigo = telaCadastroBasico as TelaCadastroAmigo;
 
-            if (telaSelecionada is TelaCadastroAmigo)
-            {
-                TelaCadastroAmigo telaCadastroAmigo = (TelaCadastroAmigo)telaSelecionada;
+            if (telaCadastroAmigo is null)
+                return;
 
-                if (opcaoSelecionada == "5")
-                {
-                    bool temRegistros = telaCadastroAmigo.VisualizarAmigosComMulta("Tela");
+            if (opcaoSelecionada == "5")
+                telaCadastroAmigo.VisualizarAmigosComMulta("Tela");
 
-                    if (!temRegistros)
-                        notificador.ApresentarMensagem("Não há nenhum amigo com multa aberta.", TipoMensagem.Atencao);
-                }
-
-                else if (opcaoSelecionada == "6")
-                    telaCadastroAmigo.PagarMulta();
-            }
+            else if (opcaoSelecionada == "6")
+                telaCadastroAmigo.PagarMulta();
         }
     }
 }

@@ -11,8 +11,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
         public Revista revista;
         private DateTime dataEmprestimo;
         private DateTime dataDevolucao;
-
-        public bool EstaAberto { get; set; }
+        private bool estaAberto;
+        public bool EstaAberto { get; }
         public DateTime DataEmprestimo { get => dataEmprestimo; }
         public string Status { get => EstaAberto ? "Aberto" : "Fechado"; }
 
@@ -22,21 +22,33 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             this.revista = revista;
         }
 
+        public override string ToString()
+        {
+            return "Número: " + numero + Environment.NewLine +
+                "Revista emprestada: " + revista.Colecao + Environment.NewLine +
+                "Nome do Amigo: " + amigo.Nome + Environment.NewLine +
+                "Data do empréstimo: " + DataEmprestimo.ToShortDateString() + Environment.NewLine +
+                "Status do empréstimo: " + Status + Environment.NewLine;
+        }
+
         public void Abrir()
         {
-            if (!EstaAberto)
+            if (!estaAberto)
             {
-                EstaAberto = true;
+                estaAberto = true;
                 dataEmprestimo = DateTime.Today;
                 dataDevolucao = dataEmprestimo.AddDays(revista.categoria.DiasEmprestimo);
+
+                amigo.RegistrarEmprestimo(this);
+                revista.RegistrarEmprestimo(this);
             }
         }
 
         public void Fechar()
         {
-            if (EstaAberto)
+            if (estaAberto)
             {
-                EstaAberto = false;
+                estaAberto = false;
 
                 DateTime dataRealDevolucao = DateTime.Today;
 
@@ -51,15 +63,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
                     amigo.RegistrarMulta(valorMulta);
                 }
             }
-        }
-
-        public override string ToString()
-        {
-            return "Número: " + numero + Environment.NewLine +
-                "Revista emprestada: " + revista.Colecao + Environment.NewLine +
-                "Nome do Amigo: " + amigo.Nome + Environment.NewLine +
-                "Data do empréstimo: " + DataEmprestimo.ToShortDateString() + Environment.NewLine +
-                "Status do empréstimo: " + Status + Environment.NewLine;
         }
 
         public override ResultadoValidacao Validar()

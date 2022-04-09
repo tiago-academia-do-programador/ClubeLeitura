@@ -77,7 +77,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             foreach (Reserva reserva in historicoReservas)
             {
-                if (reserva != null && reserva.estaAberta)
+                if (reserva != null && reserva.EstaAberta)
                 {
                     temReservaEmAberto = true;
                     break;

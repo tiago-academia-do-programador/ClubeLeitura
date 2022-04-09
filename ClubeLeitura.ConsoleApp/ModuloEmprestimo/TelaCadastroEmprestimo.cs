@@ -193,7 +193,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             List<Emprestimo> emprestimos = repositorioEmprestimo.SelecionarTodos();
 
             if (emprestimos.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhum empréstimo disponível", TipoMensagem.Atencao);
                 return false;
+            }
 
             foreach (Emprestimo emprestimo in emprestimos)
                 Console.WriteLine(emprestimo.ToString());

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 {
-    public class TelaCadastroCategoria : TelaBase, ICadastroBasico
+    public class TelaCadastroCategoria : TelaBase, ITelaCadastravel
     {
         private readonly IRepositorio<Categoria> repositorioCategoria;
         private readonly Notificador notificador;
@@ -50,8 +50,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 
             if (!conseguiuEditar)
                 notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
-
-            notificador.ApresentarMensagem("Categoria editada com sucesso", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem("Categoria editada com sucesso", TipoMensagem.Sucesso);
         }
 
         public void ExcluirRegistro()
@@ -69,9 +69,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 
             int numeroCategoria = ObterNumeroCategoria();
 
-            repositorioCategoria.Excluir(x => x.numero == numeroCategoria);
+            bool conseguiuExcluir = repositorioCategoria.Excluir(x => x.numero == numeroCategoria);
 
-            notificador.ApresentarMensagem("Categoria excluída com sucesso", TipoMensagem.Sucesso);
+            if (!conseguiuExcluir)
+                notificador.ApresentarMensagem("Não foi possível excluir", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem("Categoria excluída com sucesso", TipoMensagem.Sucesso);
         }
 
         public bool VisualizarRegistros(string tipo)
@@ -82,18 +85,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             List<Categoria> categorias = repositorioCategoria.SelecionarTodos();
 
             if (categorias.Count == 0)
-                return false;
-
-            for (int i = 0; i < categorias.Count; i++)
             {
-                Categoria categoria = (Categoria)categorias[i];
-
-                Console.WriteLine("Número: " + categoria.numero);
-                Console.WriteLine("Tipo de Categoria: " + categoria.Nome);
-                Console.WriteLine("Limite de empréstimo: " + categoria.DiasEmprestimo + " dias");
-
-                Console.WriteLine();
+                notificador.ApresentarMensagem("Não há nenhuma categoria disponível.", TipoMensagem.Atencao);
+                return false;
             }
+
+            foreach (Categoria categoria in categorias)
+                Console.WriteLine(categoria.ToString());
 
             return true;
         }

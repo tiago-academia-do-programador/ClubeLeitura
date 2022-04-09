@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
-    public class TelaCadastroAmigo : TelaBase, ICadastroBasico
+    public class TelaCadastroAmigo : TelaBase, ITelaCadastravel
     {
         private readonly Notificador notificador;
         private readonly IRepositorio<Amigo> repositorioAmigo;
@@ -107,9 +107,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             int numeroAmigo = ObterNumeroAmigo();
 
-            repositorioAmigo.Excluir(x => x.numero == numeroAmigo);
+            bool conseguiuExcluir = repositorioAmigo.Excluir(x => x.numero == numeroAmigo);
 
-            notificador.ApresentarMensagem("Amigo excluído com sucesso", TipoMensagem.Sucesso);
+            if (!conseguiuExcluir)
+                notificador.ApresentarMensagem("Não foi possível excluir.", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem("Amigo excluído com sucesso!", TipoMensagem.Sucesso);
         }
 
         public bool VisualizarRegistros(string tipo)
@@ -120,7 +123,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             List<Amigo> amigos = repositorioAmigo.SelecionarTodos();
 
             if (amigos.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhum amigo disponível.", TipoMensagem.Atencao);
                 return false;
+            }
 
             foreach (Amigo amigo in amigos)
                 Console.WriteLine(amigo.ToString());
@@ -136,7 +142,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             List<Amigo> amigosComMulta = repositorioAmigo.Filtrar(x => x.TemMultaEmAberto());
 
             if (amigosComMulta.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhum amigo com multa disponível.", TipoMensagem.Atencao);
                 return false;
+            }
 
             foreach (Amigo amigo in amigosComMulta)
                 Console.WriteLine(amigo.ToString());

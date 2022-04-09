@@ -14,8 +14,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
         private readonly string endereco;
         public Multa Multa { get; set; }
 
-        private readonly Emprestimo[] historicoEmprestimos = new Emprestimo[10];
-        private readonly Reserva[] historicoReservas = new Reserva[10];
+        private readonly List<Emprestimo> historicoEmprestimos = new List<Emprestimo>();
+        private readonly List<Reserva> historicoReservas = new List<Reserva>();
 
         public string Nome => nome;
 
@@ -44,12 +44,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
         public void RegistrarEmprestimo(Emprestimo emprestimo)
         {
-            historicoEmprestimos[ObtemPosicaoVazia()] = emprestimo;
+            historicoEmprestimos.Add(emprestimo);
         }
 
         public void RegistrarReserva(Reserva reserva)
         {
-            historicoReservas[ObtemPosicaoReservasVazia()] = reserva;
+            historicoReservas.Add(reserva);
         }
 
         public bool TemReservaEmAberto()
@@ -58,7 +58,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             foreach (Reserva reserva in historicoReservas)
             {
-                if (reserva != null && reserva.estaAberta)
+                if (reserva.EstaAberta)
                 {
                     temReservaEmAberto = true;
                     break;
@@ -74,12 +74,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             foreach (Emprestimo emprestimo in historicoEmprestimos)
             {
-                if (emprestimo != null && emprestimo.EstaAberto)
+                if (emprestimo.EstaAberto)
                 {
                     temEmprestimoEmAberto = true;
                     break;
                 }
             }
+
             return temEmprestimoEmAberto;
         }
 
@@ -104,29 +105,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             return true;
         }
 
-        #region Métodos privados
-        private int ObtemPosicaoVazia()
-        {
-            for (int i = 0; i < historicoEmprestimos.Length; i++)
-            {
-                if (historicoEmprestimos[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        private int ObtemPosicaoReservasVazia()
-        {
-            for (int i = 0; i < historicoReservas.Length; i++)
-            {
-                if (historicoReservas[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
         public override ResultadoValidacao Validar()
         {
             List<string> erros = new List<string>();
@@ -145,6 +123,5 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             return new ResultadoValidacao(erros);
         }
-        #endregion
     }
 }

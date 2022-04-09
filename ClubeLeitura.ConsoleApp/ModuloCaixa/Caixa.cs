@@ -1,4 +1,5 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
+using System;
 using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCaixa
@@ -16,6 +17,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
         {
             this.cor = cor;
             this.etiqueta = etiqueta;
+        }
+
+        public override string ToString()
+        {
+            return "Número: " + numero + Environment.NewLine +
+            "Cor: " + Cor + Environment.NewLine +
+            "Etiqueta: " + Etiqueta + Environment.NewLine;
         }
 
         public override ResultadoValidacao Validar()

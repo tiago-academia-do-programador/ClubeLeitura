@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
-    public class TelaCadastroRevista : TelaBase, ICadastroBasico
+    public class TelaCadastroRevista : TelaBase, ITelaCadastravel
     {
         private readonly TelaCadastroCaixa telaCadastroCaixa;
         private readonly TelaCadastroCategoria telaCadastroCategoria;
@@ -48,9 +48,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             Revista novaRevista = ObterRevista(caixaSelecionada, categoriaSelecionada);
 
-            repositorioRevista.Inserir(novaRevista);
+            string statusValidacao = repositorioRevista.Inserir(novaRevista);
 
-            notificador.ApresentarMensagem("Revista inserida com sucesso", TipoMensagem.Sucesso);
+            if (statusValidacao == "REGISTRO_VALIDO")
+                notificador.ApresentarMensagem("Revista inserida com sucesso", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem(statusValidacao, TipoMensagem.Erro);
         }
 
         public void EditarRegistro()
@@ -75,9 +78,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             Revista revistaAtualizada = ObterRevista(caixaSelecionada, categoriaSelecionada);
 
-            repositorioRevista.Editar(x => x.numero == numeroRevista, revistaAtualizada);
+            bool conseguiuEditar = repositorioRevista.Editar(x => x.numero == numeroRevista, revistaAtualizada);
 
-            notificador.ApresentarMensagem("Revista editada com sucesso", TipoMensagem.Sucesso);
+            if (!conseguiuEditar)
+                notificador.ApresentarMensagem("Não foi possível excluir.", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem("Revista editada com sucesso", TipoMensagem.Sucesso);
         }
 
         public void ExcluirRegistro()
@@ -95,9 +101,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             int numeroRevista = ObterNumeroRevista();
 
-            repositorioRevista.Excluir(x => x.numero == numeroRevista);
+            bool conseguiuExcluir = repositorioRevista.Excluir(x => x.numero == numeroRevista);
 
-            notificador.ApresentarMensagem("Revista excluída com sucesso", TipoMensagem.Sucesso);
+            if (!conseguiuExcluir)
+                notificador.ApresentarMensagem("Não foi possível excluir.", TipoMensagem.Sucesso);
+            else
+                notificador.ApresentarMensagem("Revista excluída com sucesso", TipoMensagem.Sucesso);
         }
 
         public bool VisualizarRegistros(string tipo)
@@ -108,7 +117,10 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             List<Revista> revistas = repositorioRevista.SelecionarTodos();
 
             if (revistas.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhuma revista disponível", TipoMensagem.Atencao);
                 return false;
+            }
 
             foreach (Revista revista in revistas)
                 Console.WriteLine(revista.ToString());

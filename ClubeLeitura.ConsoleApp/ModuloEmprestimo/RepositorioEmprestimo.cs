@@ -10,9 +10,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
             emprestimo.Abrir();
 
-            emprestimo.revista.RegistrarEmprestimo(emprestimo);
-            emprestimo.amigo.RegistrarEmprestimo(emprestimo);
-
             registros.Add(emprestimo);
 
             return "REGISTRO_VALIDO";

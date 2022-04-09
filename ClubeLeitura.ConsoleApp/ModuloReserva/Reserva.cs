@@ -5,14 +5,16 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
-    public class Reserva : EntidadeBase, ITransacao
+    public class Reserva : EntidadeBase
     {
         public Amigo amigo;
         public Revista revista;
         public DateTime dataInicialReserva;
-        public bool estaAberta;
+        private bool estaAberta;
 
-        public string Status { get => estaAberta ? "Aberta" : "Fechada"; }
+        public bool EstaAberta { get => estaAberta; }
+
+        public string Status { get => EstaAberta ? "Aberta" : "Fechada"; }
 
         public Reserva(Amigo amigo, Revista revista)
         {

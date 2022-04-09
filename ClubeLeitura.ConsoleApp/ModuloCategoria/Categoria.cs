@@ -1,5 +1,6 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
+using System;
 using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCategoria
@@ -21,6 +22,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             this.diasEmprestimo = diasEmprestimo;
         }
 
+        public override string ToString()
+        {
+            return "Número: " + numero + Environment.NewLine + 
+            "Tipo de Categoria: " + Nome + Environment.NewLine +
+            "Limite de empréstimo: " + DiasEmprestimo + " dias" + Environment.NewLine;
+        }
         public override ResultadoValidacao Validar()
         {
             List<string> erros = new List<string>();

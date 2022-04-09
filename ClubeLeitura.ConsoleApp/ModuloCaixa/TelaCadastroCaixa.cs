@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
-    public class TelaCadastroCaixa : TelaBase, ICadastroBasico
+    public class TelaCadastroCaixa : TelaBase, ITelaCadastravel
     {
         private readonly Notificador notificador;
         private readonly IRepositorio<Caixa> repositorioCaixa;
@@ -101,18 +101,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
             List<Caixa> caixas = repositorioCaixa.SelecionarTodos();
 
             if (caixas.Count == 0)
+            {
+                notificador.ApresentarMensagem("Não há nenhuma caixa disponível.", TipoMensagem.Atencao);
                 return false;
-
-            for (int i = 0; i < caixas.Count; i++)
-            {              
-                Caixa c = (Caixa)caixas[i];
-
-                Console.WriteLine("Número: " + c.numero);
-                Console.WriteLine("Cor: " + c.Cor);
-                Console.WriteLine("Etiqueta: " + c.Etiqueta);
-
-                Console.WriteLine();
             }
+
+            foreach (Caixa caixa in caixas)
+                Console.WriteLine(caixa.ToString());
 
             Console.ReadLine();
 
