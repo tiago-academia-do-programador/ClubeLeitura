@@ -5,7 +5,7 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
-    public class Reserva : EntidadeBase
+    public class Reserva : EntidadeBase, ITransacao
     {
         public Amigo amigo;
         public Revista revista;
@@ -46,7 +46,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             return ultrapassouDataReserva;
         }
 
-        public override string Validar()
+        public override ResultadoValidacao Validar()
         {
             throw new NotImplementedException();
         }

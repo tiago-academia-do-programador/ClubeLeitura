@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
-    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>
+    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>, IRepositorio<Emprestimo>, ITransacaoRepositorio<Emprestimo>
     {
         public RepositorioEmprestimo()
         {
@@ -30,17 +30,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             return true;
         }
 
-        public List<Emprestimo> SelecionarEmprestimosAbertos()
+        public List<Emprestimo> SelecionarTransacoesEmAberto()
         {
-            List<Emprestimo> emprestimosAbertos = new List<Emprestimo>();
-
-            foreach (Emprestimo emprestimo in registros)
-            {
-                if (emprestimo.estaAberto)
-                    emprestimosAbertos.Add(emprestimo);
-            }
-
-            return emprestimosAbertos;
+            return registros.Procurar(x => x.EstaAberto);
         }
     }
 }

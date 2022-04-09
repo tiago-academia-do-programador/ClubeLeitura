@@ -8,19 +8,19 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
     public class TelaCadastroRevista : TelaBase, ICadastroBasico
     {
-        private readonly TelaCadastroCategoria telaCadastroCategoria;
-        private readonly RepositorioCategoria repositorioCategoria;
         private readonly TelaCadastroCaixa telaCadastroCaixa;
-        private readonly RepositorioCaixa repositorioCaixa;
-        private readonly RepositorioRevista repositorioRevista;
+        private readonly TelaCadastroCategoria telaCadastroCategoria;
+        private readonly IRepositorio<Categoria> repositorioCategoria;
+        private readonly IRepositorio<Caixa> repositorioCaixa;
+        private readonly IRepositorio<Revista> repositorioRevista;
         private readonly Notificador notificador;
 
         public TelaCadastroRevista(
             TelaCadastroCategoria telaCadastroCategoria,
-            RepositorioCategoria repositorioCategoria,
+            IRepositorio<Categoria> repositorioCategoria,
             TelaCadastroCaixa telaCadastroCaixa,
-            RepositorioCaixa repositorioCaixa,
-            RepositorioRevista repositorioRevista,
+            IRepositorio<Caixa> repositorioCaixa,
+            IRepositorio<Revista> repositorioRevista,
             Notificador notificador) : base("Cadastro de Revistas")
         {
             this.telaCadastroCategoria = telaCadastroCategoria;

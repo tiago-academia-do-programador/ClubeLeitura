@@ -1,5 +1,6 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 {
@@ -20,9 +21,17 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             this.diasEmprestimo = diasEmprestimo;
         }
 
-        public override string Validar()
+        public override ResultadoValidacao Validar()
         {
-            throw new System.NotImplementedException();
+            List<string> erros = new List<string>();
+
+            if (diasEmprestimo < 1)
+                erros.Add("Um empréstimo precisa ser feito por pelo menos um dia!");
+
+            if (string.IsNullOrEmpty(nome))
+                erros.Add("Por favor insira um nome válido para a categoria!");
+
+            return new ResultadoValidacao(erros);
         }
     }
 }

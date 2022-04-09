@@ -4,6 +4,6 @@
     {
         public int numero;
 
-        public abstract string Validar();
+        public abstract ResultadoValidacao Validar();
     }
 }

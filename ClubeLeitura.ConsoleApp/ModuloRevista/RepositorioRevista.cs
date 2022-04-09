@@ -2,10 +2,7 @@
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
-    public class RepositorioRevista : RepositorioBase<Revista>
+    public class RepositorioRevista : RepositorioBase<Revista>, IRepositorio<Revista>
     {
-        public RepositorioRevista()
-        {
-        }
     }
 }

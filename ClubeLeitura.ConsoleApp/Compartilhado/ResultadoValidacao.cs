@@ -1,24 +1,33 @@
-﻿namespace ClubeLeitura.ConsoleApp.Compartilhado
+﻿using System;
+using System.Collections.Generic;
+
+namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
     public class ResultadoValidacao
     {
-        public StatusValidacao status;
-        public string[] erros;
-
-        public ResultadoValidacao(StatusValidacao status, string[] erros)
+        private readonly List<string> _erros;
+        
+        public StatusValidacao Status
         {
-            this.status = status;
-            this.erros = erros;
+            get
+            {
+                return _erros.Count == 0 ? StatusValidacao.Ok : StatusValidacao.Erro;
+            }
+        }
+
+        public ResultadoValidacao(List<string> erros)
+        {
+            _erros = erros;
         }
 
         public override string ToString()
         {
             string strErros = "";
 
-            for (int i = 0; i < erros.Length; i++)
+            foreach (string erro in _erros)
             {
-                if (erros[i] != "")
-                    strErros += erros[i] + "\n";
+                if (!string.IsNullOrEmpty(erro))
+                    strErros += erro + Environment.NewLine;
             }
 
             return strErros;

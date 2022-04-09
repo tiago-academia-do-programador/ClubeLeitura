@@ -4,6 +4,7 @@ using ClubeLeitura.ConsoleApp.ModuloCategoria;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloReserva;
 using System;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloRevista
 {
@@ -30,23 +31,20 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             this.edicao = edicao;
             this.ano = ano;
         }
-        public override string Validar()
+        public override ResultadoValidacao Validar()
         {
-            string validacao = "";
+            List<string> erros = new List<string>();
 
             if (string.IsNullOrEmpty(Colecao))
-                validacao += "É necessário incluir uma coleção!\n";
+                erros.Add("É necessário incluir uma coleção!");
 
             if (Edicao < 0)
-                validacao += "A edição de uma revista não pode ser menor que zero!\n";
+                erros.Add("A edição de uma revista não pode ser menor que zero!");
 
             if (Ano < 0 || Ano > DateTime.Now.Year)
-                validacao += "O ano da revista precisa ser válido!\n";
+                erros.Add("O ano da revista precisa ser válido!");
 
-            if (string.IsNullOrEmpty(validacao))
-                return "REGISTRO_VALIDO";
-
-            return validacao;
+            return new ResultadoValidacao(erros);
         }
 
         public void RegistrarReserva(Reserva reserva)
@@ -81,7 +79,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
             foreach (Emprestimo emprestimo in historicoEmprestimos)
             {
-                if (emprestimo != null && emprestimo.estaAberto)
+                if (emprestimo != null && emprestimo.EstaAberto)
                 {
                     temEmprestimoEmAberto = true;
                     break;

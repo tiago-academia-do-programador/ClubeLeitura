@@ -10,21 +10,21 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
     public class TelaCadastroReserva : TelaBase
     {
         private readonly Notificador notificador;
-        private readonly RepositorioReserva repositorioReserva;
-        private readonly RepositorioAmigo repositorioAmigo;
-        private readonly RepositorioRevista repositorioRevista;
+        private readonly IRepositorio<Reserva> repositorioReserva;
+        private readonly IRepositorio<Amigo> repositorioAmigo;
+        private readonly IRepositorio<Revista> repositorioRevista;
         private readonly TelaCadastroAmigo telaCadastroAmigo;
         private readonly TelaCadastroRevista telaCadastroRevista;
-        private readonly RepositorioEmprestimo repositorioEmprestimo;
+        private readonly IRepositorio<Emprestimo> repositorioEmprestimo;
 
         public TelaCadastroReserva(
             Notificador notificador,
             RepositorioReserva repositorioReserva,
-            RepositorioAmigo repositorioAmigo,
-            RepositorioRevista repositorioRevista,
+            IRepositorio<Amigo> repositorioAmigo,
+            IRepositorio<Revista> repositorioRevista,
             TelaCadastroAmigo telaCadastroAmigo,
             TelaCadastroRevista telaCadastroRevista,
-            RepositorioEmprestimo repositorioEmprestimo) : base("Cadastro de Reservas")
+            IRepositorio<Emprestimo> repositorioEmprestimo) : base("Cadastro de Reservas")
         {
             this.notificador = notificador;
             this.repositorioReserva = repositorioReserva;
@@ -115,10 +115,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
 
             reservaParaEmprestimo.Fechar();
 
-            Emprestimo novoEmprestimo = new Emprestimo();
-
-            novoEmprestimo.revista = reservaParaEmprestimo.revista;
-            novoEmprestimo.amigo = reservaParaEmprestimo.amigo;
+            Emprestimo novoEmprestimo 
+                = new Emprestimo(reservaParaEmprestimo.amigo, reservaParaEmprestimo.revista);
 
             string statusValidacao = repositorioEmprestimo.Inserir(novoEmprestimo);
 
@@ -160,12 +158,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Reservas em Aberto");
 
-            Reserva[] reservas = repositorioReserva.SelecionarReservasEmAberto();
+            List<Reserva> reservas = ((ITransacaoRepositorio<Reserva>)repositorioReserva).SelecionarTransacoesEmAberto();
 
-            if (reservas.Length == 0)
+            if (reservas.Count == 0)
                 return false;
 
-            for (int i = 0; i < reservas.Length; i++)
+            for (int i = 0; i < reservas.Count; i++)
             {
                 Reserva reserva = reservas[i];
 

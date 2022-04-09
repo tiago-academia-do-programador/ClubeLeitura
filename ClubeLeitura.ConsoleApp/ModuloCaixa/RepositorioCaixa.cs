@@ -3,9 +3,9 @@ using ClubeLeitura.ConsoleApp.Compartilhado;
 
 namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 {
-    public class RepositorioCaixa : RepositorioBase<Caixa>
+    public class RepositorioCaixa : RepositorioBase<Caixa>, IRepositorio<Caixa>, IEtiquetavel
     {
-        public bool EtiquetaJaUtilizada(string etiquetaInformada)
+        public bool EtiquetaIndisponivel(string etiquetaInformada)
         {
             foreach (Caixa caixa in registros)
                 if (caixa.Etiqueta == etiquetaInformada)

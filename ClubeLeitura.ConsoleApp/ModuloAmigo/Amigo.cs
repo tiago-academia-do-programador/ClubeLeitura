@@ -1,16 +1,17 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 using ClubeLeitura.ConsoleApp.ModuloEmprestimo;
 using ClubeLeitura.ConsoleApp.ModuloReserva;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
-    public class Amigo : EntidadeBase
+    public class Amigo : EntidadeBase, IMultavel
     {
         private readonly string nome;
         private readonly string nomeResponsavel;
         private readonly string telefone;
         private readonly string endereco;
-        public Multa multa;
+        public Multa Multa { get; set; }
 
         private readonly Emprestimo[] historicoEmprestimos = new Emprestimo[10];
         private readonly Reserva[] historicoReservas = new Reserva[10];
@@ -63,7 +64,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             foreach (Emprestimo emprestimo in historicoEmprestimos)
             {
-                if (emprestimo != null && emprestimo.estaAberto)
+                if (emprestimo != null && emprestimo.EstaAberto)
                 {
                     temEmprestimoEmAberto = true;
                     break;
@@ -76,18 +77,18 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
         {
             Multa novaMulta = new Multa(valor);
 
-            multa = novaMulta;
+            Multa = novaMulta;
         }
 
         public void PagarMulta()
         {
-            if (multa != null)
-                multa = null;
+            if (Multa != null)
+                Multa = null;
         }
 
         public bool TemMultaEmAberto()
         {
-            if (multa == null)
+            if (Multa == null)
                 return false;
 
             return true;
@@ -116,9 +117,23 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             return -1;
         }
 
-        public override string Validar()
+        public override ResultadoValidacao Validar()
         {
-            throw new System.NotImplementedException();
+            List<string> erros = new List<string>();
+
+            if (string.IsNullOrEmpty(nome))
+                erros.Add("Um amigo precisa ter um nome válido!");
+
+            if (string.IsNullOrEmpty(nomeResponsavel))
+                erros.Add("Um amigo precisa ter um responsável!");
+
+            if (telefone.Length < 9)
+                erros.Add("Um amigo precisa ter um número de telefone com 9 digitos!");
+
+            if (string.IsNullOrEmpty(endereco))
+                erros.Add("Um amigo ter um endereço válido!");
+
+            return new ResultadoValidacao(erros);
         }
         #endregion
     }

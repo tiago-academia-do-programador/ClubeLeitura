@@ -1,19 +1,14 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 {
-    public class RepositorioAmigo : RepositorioBase<Amigo>
+    public class RepositorioAmigo : RepositorioBase<Amigo>, IRepositorio<Amigo>, IMultavelRepository<Amigo>
     {
-        public List<Amigo> SelecionarAmigosComMulta()
+        public List<Amigo> SelecionarRegistrosComMulta()
         {
-            List<Amigo> amigosComMulta = new List<Amigo>();
-
-            foreach (Amigo amigo in registros)
-                if (amigo.TemMultaEmAberto())
-                    amigosComMulta.Add(amigo);
-
-            return amigosComMulta;
+            return registros.FindAll(x => x.TemMultaEmAberto()).ToList();
         }
     }
 }

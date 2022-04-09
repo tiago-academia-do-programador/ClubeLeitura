@@ -7,9 +7,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
     public class TelaCadastroAmigo : TelaBase, ICadastroBasico
     {
         private readonly Notificador notificador;
-        private readonly RepositorioAmigo repositorioAmigo;
+        private readonly IRepositorio<Amigo> repositorioAmigo;
 
-        public TelaCadastroAmigo(RepositorioAmigo repositorioAmigo, Notificador notificador)
+        public TelaCadastroAmigo(IRepositorio<Amigo> repositorioAmigo, Notificador notificador)
             : base ("Cadastro de Amigos")
         {
             this.repositorioAmigo = repositorioAmigo;
@@ -83,9 +83,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             Amigo amigoAtualizado = ObterAmigo();
 
-            repositorioAmigo.Editar(numeroAmigo, amigoAtualizado);
+            bool conseguiuEditar = repositorioAmigo.Editar(numeroAmigo, amigoAtualizado);
 
-            notificador.ApresentarMensagem("Amigo editado com sucesso", TipoMensagem.Sucesso);
+            if (!conseguiuEditar)
+                notificador.ApresentarMensagem("Não foi possível editar.", TipoMensagem.Erro);
+            else
+                notificador.ApresentarMensagem("Amigo editado com sucesso", TipoMensagem.Sucesso);
         }
 
         public void ExcluirRegistro()
@@ -120,7 +123,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             for (int i = 0; i < amigos.Count; i++)
             {
-                Amigo a = (Amigo)amigos[i];
+                Amigo a = amigos[i];
 
                 Console.WriteLine("Número: " + a.numero);
                 Console.WriteLine("Nome: " + a.Nome);
@@ -138,7 +141,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             if (tipo == "Tela")
                 MostrarTitulo("Visualização de Amigos com Multa");
 
-            List<Amigo> amigos = repositorioAmigo.SelecionarAmigosComMulta();
+            List<Amigo> amigos = ((IMultavelRepository<Amigo>)repositorioAmigo).SelecionarRegistrosComMulta();
 
             if (amigos.Count == 0)
                 return false;
@@ -151,7 +154,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
                 Console.WriteLine("Nome: " + a.Nome);
                 Console.WriteLine("Nome do responsável: " + a.NomeResponsavel);
                 Console.WriteLine("Onde mora: " + a.Endereco);
-                Console.WriteLine("Multa: R$" + a.multa.Valor);
+                Console.WriteLine("Multa: R$" + a.Multa.Valor);
 
                 Console.WriteLine();
             }

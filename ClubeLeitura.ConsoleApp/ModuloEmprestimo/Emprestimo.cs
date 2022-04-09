@@ -5,20 +5,27 @@ using System;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
-    public class Emprestimo : EntidadeBase
+    public class Emprestimo : EntidadeBase, ITransacao
     {
         public Amigo amigo;
         public Revista revista;
-        public DateTime dataEmprestimo;
-        public DateTime dataDevolucao;
+        private DateTime dataEmprestimo;
+        private DateTime dataDevolucao;
 
-        public bool estaAberto;
+        public bool EstaAberto { get; set; }
+        public DateTime DataEmprestimo { get => dataEmprestimo; }
+
+        public Emprestimo(Amigo amigo, Revista revista)
+        {
+            this.amigo = amigo;
+            this.revista = revista;
+        }
 
         public void Abrir()
         {
-            if (!estaAberto)
+            if (!EstaAberto)
             {
-                estaAberto = true;
+                EstaAberto = true;
                 dataEmprestimo = DateTime.Today;
                 dataDevolucao = dataEmprestimo.AddDays(revista.categoria.DiasEmprestimo);
             }
@@ -26,9 +33,9 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
         public void Fechar()
         {
-            if (estaAberto)
+            if (EstaAberto)
             {
-                estaAberto = false;
+                EstaAberto = false;
 
                 DateTime dataRealDevolucao = DateTime.Today;
 
@@ -45,7 +52,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             }
         }
 
-        public override string Validar()
+        public override ResultadoValidacao Validar()
         {
             throw new NotImplementedException();
         }

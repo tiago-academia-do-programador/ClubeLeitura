@@ -3,12 +3,8 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
-    public class RepositorioReserva : RepositorioBase<Reserva>
+    public class RepositorioReserva : RepositorioBase<Reserva>, IRepositorio<Reserva>, ITransacaoRepositorio<Reserva>
     {
-        public RepositorioReserva()
-        {
-        }
-
         public override string Inserir(Reserva reserva)
         {
             reserva.numero = ++contadorNumero;
@@ -20,7 +16,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
             return "REGISTRO_VALIDO";
         }
 
-        public Reserva[] SelecionarReservasEmAberto()
+        public List<Reserva> SelecionarTransacoesEmAberto()
         {
             List<Reserva> reservasInseridas = new List<Reserva>();
 
@@ -28,7 +24,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloReserva
                 if (reserva.estaAberta)
                     reservasInseridas.Add(reserva);
 
-            return reservasInseridas.ToArray();
+            return reservasInseridas;
         }
     }
 }
