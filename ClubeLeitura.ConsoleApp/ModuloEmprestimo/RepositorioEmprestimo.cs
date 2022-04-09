@@ -1,9 +1,8 @@
 ﻿using ClubeLeitura.ConsoleApp.Compartilhado;
-using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
-    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>, IRepositorio<Emprestimo>, ITransacaoRepositorio<Emprestimo>
+    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>, IRepositorio<Emprestimo>
     {
         public override string Inserir(Emprestimo emprestimo)
         {
@@ -24,11 +23,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             emprestimo.Fechar();
 
             return true;
-        }
-
-        public List<Emprestimo> SelecionarTransacoesEmAberto()
-        {
-            return registros.Procurar(x => x.EstaAberto);
         }
     }
 }
