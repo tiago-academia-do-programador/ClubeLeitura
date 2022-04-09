@@ -93,6 +93,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloCategoria
             foreach (Categoria categoria in categorias)
                 Console.WriteLine(categoria.ToString());
 
+            Console.ReadLine();
+
             return true;
         }
 

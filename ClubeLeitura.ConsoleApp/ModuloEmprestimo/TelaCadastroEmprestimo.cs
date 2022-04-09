@@ -201,6 +201,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             foreach (Emprestimo emprestimo in emprestimos)
                 Console.WriteLine(emprestimo.ToString());
 
+            Console.ReadLine();
+
             return true;
         }
 
@@ -212,10 +214,15 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
             List<Emprestimo> emprestimos = repositorioEmprestimo.Filtrar(x => x.EstaAberto);
 
             if (emprestimos.Count == 0)
+            {
+                notificador.ApresentarMensagem("Nenhum emprestimo em aberto disponível.", TipoMensagem.Atencao);
                 return false;
+            }
 
             foreach (Emprestimo emprestimo in emprestimos)
                 Console.WriteLine(emprestimo.ToString());
+
+            Console.ReadLine();
 
             return true;
         }

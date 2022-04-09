@@ -12,49 +12,46 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
     {
         private string opcaoSelecionada;
 
-        private const int QUANTIDADE_REGISTROS = 10;
-
-        private Notificador notificador;
-
         // Declaração de Caixas
-        private RepositorioCaixa repositorioCaixa;
+        private IRepositorio<Caixa> repositorioCaixa;
 
         private TelaCadastroCaixa telaCadastroCaixa;
 
         // Declaração de Categorias
-        private RepositorioCategoria repositorioCategoria;
+        private IRepositorio<Categoria> repositorioCategoria;
 
         private TelaCadastroCategoria telaCadastroCategoria;
 
         // Declaração de Revistas
-        private RepositorioRevista repositorioRevista;
+        private IRepositorio<Revista> repositorioRevista;
 
         private TelaCadastroRevista telaCadastroRevista;
 
         // Declaração de Amigos
-        private RepositorioAmigo repositorioAmigo;
+        private IRepositorio<Amigo> repositorioAmigo;
         private TelaCadastroAmigo telaCadastroAmigo;
 
         // Declaração de Empréstimos
-        private RepositorioEmprestimo repositorioEmprestimo;
+        private IRepositorio<Emprestimo> repositorioEmprestimo;
 
         private TelaCadastroEmprestimo telaCadastroEmprestimo;
 
         // Declaração de Reservas
-        private RepositorioReserva repositorioReserva;
+        private IRepositorio<Reserva> repositorioReserva;
 
         private TelaCadastroReserva telaCadastroReserva;
 
         public TelaMenuPrincipal(Notificador notificador)
         {
-            this.notificador = notificador;
+            repositorioCaixa = new RepositorioJson<Caixa>();
+            repositorioCategoria = new RepositorioJson<Categoria>();
+            repositorioRevista = new RepositorioJson<Revista>();
+            repositorioAmigo = new RepositorioJson<Amigo>();
+            repositorioEmprestimo = new RepositorioJson<Emprestimo>();
+            repositorioReserva = new RepositorioJson<Reserva>();
 
-            repositorioCaixa = new RepositorioCaixa();
             telaCadastroCaixa = new TelaCadastroCaixa(repositorioCaixa, notificador);
-            repositorioCategoria = new RepositorioCategoria();
             telaCadastroCategoria = new TelaCadastroCategoria(repositorioCategoria, notificador);
-            repositorioRevista = new RepositorioRevista();
-
             telaCadastroRevista = new TelaCadastroRevista(
                 telaCadastroCategoria,
                 repositorioCategoria,
@@ -64,9 +61,7 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
                 notificador
             );
 
-            repositorioAmigo = new RepositorioAmigo();
             telaCadastroAmigo = new TelaCadastroAmigo(repositorioAmigo, notificador);
-            repositorioEmprestimo = new RepositorioEmprestimo();
 
             telaCadastroEmprestimo = new TelaCadastroEmprestimo(
                 notificador,
@@ -76,8 +71,6 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
                 telaCadastroRevista,
                 telaCadastroAmigo
             );
-
-            repositorioReserva = new RepositorioReserva();
 
             telaCadastroReserva = new TelaCadastroReserva(
                 notificador,

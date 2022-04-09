@@ -131,6 +131,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
             foreach (Amigo amigo in amigos)
                 Console.WriteLine(amigo.ToString());
 
+            Console.ReadLine();
+
             return true;
         }
 
@@ -149,6 +151,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
             foreach (Amigo amigo in amigosComMulta)
                 Console.WriteLine(amigo.ToString());
+
+            Console.ReadLine();
 
             return true;
         }

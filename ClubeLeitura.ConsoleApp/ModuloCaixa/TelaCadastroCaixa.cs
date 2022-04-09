@@ -126,7 +126,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
 
             do
             {
-                etiquetaJaUtilizada = ((IEtiquetavel)repositorioCaixa).EtiquetaIndisponivel(etiqueta);
+                etiquetaJaUtilizada = repositorioCaixa.ExisteRegistro(x => x.Etiqueta == etiqueta);
 
                 if (etiquetaJaUtilizada)
                 {

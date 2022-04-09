@@ -2,6 +2,7 @@
 using ClubeLeitura.ConsoleApp.ModuloAmigo;
 using ClubeLeitura.ConsoleApp.ModuloRevista;
 using System;
+using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
@@ -20,6 +21,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
         {
             this.amigo = amigo;
             this.revista = revista;
+
+            Abrir();
         }
 
         public override string ToString()
@@ -67,7 +70,7 @@ namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 
         public override ResultadoValidacao Validar()
         {
-            throw new NotImplementedException();
+            return new ResultadoValidacao(new List<string>());
         }
     }
 }

@@ -125,6 +125,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
             foreach (Revista revista in revistas)
                 Console.WriteLine(revista.ToString());
 
+            Console.ReadLine();
+
             return true;
         }
 

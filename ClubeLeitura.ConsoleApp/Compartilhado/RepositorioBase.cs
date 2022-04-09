@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
-    public abstract class RepositorioBase<T> where T : EntidadeBase
+    public class RepositorioBase<T> where T : EntidadeBase
     {
         protected readonly List<T> registros;
 

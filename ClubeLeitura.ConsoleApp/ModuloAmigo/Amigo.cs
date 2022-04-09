@@ -35,11 +35,13 @@ namespace ClubeLeitura.ConsoleApp.ModuloAmigo
 
         public override string ToString()
         {
+            decimal valorMulta = Multa is null ? 0m : Multa.Valor;
+
             return "Número: " + numero + Environment.NewLine +
             "Nome: " + Nome + Environment.NewLine +
             "Nome do responsável: " + NomeResponsavel + Environment.NewLine +
             "Onde mora: " + Endereco + Environment.NewLine +
-            "Multa: R$" + Multa.Valor + Environment.NewLine;
+            "Multa: R$" + valorMulta + Environment.NewLine;
         }
 
         public void RegistrarEmprestimo(Emprestimo emprestimo)
