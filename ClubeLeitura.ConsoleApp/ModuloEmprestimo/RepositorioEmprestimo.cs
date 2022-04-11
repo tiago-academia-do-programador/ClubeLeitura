@@ -2,7 +2,7 @@
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
-    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>, IRepositorio<Emprestimo>
+    public class RepositorioEmprestimo : RepositorioBase<Emprestimo>
     {
         public bool RegistrarDevolucao(Emprestimo emprestimo)
         {

@@ -20,7 +20,6 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             }
         }
 
-
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -28,7 +27,7 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
             foreach (string erro in _erros)
             {
                 if (!string.IsNullOrEmpty(erro))
-                    sb.Append(erro);
+                    sb.AppendLine(erro);
             }
 
             return sb.ToString();

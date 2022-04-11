@@ -2,7 +2,7 @@
 
 namespace ClubeLeitura.ConsoleApp.ModuloCategoria
 {
-    public class RepositorioCategoria : RepositorioBase<Categoria>, IRepositorio<Categoria>
+    public class RepositorioCategoria : RepositorioBase<Categoria>
     {
     }
 }

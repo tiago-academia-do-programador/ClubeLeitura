@@ -16,8 +16,8 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
         public Caixa caixa;
         public Categoria categoria;
 
-        public Emprestimo[] historicoEmprestimos = new Emprestimo[10];
-        public Reserva[] historicoReservas = new Reserva[10];
+        public List<Emprestimo> historicoEmprestimos = new List<Emprestimo>();
+        public List<Reserva> historicoReservas = new List<Reserva>();
 
         public string Colecao => colecao;
 
@@ -63,12 +63,12 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
 
         public void RegistrarReserva(Reserva reserva)
         {
-            historicoReservas[ObtemPosicaoReservasVazia()] = reserva;
+             historicoReservas.Add(reserva);
         }
 
         public void RegistrarEmprestimo(Emprestimo emprestimo)
         {
-            historicoEmprestimos[ObtemPosicaoEmprestimosVazia()] = emprestimo;
+            historicoEmprestimos.Add(emprestimo);
         }
 
         public bool EstaReservada()
@@ -100,29 +100,6 @@ namespace ClubeLeitura.ConsoleApp.ModuloRevista
                 }
             }
             return temEmprestimoEmAberto;
-        }
-
-
-        public int ObtemPosicaoReservasVazia()
-        {
-            for (int i = 0; i < historicoReservas.Length; i++)
-            {
-                if (historicoReservas[i] == null)
-                    return i;
-            }
-
-            return -1;
-        }
-
-        public int ObtemPosicaoEmprestimosVazia()
-        {
-            for (int i = 0; i < historicoEmprestimos.Length; i++)
-            {
-                if (historicoEmprestimos[i] == null)
-                    return i;
-            }
-
-            return -1;
         }
     }
 }

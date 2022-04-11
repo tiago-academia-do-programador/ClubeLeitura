@@ -128,14 +128,18 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
             registros.Add(entidade);
 
-            string jsonRegistrosAtualizados = JsonConvert.SerializeObject(registros, Formatting.Indented);
+            string jsonRegistrosAtualizados 
+                = JsonConvert.SerializeObject(registros, Formatting.Indented,
+                     new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore } );
 
             File.WriteAllText(Arquivo, jsonRegistrosAtualizados);
         }
 
         public void SerializarLista(List<T> registros)
         {
-            string jsonRegistrosAtualizados = JsonConvert.SerializeObject(registros, Formatting.Indented);
+            string jsonRegistrosAtualizados = 
+                JsonConvert.SerializeObject(registros, Formatting.Indented,
+                    new JsonSerializerSettings { ReferenceLoopHandling =  ReferenceLoopHandling.Ignore} );
 
             File.WriteAllText(Arquivo, jsonRegistrosAtualizados);
         }

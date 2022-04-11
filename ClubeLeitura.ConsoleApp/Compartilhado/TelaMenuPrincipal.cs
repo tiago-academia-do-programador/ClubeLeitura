@@ -43,12 +43,12 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public TelaMenuPrincipal(Notificador notificador)
         {
-            repositorioCaixa = new RepositorioJson<Caixa>();
-            repositorioCategoria = new RepositorioJson<Categoria>();
-            repositorioRevista = new RepositorioJson<Revista>();
-            repositorioAmigo = new RepositorioJson<Amigo>();
-            repositorioEmprestimo = new RepositorioJson<Emprestimo>();
-            repositorioReserva = new RepositorioJson<Reserva>();
+            repositorioCaixa = new RepositorioCaixa();
+            repositorioCategoria = new RepositorioCategoria();
+            repositorioRevista = new RepositorioRevista();
+            repositorioAmigo = new RepositorioAmigo();
+            repositorioEmprestimo = new RepositorioEmprestimo();
+            repositorioReserva = new RepositorioReserva();
 
             telaCadastroCaixa = new TelaCadastroCaixa(repositorioCaixa, notificador);
             telaCadastroCategoria = new TelaCadastroCategoria(repositorioCategoria, notificador);

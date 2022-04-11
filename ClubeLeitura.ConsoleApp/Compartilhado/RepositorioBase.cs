@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ClubeLeitura.ConsoleApp.Compartilhado
 {
-    public class RepositorioBase<T> where T : EntidadeBase
+    public class RepositorioBase<T> : IRepositorio<T> where T : EntidadeBase
     {
         protected readonly List<T> registros;
 

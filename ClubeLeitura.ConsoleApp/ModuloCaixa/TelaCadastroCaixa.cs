@@ -34,11 +34,11 @@ namespace ClubeLeitura.ConsoleApp.ModuloCaixa
         {
             MostrarTitulo("Editando Caixa");
 
-            bool temCaixasCadastradas = VisualizarRegistros("Pesquisando");
+            bool temFuncionariosCadastrados = VisualizarRegistros("Pesquisando");
 
-            if (temCaixasCadastradas == false)
+            if (temFuncionariosCadastrados == false)
             {
-                notificador.ApresentarMensagem("Nenhuma caixa cadastrada para poder editar", TipoMensagem.Atencao);
+                notificador.ApresentarMensagem("Nenhum funcionario cadastrado para poder editar.", TipoMensagem.Atencao);
                 return;
             }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloReserva
 {
-    public class RepositorioReserva : RepositorioBase<Reserva>, IRepositorio<Reserva>
+    public class RepositorioReserva : RepositorioBase<Reserva>
     {
         public override string Inserir(Reserva reserva)
         {

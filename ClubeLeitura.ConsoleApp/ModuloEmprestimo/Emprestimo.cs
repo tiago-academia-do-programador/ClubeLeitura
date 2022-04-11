@@ -6,14 +6,14 @@ using System.Collections.Generic;
 
 namespace ClubeLeitura.ConsoleApp.ModuloEmprestimo
 {
-    public class Emprestimo : EntidadeBase, ITransacao
+    public class Emprestimo : EntidadeBase
     {
         public Amigo amigo;
         public Revista revista;
         private DateTime dataEmprestimo;
         private DateTime dataDevolucao;
         private bool estaAberto;
-        public bool EstaAberto { get; }
+        public bool EstaAberto { get => estaAberto; }
         public DateTime DataEmprestimo { get => dataEmprestimo; }
         public string Status { get => EstaAberto ? "Aberto" : "Fechado"; }
 

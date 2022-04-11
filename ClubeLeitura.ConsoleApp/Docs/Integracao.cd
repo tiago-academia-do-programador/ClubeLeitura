@@ -25,7 +25,6 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ModuloRevista\RepositorioRevista.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.Compartilhado.Notificador">
     <Position X="6.75" Y="4.5" Width="2" />
@@ -37,10 +36,9 @@
   <Class Name="ClubeLeitura.ConsoleApp.ModuloCaixa.RepositorioCaixa">
     <Position X="12" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ModuloCaixa\RepositorioCaixa.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="ClubeLeitura.ConsoleApp.ModuloCaixa.TelaCadastroCaixa">
     <Position X="9.5" Y="3" Width="2" />
