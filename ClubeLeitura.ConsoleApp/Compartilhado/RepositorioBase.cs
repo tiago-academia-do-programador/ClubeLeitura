@@ -30,7 +30,20 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public bool Editar(int numeroSelecionado, T novaEntidade)
         {
-            return Editar(x => x.numero == numeroSelecionado, novaEntidade);
+            foreach (T entidade in registros)
+            {
+                if (numeroSelecionado == entidade.numero)
+                {
+                    novaEntidade.numero = entidade.numero;
+
+                    int posicaoParaEditar = registros.IndexOf(entidade);
+                    registros[posicaoParaEditar] = novaEntidade;
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool Editar(Predicate<T> condicao, T novaEntidade)
@@ -53,7 +66,16 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public bool Excluir(int numeroSelecionado)
         {
-            return Excluir(x => x.numero == numeroSelecionado);
+            foreach (T entidade in registros)
+            {
+                if (numeroSelecionado == entidade.numero)
+                {
+                    registros.Remove(entidade);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool Excluir(Predicate<T> condicao)
@@ -71,7 +93,13 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public T SelecionarRegistro(int numeroSelecionado)
         {
-            return SelecionarRegistro(x => x.numero == numeroSelecionado);
+            foreach (T entidade in registros)
+            {
+                if (numeroSelecionado == entidade.numero)
+                    return entidade;
+            }
+
+            return null;
         }
 
         public T SelecionarRegistro(Predicate<T> condicao)
@@ -103,7 +131,11 @@ namespace ClubeLeitura.ConsoleApp.Compartilhado
 
         public bool ExisteRegistro(int numeroSelecionado)
         {
-            return ExisteRegistro(x => x.numero == numeroSelecionado);
+            foreach (T entidade in registros)
+                if (numeroSelecionado == entidade.numero)
+                    return true;
+
+            return false;
         }
 
         public bool ExisteRegistro(Predicate<T> condicao)
